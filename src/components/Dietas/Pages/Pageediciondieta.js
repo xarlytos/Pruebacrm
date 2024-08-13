@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Semanacomponente from '../Semanacomponente';
 import Calendariodieta from '../Calendariodieta';
 import axios from 'axios';
-import mongoose from 'mongoose';
 import styles from './Pageediciondieta.module.css';
 
 const Pageediciondieta = ({ theme }) => {
