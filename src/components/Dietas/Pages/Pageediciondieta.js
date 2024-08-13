@@ -46,15 +46,15 @@ const Pageediciondieta = ({ theme }) => {
   const handleSaveDieta = async () => {
     try {
       const sanitizedWeeks = weeks.map(week => ({
-        _id: isValidObjectId(week._id) ? week._id : new mongoose.Types.ObjectId(),
+        _id: isValidObjectId(week._id) ? week._id : generateObjectId(),
         id: week.id,
         nombre: week.nombre,
         dias: week.dias.map(dia => ({
-          _id: isValidObjectId(dia._id) ? dia._id : new mongoose.Types.ObjectId(),
+          _id: isValidObjectId(dia._id) ? dia._id : generateObjectId(),
           id: dia.id,
           nombre: dia.nombre,
           comidas: dia.comidas.map(comida => ({
-            _id: isValidObjectId(comida._id) ? comida._id : new mongoose.Types.ObjectId(),
+            _id: isValidObjectId(comida._id) ? comida._id : generateObjectId(),
             nombreComida: comida.nombreComida,
             calorias: parseInt(comida.calorias, 10),
             macronutrientes: {
@@ -80,8 +80,16 @@ const Pageediciondieta = ({ theme }) => {
     }
   };
 
+  // Función para verificar si un ObjectId es válido utilizando una expresión regular
   const isValidObjectId = (id) => {
-    return mongoose.Types.ObjectId.isValid(id) && (new mongoose.Types.ObjectId(id)).toString() === id.toString();
+    return /^[0-9a-fA-F]{24}$/.test(id);
+  };
+
+  // Función para generar un ObjectId "falso" en el frontend
+  const generateObjectId = () => {
+    return Math.floor(Date.now() / 1000).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => {
+      return (Math.random() * 16 | 0).toString(16);
+    }).toLowerCase();
   };
 
   return (
