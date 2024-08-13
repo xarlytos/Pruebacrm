@@ -55,9 +55,10 @@ const ClientesLista = ({ theme, setTheme }) => {
     useEffect(() => {
         cargarClientes();
     }, []);
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
     const cargarClientes = () => {
-        axios.get('/api/clientes')
+        axios.get('${API_BASE_URL}/api/clientes')
             .then(response => {
                 setClientes(response.data);
                 toast.success('Clientes cargados correctamente');
@@ -96,7 +97,7 @@ const ClientesLista = ({ theme, setTheme }) => {
     };
 
     const handleEliminarClientes = () => {
-        axios.delete('/api/clientes', { data: { ids: clientesSeleccionados } })
+        axios.delete('${API_BASE_URL}/api/clientes', { data: { ids: clientesSeleccionados } })
             .then(() => {
                 setClientes(prev => prev.filter(cliente => !clientesSeleccionados.includes(cliente._id)));
                 setClientesSeleccionados([]);
@@ -148,7 +149,7 @@ const ClientesLista = ({ theme, setTheme }) => {
 
     const handleCSVConfirm = async (csvData) => {
         try {
-            await axios.post('/api/clientes/import', { clientes: csvData });
+            await axios.post('${API_BASE_URL}/api/clientes/import', { clientes: csvData });
             cargarClientes();
             toast.success('Clientes importados correctamente');
         } catch (error) {
