@@ -5,6 +5,8 @@ import Calendariodieta from '../Calendariodieta';
 import axios from 'axios';
 import styles from './Pageediciondieta.module.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Pageediciondieta = ({ theme }) => {
   const { id: dietaId } = useParams();
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const Pageediciondieta = ({ theme }) => {
       try {
         if (dietaId) {
           console.log("Fetching dieta with ID:", dietaId);
-          const response = await axios.get(`/api/dietas/${dietaId}`);
+          const response = await axios.get(`${API_BASE_URL}/api/dietas/${dietaId}`);
           console.log("Dieta fetched from backend:", response.data);
           setDieta(response.data);
           setWeeks(response.data.semanas);
@@ -68,7 +70,7 @@ const Pageediciondieta = ({ theme }) => {
 
       console.log("Saving sanitized weeks data: ", sanitizedWeeks);
 
-      const response = await axios.put(`/api/dietas/${dietaId}`, {
+      const response = await axios.put(`${API_BASE_URL}/api/dietas/${dietaId}`, {
         ...dieta,
         semanas: sanitizedWeeks
       });
@@ -93,17 +95,63 @@ const Pageediciondieta = ({ theme }) => {
   };
 
   return (
-    <div className={`${styles.page} ${theme === 'dark' ? 'dark' : ''}`}>
-      <h1>Editar Dieta</h1>
-      <div className={styles.weeksContainer}>
-        <Calendariodieta weeks={weeks} onSelectWeek={setSelectedWeek} />
+    <div className={`${styles.pageEdicionDieta} ${theme}`}>
+      <h2>Editar Dieta</h2>
+      <div>
+        <label>Nombre de la Dieta:</label>
+        <input 
+          type="text" 
+          value={dieta.nombre} 
+          onChange={(e) => setDieta({ ...dieta, nombre: e.target.value })} 
+        />
       </div>
-      {weeks.length > 0 && (
-        <Semanacomponente selectedWeek={selectedWeek} weeksData={weeks} setWeeksData={setWeeks} />
-      )}
-      <button onClick={handleSaveDieta} className={styles.buttonSave}>
-        Guardar Dieta
-      </button>
+      <div>
+        <label>Cliente:</label>
+        <input 
+          type="text" 
+          value={dieta.cliente} 
+          onChange={(e) => setDieta({ ...dieta, cliente: e.target.value })} 
+        />
+      </div>
+      <div>
+        <label>Fecha de Inicio:</label>
+        <input 
+          type="date" 
+          value={dieta.fechaInicio} 
+          onChange={(e) => setDieta({ ...dieta, fechaInicio: e.target.value })} 
+        />
+      </div>
+      <div>
+        <label>Duración (semanas):</label>
+        <input 
+          type="number" 
+          value={dieta.duracionSemanas} 
+          onChange={(e) => setDieta({ ...dieta, duracionSemanas: e.target.value })} 
+        />
+      </div>
+      <div>
+        <label>Objetivo:</label>
+        <input 
+          type="text" 
+          value={dieta.objetivo} 
+          onChange={(e) => setDieta({ ...dieta, objetivo: e.target.value })} 
+        />
+      </div>
+      <div>
+        <label>Restricciones:</label>
+        <input 
+          type="text" 
+          value={dieta.restricciones} 
+          onChange={(e) => setDieta({ ...dieta, restricciones: e.target.value })} 
+        />
+      </div>
+      <div>
+        <Semanacomponente weeks={weeks} setWeeks={setWeeks} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek} />
+      </div>
+      <div>
+        <Calendariodieta weeks={weeks} setWeeks={setWeeks} />
+      </div>
+      <button onClick={handleSaveDieta}>Guardar Dieta</button>
     </div>
   );
 };
