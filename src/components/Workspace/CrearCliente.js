@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CrearCliente.css';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const CrearCliente = ({ onClose, onClienteCreado, theme }) => {
     const [cliente, setCliente] = useState({
@@ -34,7 +35,7 @@ const CrearCliente = ({ onClose, onClienteCreado, theme }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('/api/clientes', cliente)
+        axios.post('${API_BASE_URL}/api/clientes', cliente)
             .then(response => {
                 console.log('Cliente creado:', response.data);
                 onClienteCreado();
