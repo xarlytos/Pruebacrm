@@ -61,7 +61,6 @@ const App = () => {
             <Route path="/forecasts" element={<Forecasts theme={theme} setTheme={setTheme}/>} />
             <Route path="/expenses" element={<Expenses theme={theme} setTheme={setTheme}/>} />
             <Route path="/income-expenses" element={<IncomeExpenses theme={theme} setTheme={setTheme}/>} />
-            <Route path="/documents/*" element={<Documents theme={theme} setTheme={setTheme}/>} />
             <Route path="/bonos" element={<Bonos theme={theme} setTheme={setTheme}/>} />
             <Route path="/incomes" element={<Incomes theme={theme} setTheme={setTheme}/>} />
             <Route path="/economia" element={<Pestañaeconomiapage theme={theme} setTheme={setTheme}/>} />
