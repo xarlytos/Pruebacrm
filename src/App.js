@@ -12,7 +12,6 @@ import Plans from './components/planes/Plans';
 import Forecasts from './components/Previsiones/Forecasts';
 import Expenses from './components/Previsiones/Expenses';
 import IncomeExpenses from './components/Previsiones/IncomeExpenses';
-import Documents from './components/Documentos/Documents';
 import Bonos from './components/Bonos/Bonos';
 import Incomes from './components/Previsiones/Incomes';
 import Pestañaeconomiapage from './components/Widgets/Pestañaeconomiapage';
