@@ -120,17 +120,8 @@ const ClientesLista = ({ theme, setTheme }) => {
         }));
     };
 
-    const sortClientes = (clientes) => {
-        if (!orden.campo || !orden.direccion) return clientes;
-
-        return [...clientes].sort((a, b) => {
-            if (a[orden.campo] < b[orden.campo]) return orden.direccion === 'asc' ? -1 : 1;
-            if (a[orden.campo] > b[orden.campo]) return orden.direccion === 'asc' ? 1 : -1;
-            return 0;
-        });
-    };
-
     const applyAdvancedFilters = (clientes, filtros) => {
+        if (!Array.isArray(clientes)) return []; // Asegurarse de que 'clientes' sea un array
         return clientes.filter(cliente =>
             Object.keys(filtros).every(key => {
                 if (!filtros[key]) return true;
@@ -138,8 +129,18 @@ const ClientesLista = ({ theme, setTheme }) => {
             })
         );
     };
-
-    const clientesFiltrados = applyAdvancedFilters(sortClientes(clientes), filtrosAvanzados);
+    
+    const sortClientes = (clientes) => {
+        if (!Array.isArray(clientes)) return []; // Asegurarse de que 'clientes' sea un array
+        if (!orden.campo || !orden.direccion) return clientes;
+    
+        return [...clientes].sort((a, b) => {
+            if (a[orden.campo] < b[orden.campo]) return orden.direccion === 'asc' ? -1 : 1;
+            if (a[orden.campo] > b[orden.campo]) return orden.direccion === 'asc' ? 1 : -1;
+            return 0;
+        });
+    };
+        const clientesFiltrados = applyAdvancedFilters(sortClientes(clientes), filtrosAvanzados);
 
     const handleFileUpload = () => {
         setMostrarPopupCSV(true);
