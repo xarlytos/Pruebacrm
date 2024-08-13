@@ -45,7 +45,7 @@ const Listadedietas = ({ theme, setTheme }) => {
   useEffect(() => {
     const fetchDietas = async () => {
       try {
-        const response = await axios.get('${API_BASE_URL}/api/dietas');
+        const response = await axios.get(`${API_BASE_URL}/api/dietas`);
         setDietas(response.data);
       } catch (error) {
         console.error('Error fetching dietas:', error);
@@ -54,7 +54,7 @@ const Listadedietas = ({ theme, setTheme }) => {
 
     const fetchClientes = async () => {
       try {
-        const response = await axios.get('${API_BASE_URL}/api/clientes');
+        const response = await axios.get(`${API_BASE_URL}/api/clientes`);
         setClientes(response.data);
       } catch (error) {
         console.error('Error fetching clientes:', error);

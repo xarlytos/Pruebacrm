@@ -38,7 +38,7 @@ const CommandPopup = ({ onClose, theme }) => {
             setIsAnimating(true);
             setLoading(true);
 
-            const response = await axios.post('/api/commands/execute', { command });
+            const response = await axios.post('${API_BASE_URL}/api/commands/execute', { command });
 
             console.log('Respuesta del servidor:', response.data);
 
