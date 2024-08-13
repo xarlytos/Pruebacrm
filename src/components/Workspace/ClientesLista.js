@@ -17,6 +17,7 @@ import ClientFilterDropdown from '../Workspace/ClientFilterDropdown';
 import './ClientesLista.css';
 import { MdDelete, MdViewModule, MdViewList, MdUpload, MdOpenInBrowser, MdWbSunny, MdBrightness3, MdFilterList, MdClose, MdExpandMore, MdNoteAdd, MdFitnessCenter, MdFlag, MdRestaurant, MdMessage, MdPayment, MdCardGiftcard, MdBarChart, MdFileDownload } from 'react-icons/md';
 import { Menu, MenuItem } from '@mui/material';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const camposDisponibles = [
     { key: 'nombre', label: 'Nombre' },
@@ -55,7 +56,6 @@ const ClientesLista = ({ theme, setTheme }) => {
     useEffect(() => {
         cargarClientes();
     }, [API_BASE_URL]);
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
     const cargarClientes = () => {
         axios.get(`${API_BASE_URL}/api/clientes`)

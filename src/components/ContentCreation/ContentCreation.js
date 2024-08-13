@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ChatComponentContentC from './ChatComponentContentC';
 import Modal from './Modal';
 import WireframeModal from './WireframeModal';
+import ConexionConIA from './ConexionConIA'; // Importar el nuevo componente
 import './ContentCreation.css';
 import chatsConfig from './chatsConfig.json';
 
@@ -10,6 +11,7 @@ const ContentCreation = ({ theme }) => {
   const [selectedChatConfig, setSelectedChatConfig] = useState(null);
   const [showWireframe, setShowWireframe] = useState(false);
   const [selectedTool, setSelectedTool] = useState(null);
+  const [showConexionConIA, setShowConexionConIA] = useState(false); // Estado para ConexionConIA
 
   const handleChatClick = (config) => {
     setSelectedChatConfig(config);
@@ -29,6 +31,14 @@ const ContentCreation = ({ theme }) => {
   const handleCloseWireframe = () => {
     setShowWireframe(false);
     setSelectedTool(null);
+  };
+
+  const handleConexionConIAClick = () => {
+    setShowConexionConIA(true); // Mostrar ConexionConIA
+  };
+
+  const handleCloseConexionConIA = () => {
+    setShowConexionConIA(false); // Ocultar ConexionConIA
   };
 
   const getIconPath = (title) => {
@@ -60,11 +70,20 @@ const ContentCreation = ({ theme }) => {
         <img src={getIconPath('Tool 6')} alt="Tool 6 icon" />
         <h2>Tool 6</h2>
       </div>
+      <button className={`content-card ${theme}`} onClick={handleConexionConIAClick}>
+        <h2>Open ConexionConIA</h2>
+      </button>
       {showModal && selectedChatConfig && (
         <Modal show={showModal} onClose={handleCloseModal} config={selectedChatConfig} />
       )}
       {showWireframe && selectedTool && (
         <WireframeModal show={showWireframe} onClose={handleCloseWireframe} tool={selectedTool} theme={theme} />
+      )}
+      {showConexionConIA && (
+        <div className="conexionconia-wrapper">
+          <ConexionConIA />
+          <button onClick={handleCloseConexionConIA}>Cerrar ConexionConIA</button>
+        </div>
       )}
     </div>
   );

@@ -35,7 +35,7 @@ const CrearCliente = ({ onClose, onClienteCreado, theme }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('${API_BASE_URL}/api/clientes', cliente)
+        axios.post(`${API_BASE_URL}/api/clientes`, cliente)
             .then(response => {
                 console.log('Cliente creado:', response.data);
                 onClienteCreado();

@@ -44,40 +44,40 @@ const Listadedietas = ({ theme, setTheme }) => {
 
   useEffect(() => {
     const fetchDietas = async () => {
-        try {
-            const response = await axios.get(`${API_BASE_URL}/api/dietas`);
-            console.log('Respuesta de dietas:', response.data); // <-- Agrega este log
-            if (Array.isArray(response.data)) {
-                setDietas(response.data);
-            } else {
-                console.error('La respuesta de dietas no es un array:', response.data);
-                setDietas([]); // Establecer un array vacío si la respuesta no es un array
-            }
-        } catch (error) {
-            console.error('Error fetching dietas:', error);
-            setDietas([]); // Establecer un array vacío en caso de error
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/dietas`);
+        console.log('Respuesta de dietas:', response.data); // Log para ver la respuesta
+        if (Array.isArray(response.data)) {
+          setDietas(response.data);
+        } else {
+          console.error('La respuesta de dietas no es un array:', response.data);
+          setDietas([]); // Asegura que dietas siempre sea un array
         }
+      } catch (error) {
+        console.error('Error fetching dietas:', error);
+        setDietas([]); // En caso de error, dietas será un array vacío
+      }
     };
 
     const fetchClientes = async () => {
-        try {
-            const response = await axios.get(`${API_BASE_URL}/api/clientes`);
-            console.log('Respuesta de clientes:', response.data); // <-- Agrega este log
-            if (Array.isArray(response.data)) {
-                setClientes(response.data);
-            } else {
-                console.error('La respuesta de clientes no es un array:', response.data);
-                setClientes([]); // Establecer un array vacío si la respuesta no es un array
-            }
-        } catch (error) {
-            console.error('Error fetching clientes:', error);
-            setClientes([]); // Establecer un array vacío en caso de error
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/clientes`);
+        console.log('Respuesta de clientes:', response.data); // <-- Agrega este log
+        if (Array.isArray(response.data)) {
+          setClientes(response.data);
+        } else {
+          console.error('La respuesta de clientes no es un array:', response.data);
+          setClientes([]); // Establecer un array vacío si la respuesta no es un array
         }
+      } catch (error) {
+        console.error('Error fetching clientes:', error);
+        setClientes([]); // Establecer un array vacío en caso de error
+      }
     };
 
     fetchDietas();
     fetchClientes();
-}, []);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,7 +93,6 @@ const Listadedietas = ({ theme, setTheme }) => {
   };
 
   const handleCustomObjetivoChange = (e) => {
-    console.log('Cambiando objetivo personalizado a:', e.target.value);
     setCustomObjetivo(e.target.value);
   };
 
@@ -101,9 +100,7 @@ const Listadedietas = ({ theme, setTheme }) => {
     e.preventDefault();
     try {
       const objetivoFinal = dieta.objetivo === 'Otro' ? customObjetivo : dieta.objetivo;
-      console.log('Enviando nueva dieta a la API:', { ...dieta, objetivo: objetivoFinal });
       const response = await axios.post(`${API_BASE_URL}/api/dietas`, { ...dieta, objetivo: objetivoFinal });
-      console.log('Respuesta de la API al crear dieta:', response.data);
       setDietas([...dietas, response.data]);
       setDieta({
         nombre: '',
@@ -121,13 +118,11 @@ const Listadedietas = ({ theme, setTheme }) => {
   };
 
   const handleEditDieta = (dietaId) => {
-    console.log('Redirigiendo para editar la dieta con ID:', dietaId);
     navigate(`/edit-dieta/${dietaId}`);
   };
 
   const handleDeleteDieta = async (dietaId) => {
     try {
-      console.log('Eliminando dieta con ID:', dietaId);
       await axios.delete(`${API_BASE_URL}/api/dietas/${dietaId}`);
       setDietas(dietas.filter((dieta) => dieta._id !== dietaId));
     } catch (error) {
@@ -135,30 +130,21 @@ const Listadedietas = ({ theme, setTheme }) => {
     }
   };
 
-  console.log('Estado actual de dietas:', dietas); // <-- Agrega este log
-
-  const filteredDietas = Array.isArray(dietas) 
-    ? dietas.filter((dieta) =>
-        dieta.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
-
-  console.log('Dietas filtradas:', filteredDietas);
+  const filteredDietas = dietas.filter((dieta) =>
+    dieta.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const openPopup = (comida = null) => {
-    console.log('Abriendo popup para comida:', comida);
     setComidaToEdit(comida);
     setIsPopupOpen(true); // Abre el popup
   };
 
   const closePopup = () => {
-    console.log('Cerrando popup');
     setIsPopupOpen(false); // Cierra el popup
     setComidaToEdit(null);
   };
 
   const refreshComidas = async () => {
-    console.log('Refrescando lista de comidas...');
     // Lógica para refrescar la lista de comidas después de crear o editar una
   };
 
