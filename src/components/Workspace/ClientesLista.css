@@ -505,7 +505,7 @@ body.light .clientes-table input[type="checkbox"]:checked::after {
 
 /* Modo Oscuro - Checkbox no seleccionado */
 body.dark .clientes-table input[type="checkbox"] {
-    background-color: var(--text-light); /* Fondo blanco */
+    background-color: #0f1331; /* Fondo blanco */
     border-color: var(--text-light); /* Borde blanco */
 }
 

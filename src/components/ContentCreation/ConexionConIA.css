@@ -187,11 +187,9 @@
   }
   
   button.light {
-    background-color: #ff4c4c;
   }
   
   button.light:hover {
-    background-color: #ff1a1a;
   }
   
   /* Mensajes de usuario y asistente en modo claro */
