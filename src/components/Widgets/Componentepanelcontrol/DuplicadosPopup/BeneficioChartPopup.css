@@ -1,0 +1,74 @@
+.panelcontrol-beneficio-popup {
+  background: #1c1c1e;
+  padding: 20px;
+  border-radius: 8px;
+  color: #FFFFFF;
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.panelcontrol-beneficio-popup h3 {
+  text-align: left;
+  margin-bottom: 20px;
+  color: rgb(12, 211, 151);
+  cursor: pointer;
+}
+
+.panelcontrol-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.panelcontrol-header {
+  display: flex;
+  align-items: center;
+  margin-left: 60px;
+  margin-top: 5px !important;
+  margin-bottom: 8px;
+}
+
+.panelcontrol-header .title-header {
+  display: flex;
+  margin-left: 10px;
+}
+
+.panelcontrol-beneficio-popup-chart-wrapper {
+  position: relative;
+  height: 300px; /* Ajusta la altura según sea necesario */
+}
+
+.panelcontrol-dropdown-grafico {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #FFF;
+  background-color: #444;
+  color: #FFF;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  width: 100px;
+}
+
+.year-navigation, .month-navigation, .week-navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.year-navigation button, .month-navigation button, .week-navigation button {
+  background-color: var(--button-bg);
+  color: #FFF;
+  border: none;
+  padding: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.year-navigation span, .month-navigation span, .week-navigation span {
+  font-size: 1.2em;
+  color: #FFF;
+}

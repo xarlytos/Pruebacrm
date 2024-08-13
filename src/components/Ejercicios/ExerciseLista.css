@@ -1,0 +1,300 @@
+.ejercicios {
+}
+
+.titulo {
+    margin-left: 20px;
+}
+
+.filtro {
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.actions input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 0;
+}
+
+.exercises-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 98vw;
+    border-radius: 15px;
+}
+
+.exercises-table th, .exercises-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.exercises-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.selected-exercise {
+    background-color: #d3d3d3;
+}
+
+.exercise-detalle-row td {
+    padding: 0;
+}
+
+.exercises-table th {
+    padding: 17px;
+    background-color: rgba(112, 111, 111, 0.24);
+    border-top: 0;
+    border-bottom: 0.5px solid black;
+    cursor: pointer;
+    border-left: 0;
+    border-right: 0;
+}
+
+.importar-ejercicios-label {
+    padding: 10px 15px;
+    background-color: var(--primary-light);
+    color: var(--button-text-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 10px;
+    border-style: dashed;
+}
+
+.importar-ejercicios-label:hover {
+    background-color: var(--primary-dark);
+}
+
+.importar-ejercicios-input {
+    display: none;
+}
+
+.exercise-detail-wrapper {
+    width: 100%;
+    max-width: 98vw;
+}
+
+.exercise-detail-grid {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    white-space: nowrap;
+}
+
+.exercise-detail-grid > div {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+    flex: 0 0 auto;
+    min-width: 250px;
+}
+
+.ejercicioButton {
+    position: absolute;
+    right: 230px;
+    top: 105px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-style: dashed;
+}
+
+.ejercicioButton.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    border-color: var(--primary-dark);
+}
+
+.ejercicioButton.light:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+.ejercicioButton.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    border-color: var(--primary-light);
+}
+
+.ejercicioButton.dark:hover {
+    background-color: var(--primary-light);
+    color: var(--text-dark);
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    margin-right: -10px;
+}
+
+.filters .left, .filters .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filters .left{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filters .left .toggle-button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    border-radius: 5px;
+    border-style: dashed;
+}
+
+.filters .left .toggle-button.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    border-color: var(--primary-dark);
+}
+
+.filters .left .toggle-button.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    border-color: var(--primary-light);
+}
+
+.filters .left .toggle-button.selected.light {
+    background-color: var(--primary-dark);
+    color: var(--button-text-light);
+}
+
+.filters .left .toggle-button.selected.dark {
+    background-color: var(--primary-light);
+    color: var(--button-text-dark);
+}
+
+.filters .left select, .filters .right input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border 0.3s ease;
+}
+
+.toggle-buttons {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+#todosEj {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: 0;
+}
+
+#propiosEj {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: 0;
+}
+
+.cabeza {
+ display: flex;
+ flex-direction: row;
+ align-items: flex-start;
+}
+
+.ejercicios h1{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+    margin-top: 8px;
+}
+
+.action-button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-style: dashed;
+}
+
+.action-button.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    border-color: var(--primary-dark);
+    border-style: dashed;
+    border-radius: 10px;
+}
+
+.action-button.light:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+.action-button.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    border-color: var(--primary-light);
+    border-style: dashed;
+    border-radius: 10px;
+}
+
+.action-button.dark:hover {
+    background-color: var(--primary-light);
+    color: var(--text-dark);
+}
+
+.exercises-table.light th,
+.exercises-table.light td {
+    color: var(--text-light);
+}
+
+.exercises-table.dark th,
+.exercises-table.dark td {
+    color: var(--text-dark);
+}
+
+.filters .left select,
+.filters .right input {
+    transition: border 0.3s ease;
+}
+
+.filters .left select.light,
+.filters .right input.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    border-color: var(--primary-dark);
+}
+
+.filters .left select.dark,
+.filters .right input.dark {
+    background-color: var(--background-dark);
+    color: #ffffff;
+    border-color: var(--primary-light);
+}
+
+.filters .left select:focus,
+.filters .right input:focus {
+    border-width: 2px;
+    outline: none;
+}

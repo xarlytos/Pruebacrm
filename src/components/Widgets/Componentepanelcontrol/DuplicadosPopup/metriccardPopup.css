@@ -1,0 +1,93 @@
+/* Estilos generales */
+.popup-metric-card {
+  padding: 10px;
+  border-radius: 5px;
+  flex: 1;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.3s, transform 0.3s;
+  min-width: 250px;
+}
+
+.popup-metric-card:hover {
+  transform: scale(1.05);
+}
+
+.popup-metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popup-metric-icon {
+  font-size: 24px;
+}
+
+.popup-metric-value {
+  font-size: 24px;
+  margin: 0;
+}
+
+.popup-metric-value-green {
+  color: var(--create-button-bg-light);
+}
+
+.popup-metric-description {
+  font-size: 14px;
+}
+
+.popup-metric-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.popup-metric-difference {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.difference-positive {
+  color: var(--success-color);
+}
+
+.difference-negative {
+  color: var(--error-color);
+}
+
+.difference-neutral {
+  color: var(--neutral-color);
+}
+
+.difference-icon {
+  margin-right: 4px;
+}
+
+/* Estilos para tema claro */
+.popup-metric-card.light {
+  background: #999;
+  color: var(--text-light);
+}
+
+.popup-metric-card.light .popup-metric-description {
+  color: var(--secondary-light);
+}
+
+/* Estilos para tema oscuro */
+.popup-metric-card.dark {
+  color: var(--text-dark);
+}
+
+.popup-metric-card.dark .popup-metric-description {
+  color: #a9a9a9;
+}
+
+.panelcontrol-metric-value-red{
+  color: rgba(216, 15, 15, 0.884);
+}

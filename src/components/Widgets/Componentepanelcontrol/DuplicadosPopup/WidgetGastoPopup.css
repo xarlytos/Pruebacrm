@@ -1,0 +1,262 @@
+/* Estilos generales */
+.popup-widget-gasto {
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid #4444443b;
+}
+
+.popup-gasto-title {
+  margin-bottom: 10px;
+  color: rgb(12, 211, 151);
+}
+
+.popup-widget-gasto .controls {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.popup-widget-gasto input[type="text"] {
+  padding: 5px;
+  border-radius: 4px;
+  width: 300px;
+  margin: 0;
+}
+
+.gasto-button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.popup-widget-gasto .dropdown {
+  position: relative;
+}
+
+.popup-widget-gasto .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 300px;
+  padding: 12px 16px;
+  z-index: 1;
+  border-radius: 5px;
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.popup-widget-gasto .dropdown-content form {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.popup-widget-gasto .dropdown-content form input {
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.popup-widget-gasto .dropdown-content form button {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-widget-gasto table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.popup-widget-gasto th,
+.popup-widget-gasto td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.popup-widget-gasto th {
+}
+
+.popup-widget-gasto tr:nth-child(even) {
+}
+
+.popup-widget-gasto tr:hover {
+}
+
+.popup-widget-gasto .options-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.popup-widget-gasto .options-menu {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 0;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.popup-widget-gasto .options-btn:hover .options-menu,
+.popup-widget-gasto .options-menu:hover {
+  display: block;
+}
+
+.popup-widget-gasto .dropdown-item {
+  display: block;
+  padding: 5px 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.popup-widget-gasto .dropdown-item:hover {
+}
+
+.popup-widget-gasto .dropdown-item input {
+  margin-right: 5px;
+}
+
+.theme-toggle-btn {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #444444;
+  margin-top: 20px;
+}
+
+/* Estilos para el tema light */
+.popup-widget-gasto.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.popup-widget-gasto.light input[type="text"] {
+  border: 1px solid var(--button-border-light);
+  background: var(--input-bg-light);
+  color: var(--input-text-light);
+}
+
+.gasto-button-container.light button {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+  border: 1px solid var(--button-border-light);
+}
+
+.popup-widget-gasto.light th {
+  background: var(--header-bg-light);
+}
+
+.popup-widget-gasto.light tr:hover {
+  background: var(--table-row-hover-bg-light);
+}
+
+.popup-widget-gasto.light .options-menu {
+  background: var(--dropdown-bg-light);
+  border: 1px solid var(--dropdown-border-light);
+}
+
+.popup-widget-gasto.light .dropdown-item {
+  color: var(--dropdown-text-light);
+}
+
+.popup-widget-gasto.light .dropdown-item:hover {
+  background: var(--dropdown-hover-bg-light);
+}
+
+.popup-widget-gasto.light .dropdown-content {
+  background: var(--dropdown-bg-light);
+  border: 1px solid var(--dropdown-border-light);
+}
+
+.popup-widget-gasto.light .dropdown-content form input {
+  background: var(--input-bg-light);
+  border: 1px solid var(--input-border-light);
+  color: var(--input-text-light);
+}
+
+.popup-widget-gasto.light .dropdown-content form button {
+  background: var(--create-button-bg-light);
+  color: var(--button-text-light);
+}
+
+.popup-widget-gasto.light .confirm-btn {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.theme-toggle-btn.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+/* Estilos para el tema dark */
+.popup-widget-gasto.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.popup-widget-gasto.dark input[type="text"] {
+  border: 1px solid var(--button-border-dark);
+  background: var(--input-bg-dark);
+  color: var(--input-text-dark);
+}
+
+.gasto-button-container.dark button {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border: 1px solid var(--button-border-dark);
+}
+
+.popup-widget-gasto.dark th {
+  background: var(--header-bg-dark);
+}
+
+.popup-widget-gasto.dark tr:hover {
+  background: var(--table-row-hover-bg-dark);
+}
+
+.popup-widget-gasto.dark .options-menu {
+  background: var(--dropdown-bg-dark);
+  border: 1px solid var(--dropdown-border-dark);
+}
+
+.popup-widget-gasto.dark .dropdown-item {
+  color: var(--dropdown-text-dark);
+}
+
+.popup-widget-gasto.dark .dropdown-item:hover {
+  background: var(--dropdown-hover-bg-dark);
+}
+
+.popup-widget-gasto.dark .dropdown-content {
+  background: var(--dropdown-bg-dark);
+  border: 1px solid var(--dropdown-border-dark);
+}
+
+.popup-widget-gasto.dark .dropdown-content form input {
+  background: var(--input-bg-dark);
+  border: 1px solid var(--input-border-dark);
+  color: var(--input-text-dark);
+}
+
+.popup-widget-gasto.dark .dropdown-content form button {
+  background: var(--create-button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.popup-widget-gasto.dark .confirm-btn {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.theme-toggle-btn.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}

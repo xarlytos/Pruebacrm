@@ -1,0 +1,126 @@
+/* src/components/facturas/modal-de-escaneo-de-facturas.css */
+.ModalDeEscaneoDeFacturas-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ModalDeEscaneoDeFacturas-content {
+  color: var(--text);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  height: 90%;
+  max-width: 1200px;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.ModalDeEscaneoDeFacturas-close-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.ModalDeEscaneoDeFacturas-close-btn:hover {
+  background-color: #e53935;
+}
+
+.scan-invoice-form {
+  max-width: 100%;
+  padding: 20px;
+  background-color: var(--background);
+  color: var(--text);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.scan-invoice-form h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.scan-invoice-form h2 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+}
+
+.scan-invoice-form input[type="file"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.scan-invoice-form table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.scan-invoice-form th,
+.scan-invoice-form td {
+  border: 1px solid #444;
+  padding: 8px;
+}
+
+.scan-invoice-form th {
+  background-color: var(--secondary);
+}
+
+.scan-invoice-form button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-right: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+.scan-invoice-form button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.scan-invoice-form button:last-of-type {
+  background-color: var(--button-bg-secondary);
+}
+
+.scan-invoice-form button:last-of-type:hover {
+  background-color: var(--button-hover-bg-secondary);
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: var(--secondary);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress {
+  height: 20px;
+  background-color: var(--button-bg);
+  width: 0%;
+}

@@ -1,0 +1,159 @@
+.main-widget {
+  width: 100% !important;
+  height: 90vh;
+}
+
+.pestaña-economia {
+  height: 100%;
+}
+
+.widget-background {
+  width: 100%;
+  background: var(--background);
+  color: var(--text);
+}
+
+.Ecolayout {
+  height: 1000px !important;
+}
+
+.react-grid-layout .Ecolayout {
+  height: 10px;
+}
+
+.react-grid-layout .Transaccioneslayout {
+  height: 1000px !important; 
+}
+
+.Transaccioneslayout {
+  padding-top: 10px;
+  width: 100% !important;
+  height: 100px !important;
+}
+
+.panelcontrol-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+}
+
+.cssTransforms.react-grid-item.react-resizable.react-resizable-hide.widget {
+  width: 10000px;
+}
+
+.widget-background {
+  background: var(--background);
+  padding: 20px;
+  padding-left: 0px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 10000px;
+  box-sizing: border-box;
+}
+
+.open-popup-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.widget {
+  background: var(--primary);
+  padding: 10px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  color: var(--text);
+  border-radius: 10px;
+}
+
+.widget .widget-drag-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  cursor: move;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px 10px 0 0;
+}
+
+.widget-remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.edit-mode-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.boton-popup-edit {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.widget-background h1 {
+  color: var(--text);
+  margin-left: 20px;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button {
+  background-color: var(--secondary);
+  color: var(--text);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.overviewChart-widget .panelcontrol-overview {
+  width: 99.99%;
+}
+
+.ingresosbeneficios-widget {
+  width: 99.99%;
+  height: 99.99%;
+}
+
+.NavBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.NavBtn .boton-popup-edit {
+  align-items: flex-end;
+  position: absolute;
+  right: 25px;
+}

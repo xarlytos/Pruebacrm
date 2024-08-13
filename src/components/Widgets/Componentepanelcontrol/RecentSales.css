@@ -1,0 +1,185 @@
+.panelcontrol-recent-sales {
+  padding: 20px;
+  background: var(--background);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.panelcontrol-recent-sales.detailed {
+  width: 100%;
+  height: auto;
+}
+
+.panelcontrol-recent-sales h3 {
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: rgb(12, 211, 151);
+}
+
+.panelcontrol-filter-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.panelcontrol-filter-input:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
+}
+
+.panelcontrol-filter-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.panelcontrol-filter-select {
+  padding: 10px;
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  width: 100%;
+}
+
+.panelcontrol-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 175px;
+}
+
+.panelcontrol-dropdown-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: var(--text);
+}
+
+.panelcontrol-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: var(--background);
+  color: var(--text);
+  min-width: 250px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.panelcontrol-dropdown:hover .panelcontrol-dropdown-content {
+  display: block;
+}
+
+.panelcontrol-dropdown-content label {
+  display: block;
+  margin-bottom: 5px;
+  color: #999;
+}
+
+.panelcontrol-dropdown-content button,
+.panelcontrol-dropdown-content select,
+.panelcontrol-dropdown-content input {
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--button-text);
+  padding: 10px 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.panelcontrol-dropdown-content button:hover,
+.panelcontrol-dropdown-content select:hover,
+.panelcontrol-dropdown-content input:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
+}
+
+.panelcontrol-filter-btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.panelcontrol-filter-btn:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
+}
+
+.panelcontrol-active-filters {
+  color: #0cd397;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.panelcontrol-sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text);
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.panelcontrol-sales-table th,
+.panelcontrol-sales-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.panelcontrol-sales-table tr {
+  border-bottom: 1px solid var(--button-border);
+}
+
+.panelcontrol-pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.panelcontrol-pagination button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  padding: 5px 5px;
+  padding-top: 0px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 25px;
+  margin-top: 10px;
+}
+
+
+
+.panelcontrol-pagination-info {
+  text-align: center;
+  color: var(--text);
+  padding: 10px 0;
+}
+
+.panelcontrol-filasseleccionadas {
+  color: var(--text);
+}
+
+.panelcontrol-recent-sales.detailed {
+  width: 90%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}

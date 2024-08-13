@@ -1,0 +1,125 @@
+/* AddEventForm.css */
+
+/* Estilos para el modal */
+.add-event-modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para el contenido del modal en modo claro */
+.add-event-modal-content.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+}
+
+/* Estilos para el contenido del modal en modo oscuro */
+.add-event-modal-content.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+}
+
+/* Estilos para el botón de cierre del modal */
+.add-event-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-event-modal-close:hover,
+.add-event-modal-close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Estilos para las etiquetas de los formularios */
+.add-event-modal-content form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Estilos para los campos de entrada y botones del formulario en modo claro */
+.add-event-modal-content.light form input,
+.add-event-modal-content.light form button,
+.add-event-modal-content.light form select,
+.add-event-modal-content.light form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilos para los campos de entrada y botones del formulario en modo oscuro */
+.add-event-modal-content.dark form input,
+.add-event-modal-content.dark form button,
+.add-event-modal-content.dark form select,
+.add-event-modal-content.dark form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #444;
+  color: #fff;
+}
+
+/* Estilos para el botón de envío del formulario */
+.add-event-modal-content form button {
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Estilos para el botón de envío del formulario en modo oscuro */
+.add-event-modal-content.dark form button {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.add-event-modal-content form button:hover {
+  background-color: var(--button-hover-bg);
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,403 @@
+/* Sidebar.css */
+.Sidebarcalendario-sidebar {
+  width: 500px;
+  padding: 20px;
+  background: var(--background-light);
+  border-right: 1px solid var(--secondary-light);
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  height: calc(100vh - 40px);
+  border-radius: 10px;
+}
+
+.sidebar-dark {
+  background: var(--background-dark);
+  border-right: 1px solid var(--secondary-dark);
+}
+
+.Sidebarcalendario-weekday-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.Sidebarcalendario-weekday-button {
+  background-color: var(--button-bg-light);
+  border: 1px solid var(--secondary-light);
+  border-radius: 4px;
+  color: var(--button-text-light);
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  flex: 1 1 48%;
+  margin-right: 2%;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.Sidebarcalendario-weekday-button.Sidebarcalendario-selected {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Sidebarcalendario-weekday-button:hover {
+  background-color: #e9ecef;
+  transform: scale(1.05);
+}
+
+.Sidebarcalendario-month-calendar {
+  margin-bottom: 20px;
+  animation: fadeIn 1s;
+}
+
+.Sidebarcalendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--secondary-light);
+  margin-bottom: 10px;
+}
+
+.sidebar-dark .Sidebarcalendario-header {
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+.Sidebarcalendario-header .Sidebarcalendario-col {
+  display: flex;
+  align-items: center;
+}
+
+.Sidebarcalendario-header .Sidebarcalendario-col-start,
+.Sidebarcalendario-header .Sidebarcalendario-col-end {
+  width: 50px;
+  justify-content: center;
+}
+
+.Sidebarcalendario-header .Sidebarcalendario-col-center {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.sidebar-dark .Sidebarcalendario-header .Sidebarcalendario-col-center {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-icon {
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+.sidebar-dark .Sidebarcalendario-icon {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-days {
+  display: flex;
+  border-bottom: 1px solid var(--secondary-light);
+  padding-bottom: 10px;
+}
+
+.sidebar-dark .Sidebarcalendario-days {
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+.Sidebarcalendario-days .Sidebarcalendario-col {
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.sidebar-dark .Sidebarcalendario-days .Sidebarcalendario-col {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-body .Sidebarcalendario-row {
+  display: flex;
+}
+
+.Sidebarcalendario-body .Sidebarcalendario-col {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-right: 1px solid var(--secondary-light);
+  border-bottom: 1px solid var(--secondary-light);
+  border-radius: 4px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.sidebar-dark .Sidebarcalendario-body .Sidebarcalendario-col {
+  border-right: 1px solid var(--secondary-dark);
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+.Sidebarcalendario-body .Sidebarcalendario-col.Sidebarcalendario-disabled {
+  background-color: #f8f9fa;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.sidebar-dark .Sidebarcalendario-body .Sidebarcalendario-col.Sidebarcalendario-disabled {
+  background-color: #555;
+  color: #999;
+}
+
+.Sidebarcalendario-body .Sidebarcalendario-col.Sidebarcalendario-selected {
+  background-color: var(--primary-light);
+  color: var(--text-dark);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-dark .Sidebarcalendario-body .Sidebarcalendario-col.Sidebarcalendario-selected {
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+}
+
+.Sidebarcalendario-event-filter {
+  margin-top: 20px;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.Sidebarcalendario-event-filter h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+.sidebar-dark .Sidebarcalendario-event-filter h3 {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-event-filter h3:hover {
+  color: #007bff;
+}
+
+.Sidebarcalendario-filter-group {
+  margin-bottom: 10px;
+}
+
+.Sidebarcalendario-event-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  transition: transform 0.3s;
+}
+
+.Sidebarcalendario-event-label:hover {
+  transform: translateX(10px);
+}
+
+.Sidebarcalendario-event-label input {
+  margin-right: 10px;
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.Sidebarcalendario-event-label input:hover {
+  transform: scale(1.3);
+  background-color: #e9ecef;
+}
+
+.Sidebarcalendario-event-label label {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+.sidebar-dark .Sidebarcalendario-event-label label {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-event-label label:hover {
+  color: #007bff;
+}
+
+.Sidebarcalendario-expand-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 5px;
+  transition: transform 0.3s;
+}
+
+.Sidebarcalendario-expand-btn:hover {
+  transform: scale(1.2);
+}
+
+.Sidebarcalendario-filter-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.Sidebarcalendario-filter-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.Sidebarcalendario-filter-fields input,
+.Sidebarcalendario-filter-fields textarea {
+  padding: 8px;
+  border: 1px solid var(--secondary-light);
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.sidebar-dark .Sidebarcalendario-filter-fields input,
+.sidebar-dark .Sidebarcalendario-filter-fields textarea {
+  border: 1px solid var(--secondary-dark);
+}
+
+.Sidebarcalendario-filter-fields input:focus,
+.Sidebarcalendario-filter-fields textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Sidebarcalendario-color-box {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 3px;
+  transition: transform 0.3s;
+}
+
+.Sidebarcalendario-color-box:hover {
+  transform: rotate(360deg);
+}
+
+.Sidebarcalendario-color-box.clase { background: #ff6347; }
+.Sidebarcalendario-color-box.cita { background: #ffa500; }
+.Sidebarcalendario-color-box.pago { background: #20b2aa; }
+.Sidebarcalendario-color-box.rutina { background: #9370db; }
+.Sidebarcalendario-color-box.libre { background: #3cb371; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.Sidebarcalendario-hours-container {
+  margin-top: 20px;
+}
+
+.Sidebarcalendario-hours-container h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--text-light);
+}
+
+.sidebar-dark .Sidebarcalendario-hours-container h3 {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-hour-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 5px;
+  border: 1px solid var(--secondary-light);
+  border-radius: 4px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sidebar-dark .Sidebarcalendario-hour-label {
+  border: 1px solid var(--secondary-dark);
+}
+
+.Sidebarcalendario-hour-label:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-dark .Sidebarcalendario-hour-label:hover {
+  background-color: #666;
+}
+
+.Sidebarcalendario-hour-label input {
+  margin-right: 10px;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.Sidebarcalendario-hour-label label {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.sidebar-dark .Sidebarcalendario-hour-label label {
+  color: var(--text-dark);
+}
+
+.Sidebarcalendario-custom-day-calendar {
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.sidebar-dark .Sidebarcalendario-custom-day-calendar {
+  background-color: #444;
+}
+
+.Sidebarcalendario-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--create-button-bg-light);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-top: 25px;
+}
+
+.sidebar-dark .Sidebarcalendario-dropdown-btn {
+  background-color: var(--create-button-bg-dark);
+}
+
+.Sidebarcalendario-dropdown-btn:hover {
+  background-color: #e9ecef;
+}
+
+.sidebar-dark .Sidebarcalendario-dropdown-btn:hover {
+  background-color: #666;
+}

@@ -1,0 +1,41 @@
+
+.bonos-container {
+    padding: 20px;
+  }
+  
+  .vender-bono-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .vender-bono-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .bonos-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .bonos-table th, .bonos-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .bonos-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .bonos-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .bonos-table tr:hover {
+    background-color: #ddd;
+  }
+  

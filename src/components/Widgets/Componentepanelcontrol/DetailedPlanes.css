@@ -1,0 +1,130 @@
+.detailed-planes-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.detailed-planes-overlay.light {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.detailed-planes-overlay.dark {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.detailed-planes {
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.detailed-planes.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.detailed-planes.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.detailed-planes .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.detailed-planes .close-btn.light {
+  color: var(--text-light);
+}
+
+.detailed-planes .close-btn.dark {
+  color: var(--text-dark);
+}
+
+.detailed-planes-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detailed-metrics-grid {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.detailed-metrics-grid.light {
+  background: #999;
+}
+
+.detailed-metrics-grid.dark {
+  background-color: var(--secondary-dark);
+}
+
+.metrics-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 0 10px;
+}
+
+.close-modal-btn {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+
+.close-modal-btn.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.close-modal-btn.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.close-modal-btn:hover {
+  background: #ff1c1c;
+}
+
+.theme-toggle-btn {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #444444;
+  margin-top: 20px;
+}
+
+.theme-toggle-btn.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.theme-toggle-btn.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}

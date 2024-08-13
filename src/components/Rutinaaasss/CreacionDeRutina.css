@@ -1,0 +1,302 @@
+.creacion-de-rutina-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.creacion-de-rutina-modal-content {
+  margin: 5% auto;
+  padding: 20px;
+  width: 60%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.creacion-de-rutina-modal-content.light {
+  background-color: var(--listaderutinas-card);
+  color: var(--listaderutinas-card-foreground);
+  border: 1px solid var(--listaderutinas-border);
+}
+
+.creacion-de-rutina-modal-content.dark {
+  background-color: var(--listaderutinas-card-dark);
+  color: var(--listaderutinas-card-foreground-dark);
+  border: 1px solid var(--listaderutinas-border-dark);
+}
+
+.creacion-de-rutina-close {
+  color: var(--listaderutinas-muted);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.creacion-de-rutina-close:hover,
+.creacion-de-rutina-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.creacion-de-rutina-modal h2 {
+  margin-top: 0;
+}
+
+.creacion-de-rutina-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.creacion-de-rutina-modal label {
+  margin-bottom: 10px;
+}
+
+.creacion-de-rutina-modal input[type="text"],
+.creacion-de-rutina-modal textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.creacion-de-rutina-modal input[type="text"].light,
+.creacion-de-rutina-modal textarea.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+  border: 1px solid #747474;
+}
+
+.creacion-de-rutina-modal input[type="text"].dark,
+.creacion-de-rutina-modal textarea.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--button-text-dark);
+}
+
+.creacion-de-rutina-modal button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.creacion-de-rutina-modal button[type="submit"].light {
+  background-color: var(--listaderutinas-primary);
+  color: var(--listaderutinas-primary-foreground);
+}
+
+.creacion-de-rutina-modal button[type="submit"].dark {
+  background-color: var(--listaderutinas-primary-dark);
+  color: var(--listaderutinas-primary-foreground-dark);
+}
+
+.creacion-de-rutina-modal button[type="button"].light {
+  background-color: var(--listaderutinas-secondary);
+  color: var(--listaderutinas-secondary-foreground);
+}
+
+.creacion-de-rutina-modal button[type="button"].dark {
+  background-color: var(--listaderutinas-secondary-dark);
+  color: var(--listaderutinas-secondary-foreground-dark);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid var(--listaderutinas-border);
+  padding: 8px;
+  text-align: left;
+}
+
+.table th.light, .table td.light {
+  background-color: var(--listaderutinas-secondary);
+  color: var(--listaderutinas-secondary-foreground);
+}
+
+.table th.dark, .table td.dark {
+  background-color: var(--listaderutinas-secondary-dark);
+  color: var(--listaderutinas-secondary-foreground-dark);
+}
+
+.tableCell {
+  position: relative;
+}
+
+.tableCell input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+
+.tableCell input.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+  border: 1px solid #747474;
+}
+
+.tableCell input.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--button-text-dark);
+}
+
+.addButtonCell.light {
+  background-color: var(--listaderutinas-secondary);
+  color: var(--listaderutinas-secondary-foreground);
+}
+
+.addButtonCell.dark {
+  background-color: var(--listaderutinas-secondary-dark);
+  color: var(--listaderutinas-secondary-foreground-dark);
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.suggestions.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.suggestions.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+.addButton {
+  background-color: #28a745;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #218838;
+}
+
+.addButtonCell {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.addButtonWrapperRow {
+  display: flex;
+  justify-content: center;
+}
+
+.addButtonRow.light {
+  background-color: var(--listaderutinas-secondary);
+  color: var(--listaderutinas-secondary-foreground);
+}
+
+.addButtonRow.dark {
+  background-color: var(--listaderutinas-secondary-dark);
+  color: var(--listaderutinas-secondary-foreground-dark);
+}
+
+.addButtonRow:hover {
+  background-color: #0069d9;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.addRoutineButton.light {
+  background-color: var(--listaderutinas-primary);
+  color: var(--listaderutinas-primary-foreground);
+}
+
+.addRoutineButton.dark {
+  background-color: var(--listaderutinas-primary-dark);
+  color: var(--listaderutinas-primary-foreground-dark);
+}
+
+.preview-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.preview-modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.preview-modal-content.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.preview-modal-content.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.preview-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.preview-close:hover,
+.preview-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.preview-modal h2 {
+  margin-top: 0;
+}

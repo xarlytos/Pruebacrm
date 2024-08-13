@@ -1,0 +1,604 @@
+:root {
+    --background-light: #fafafa;
+    --background-dark: #333333;
+    --text-light: #000000;
+    --text-dark: #ffffff;
+    --primary-light: #007bff;
+    --primary-dark: #0056b3;
+    --secondary-light: #ddd;
+    --secondary-dark: #555;
+    --button-background-light: var(--background-light);
+    --button-background-dark: var(--background-dark);
+    --button-text-light: var(--text-light);
+    --button-text-dark: var(--text-dark);
+}
+
+body.light, .clientes-lista.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+}
+
+body.dark, .clientes-lista.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+body, .clientes-lista {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Corregido - Color de los títulos de las tablas */
+body.light .clientes-table th, .clientes-lista.light .clientes-table th {
+    color: var(--text-light); /* Ahora los títulos son oscuros en modo claro */
+}
+
+body.dark .clientes-table th, .clientes-lista.dark .clientes-table th {
+    color: var(--text-dark); /* Ahora los títulos son claros en modo oscuro */
+}
+
+.resizable-componentedesplegable-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    transition: height 0.3s ease-in-out;
+}
+
+.resize-handle {
+    width: 100%;
+    height: 10px;
+    background-color: #888;
+    cursor: row-resize;
+    position: absolute;
+    bottom: 0;
+    z-index: 99999;
+}
+
+.clientes-lista-contenido {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.fixed-button {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+body.dark .fixed-button {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+}
+
+.fixed-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.draggable-button-wrapper {
+    position: absolute; /* Permite arrastrar el botón */
+}
+
+.draggable-handle {
+    cursor: move;
+    width: 100%;
+    height: 100%;
+}
+
+.clientes-lista-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    flex-direction: row-reverse;
+}
+
+.tituloClientes {
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    animation: fadeInDown 0.8s ease-in-out;
+}
+
+.theme-toggle-btn {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    padding: 10px 15px;
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13.33333px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+body.dark .theme-toggle-btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.filtro {
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+}
+
+body.dark .filtro {
+    border: 1px solid var(--secondary-dark);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dropdown {
+    margin-left: 10px;
+}
+
+.dropdown.open .Dropdown-control {
+    border-color: var(--primary-dark);
+}
+
+.actions input {
+    padding: 10px;
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+    margin-right: 0;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.actions input.light {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    border: 1px solid #747474;
+}
+
+.actions input.dark {
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    border: 1px solid var(--button-text-light);
+}
+
+body.dark .actions input {
+    border: 1px solid var(--secondary-dark);
+}
+
+body.dark .actions button, body.dark .importar-clientes-label {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+}
+
+.actions button:hover, .importar-clientes-label:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+}
+
+.clientes-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    border: 1px solid var(--secondary-light);
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+body.dark .clientes-table {
+    border: 1px solid var(--secondary-dark);
+}
+
+.clientes-table th, .clientes-table td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #0d0959;
+    transition: background-color 0.3s ease;
+}
+
+body.dark .clientes-table th, body.dark .clientes-table td {
+    border: 1px solid var(--secondary-dark);
+}
+
+.clientes-table th {
+    color: var(--text-dark); /* Texto oscuro en modo claro */
+    cursor: pointer;
+}
+
+body.dark .clientes-table th {
+    color: var (--text-light); /* Texto claro en modo oscuro */
+}
+
+.clientes-table tr:nth-child(even) {
+    background-color: #d5d8e9;
+}
+
+body.dark .clientes-table tr:nth-child(even) {
+    background-color: #666666;
+}
+
+.clientes-table tr:hover {
+    background-color: #cce5ff; /* Suavizar el color del hover */
+}
+
+body.dark .clientes-table tr:hover {
+    background-color: #444444; /* Suavizar el color del hover en modo oscuro */
+}
+
+.clientes-table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.clientes-table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.clientes-table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.clientes-table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.selected-client {
+    background-color: #cce5ff; /* Suavizar el color de selección */
+    color: var(--text-dark);
+}
+
+body.dark .selected-client {
+    background-color: #444444; /* Suavizar el color de selección en modo oscuro */
+    color: var(--text-light);
+}
+
+.cliente-detalle-row td {
+    padding: 0;
+}
+
+.importar-clientes-label {
+    padding: 10px 15px;
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+body.dark .importar-clientes-label {
+    background-color: var(--button-background-dark);
+    color: var (--button-text-dark);
+}
+
+.importar-clientes-label:hover {
+    background-color: var (--primary-dark);
+}
+
+.actions {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.actions input, .importar-clientes-input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+}
+
+body.dark .actions input, body.dark .importar-clientes-input {
+    border: 1px solid var(--secondary-dark);
+}
+
+body.dark .actions button, body.dark .importar-clientes-label {
+    background-color: var (--button-background-dark);
+    color: var (--button-text-dark);
+}
+
+.actions button:hover, .importar-clientes-label:hover {
+    background-color: var (--primary-dark);
+    color: var (--text-dark);
+}
+
+.subtituloClientes {
+    margin-left: 50px;
+}
+
+.importar-clientes-label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.importar-clientes-input {
+    display: none;
+}
+
+.client-detail-grid > div {
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+    padding: 15px;
+    background-color: var(--background-light);
+    flex: 0 0 auto;
+    min-width: 250px;
+}
+
+.clientes-lista.dark .client-detail-grid > div {
+    border: 1px solid var(--secondary-dark);
+    background-color: var (--background-dark);
+    color: var (--text-light);
+}
+
+.tituloClientes {
+    margin-left: 48px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.filtro-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.filtro-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var (--background-light);
+    border: 1px solid var (--secondary-light);
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    width: 300px;
+}
+
+body.dark .filtro-dropdown {
+    background-color: var (--background-dark);
+    border: 1px solid var (--secondary-dark);
+}
+
+.filtro-dropdown-item {
+    margin-bottom: 10px;
+}
+
+.filtro-dropdown-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.filtro-dropdown-item input {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid var (--secondary-light);
+    border-radius: 5px;
+}
+
+body.dark .filtro-dropdown-item input {
+    border: 1px solid var (--secondary-dark);
+}
+
+.applied-filters {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.filter-tag {
+    background-color: var (--secondary-light);
+    color: var (--text-light);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+body.dark .filter-tag {
+    background-color: var (--secondary-dark);
+    color: var (--text-dark);
+}
+
+.filter-tag svg {
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Checkbox styles */
+.clientes-table input[type="checkbox"] {
+    appearance: none;
+    border: 1px solid; /* Borde general */
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    margin-right: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Modo Claro - Checkbox no seleccionado */
+body.light .clientes-table input[type="checkbox"] {
+    background-color: var(--text-dark); /* Fondo negro */
+    border-color: var(--text-dark); /* Borde negro */
+}
+
+/* Modo Claro - Checkbox seleccionado */
+body.light .clientes-table input[type="checkbox"]:checked {
+    background-color: var(--text-light); /* Fondo blanco */
+    border-color: var(--text-light); /* Mantiene el borde blanco */
+}
+
+body.light .clientes-table input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dark); /* Check negro */
+    font-size: 16px;
+}
+
+/* Modo Oscuro - Checkbox no seleccionado */
+body.dark .clientes-table input[type="checkbox"] {
+    background-color: var(--text-light); /* Fondo blanco */
+    border-color: var(--text-light); /* Borde blanco */
+}
+
+/* Modo Oscuro - Checkbox seleccionado */
+body.dark .clientes-table input[type="checkbox"]:checked {
+    background-color: var(--text-dark); /* Fondo negro */
+    border-color: var(--text-dark); /* Mantiene el borde negro */
+}
+
+body.dark .clientes-table input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light); /* Check blanco */
+    font-size: 16px;
+}
+
+/* Estilos específicos para los botones */
+button.cliente-action-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light); /* Agregar borde dashed */
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Agregar transiciones para el borde */
+}
+
+button.cliente-action-btn.dark {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark); /* Agregar borde dashed */
+}
+
+button.cliente-action-btn:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+    border-color: var(--text-dark); /* Cambiar el color del borde al hacer hover */
+}
+
+/* Estilos específicos para el botón súper original */
+button.boton-super-original {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light); /* Agregar borde dashed */
+    border-radius: 10px; /* Un borde más redondeado */
+    padding: 15px 20px; /* Un relleno más grande */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Agregar transiciones para el borde */
+    font-weight: bold; /* Hacemos el texto en negrita */
+}
+
+button.boton-super-original.dark {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark); /* Agregar borde dashed */
+}
+
+button.boton-super-original:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+    border-color: var(--text-dark); /* Cambiar el color del borde al hacer hover */
+    transform: scale(1.05); /* Aumentamos el tamaño del botón al pasar el ratón por encima */
+}
+
+/* Estilos específicos para el label importar-clientes-label */
+.importar-clientes-label {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light); /* Agregar borde dashed */
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Agregar transiciones para el borde */
+}
+
+.importar-clientes-label.dark {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark); /* Agregar borde dashed */
+}
+
+.importar-clientes-label:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+    border-color: var(--text-dark); /* Cambiar el color del borde al hacer hover */
+}

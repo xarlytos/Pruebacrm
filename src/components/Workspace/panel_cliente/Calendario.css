@@ -1,0 +1,102 @@
+.calendario-section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #db4343;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.calendario-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    box-sizing: border-box;
+    padding: 10px;
+    color: black;
+
+}
+
+.react-calendar {
+    width: 100%;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+    color: black;
+
+}
+
+.react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.react-calendar__navigation button {
+    min-width: 44px;
+    background: none;
+    border: none;
+    color: #6f48eb;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.react-calendar__navigation button:disabled {
+    background-color: black;
+}
+
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    display: inline-block;
+    width: 14.2857142857%;
+    padding: 10px 0;
+}
+
+.react-calendar__month-view__days__day {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: black;
+
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: black;
+}
+
+.react-calendar__tile {
+    max-width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.react-calendar__tile:disabled {
+    background-color: #f0f0f0;
+}
+
+.react-calendar__tile--now {
+    background: #6f48eb33;
+    border-radius: 50%;
+}
+
+.react-calendar__tile--active {
+    background: #6f48eb;
+    color: white;
+    border-radius: 50%;
+}
+
+.react-calendar__tile--now.react-calendar__tile--active {
+    background: #6f48eb;
+    color: white;
+}

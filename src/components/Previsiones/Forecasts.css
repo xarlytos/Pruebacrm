@@ -1,0 +1,182 @@
+/*:root {
+    --color-background: #425282;
+    --color-light: #425282;
+    --color-medium: #F3D7CA;
+    --color-dark: #E6A4B4;
+    --color-text: #333;
+    --color-button: var(--color-dark);
+    --color-button-hover: #D98B9C;
+  }
+  
+  body {
+    background-color: var(--color-background);
+  }
+  
+  .Forecast-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--color-light);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
+  
+  .Forecast-button-group,
+  .Forecast-view-controls,
+  .Forecast-week-controls,
+  .Forecast-month-controls,
+  .Forecast-year-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .Forecast-button-group button,
+  .Forecast-view-controls button,
+  .Forecast-week-controls button,
+  .Forecast-month-controls button,
+  .Forecast-year-controls button,
+  .Forecast-custom-button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: var(--color-button);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .Forecast-custom-button:hover {
+    background-color: var(--color-button-hover);
+  }
+  
+  .Forecast-custom-select {
+    padding: 10px;
+    border: 1px solid var(--color-medium);
+    border-radius: 4px;
+    margin-top: 10px;
+    width: 100%;
+    background-color: var(--color-light);
+  }
+  
+  .Forecast-main-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Forecast-chart-container {
+    margin-top: 20px;
+    height: 400px;
+    max-height: 400px; /* Limit the height */
+  /*  overflow: hidden;
+    background-color: var(--color-light);
+  }
+  
+  .Forecast-income-summary {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .Forecast-income-summary div {
+    width: 45%;
+  }
+  
+  .Forecast-income-summary h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .Forecast-income-summary p {
+    font-size: 1.5em;
+    margin: 5px 0;
+  }
+  
+  .Forecast-positive {
+    color: green;
+  }
+  
+  .Forecast-negative {
+    color: red;
+  }
+  
+  #transactions {
+    margin-top: 20px;
+  }
+  
+  .Forecast-account, .Forecast-transaction, .Forecast-no-transactions {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: var(--color-light);
+    border: 1px solid var(--color-medium);
+    border-radius: 4px;
+  }
+  
+  .Forecast-title {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--color-text);
+  }
+  
+  .Forecast-switch-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  nav {
+    background-color: var(--color-dark);
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  nav a, .dropbtn {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  nav a:hover, .dropbtn:hover {
+    text-decoration: underline;
+  }
+  
+  .Forecast-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .Forecast-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-light);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .Forecast-dropdown-content a {
+    color: var(--color-text);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .Forecast-dropdown-content a:hover {
+    background-color: var(--color-medium);
+  }
+  
+  .Forecast-dropdown .show {
+    display: block;
+  }
+  
+  .Forecast-arrow {
+    margin-left: 5px;
+  }
+  */

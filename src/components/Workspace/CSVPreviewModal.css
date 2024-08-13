@@ -1,0 +1,119 @@
+/* src/components/CSVPreviewModal.css */
+:root {
+    --modal-bg-light: #fefefe; /* Fondo claro */
+    --modal-bg-dark: #2d2d2d; /* Fondo gris oscuro */
+    --modal-text-light: #000000; /* Texto en modo claro */
+    --modal-text-dark: #ffffff; /* Texto en modo oscuro */
+    --close-button-light: #aaa; /* Botón de cierre en modo claro */
+    --close-button-dark: #aaa; /* Botón de cierre en modo oscuro */
+    --close-button-hover-light: #000000; /* Botón de cierre al pasar el ratón en modo claro */
+    --close-button-hover-dark: #ffffff; /* Botón de cierre al pasar el ratón en modo oscuro */
+    --table-border-light: #ddd; /* Borde de la tabla en modo claro */
+    --table-border-dark: #ffffff; /* Borde de la tabla en modo oscuro */
+    --input-bg-light: #ffffff; /* Fondo del input en modo claro */
+    --input-bg-dark: #1e1e1e; /* Fondo del input en modo oscuro */
+    --input-text-light: #000000; /* Texto del input en modo claro */
+    --input-text-dark: #ffffff; /* Texto del input en modo oscuro */
+    --input-border-light: #ccc; /* Borde del input en modo claro */
+    --input-border-dark: #ffffff; /* Borde del input en modo oscuro */
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    border: none;
+}
+
+body.light .modal-content {
+    background-color: var(--modal-bg-light);
+    color: var(--modal-text-light);
+}
+
+body.dark .modal-content {
+    background-color: var(--modal-bg-dark);
+    color: var(--modal-text-dark);
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+body.light .close {
+    color: var(--close-button-light);
+}
+
+body.dark .close {
+    color: var(--close-button-dark);
+}
+
+body.light .close:hover,
+body.light .close:focus {
+    color: var(--close-button-hover-light);
+    text-decoration: none;
+}
+
+body.dark .close:hover,
+body.dark .close:focus {
+    color: var(--close-button-hover-dark);
+    text-decoration: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px 12px;
+    border: 1px solid;
+}
+
+body.light th, body.light td {
+    border-color: var(--table-border-light);
+}
+
+body.dark th, body.dark td {
+    border-color: var(--table-border-dark);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+body.light input[type="text"] {
+    background-color: var(--input-bg-light);
+    color: var(--input-text-light);
+    border-color: var(--input-border-light);
+}
+
+body.dark input[type="text"] {
+    background-color: var(--input-bg-dark);
+    color: var(--input-text-dark);
+    border-color: var(--input-border-dark);
+}

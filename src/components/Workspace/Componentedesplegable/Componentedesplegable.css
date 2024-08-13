@@ -1,0 +1,84 @@
+/* src/Componentedesplegable.css */
+.draggable-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.componentedesplegable {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.draggable-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #333;
+    cursor: move;
+    padding: 10px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
+    cursor: move;
+}
+
+.close-button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.close-button:hover {
+    background-color: #cc0000;
+}
+
+.tablinks {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin: 0 5px;
+}
+
+.tablinks.active {
+    background-color: #333;
+    font-weight: bold;
+}
+
+.draggable-handle {
+    cursor: move;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+}

@@ -1,0 +1,63 @@
+/* src/components/RoutineTimeline.css */
+.timeline-container {
+    padding: 20px;
+  }
+  
+  .timeline {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .timeline-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    min-width: 100px;
+  }
+  
+  .timeline-bar-date {
+    font-size: 0.8em;
+    color: #333;
+  }
+  
+  .timeline-bar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .timeline-bar-name {
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
+  .timeline-bar-intensity {
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  /* Colores de intensidad (puedes ajustarlos según sea necesario) */
+  .hyp {
+    background-color: #4CAF50;
+  }
+  
+  .stc {
+    background-color: #2196F3;
+  }
+  
+  .str {
+    background-color: #FFC107;
+  }
+  
+  .max {
+    background-color: #F44336;
+  }
+  
+  .pwr {
+    background-color: #9C27B0;
+  }
+  

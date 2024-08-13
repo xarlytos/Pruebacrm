@@ -1,0 +1,258 @@
+.widget-previsiones {
+  padding: 20px;
+  background: var(--background);
+  border-radius: 8px;
+  color: var(--text);
+}
+
+.widget-previsiones h2 {
+  color: rgb(12, 211, 151);
+  cursor: pointer;
+}
+
+.widget-previsiones .controls {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-top: 13px;
+  margin-bottom: 25px;
+}
+
+.widget-previsiones input[type="text"] {
+  padding: 5px;
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  width: 300px !important;
+  margin: 0;
+}
+
+.ingreso-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.ingreso-button-container button {
+  padding: 8px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+}
+
+.ingreso-button-container button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.widget-previsiones .dropdown {
+  position: relative;
+}
+
+.widget-previsiones .dropdown-toggle {
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  padding: 5px;
+  color: var(--button-text);
+  cursor: pointer;
+}
+
+.widget-previsiones .dropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  padding: 10px;
+  border-radius: 4px;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.widget-previsiones .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.widget-previsiones .Prevdropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  width: 290px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  height: 304px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.widget-previsiones .Prevdropdown-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-previsiones .Prevdropdown-content form input {
+  margin: 5px 0;
+  padding: 8px;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  color: var(--button-text);
+}
+
+.widget-previsiones .Prevdropdown-content form button {
+  padding: 10px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--button-border);
+}
+
+.widget-previsiones .Prevdropdown-content form button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.widget-previsiones table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.widget-previsiones th,
+.widget-previsiones td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--button-border);
+}
+
+.widget-previsiones th {
+  background: var(--button-bg);
+}
+
+.widget-previsiones tr:nth-child(even) {
+  background: var(--button-bg);
+}
+
+.widget-previsiones tr:hover {
+  background: var(--button-hover-bg);
+}
+
+.widget-previsiones .options-btn {
+  background: none;
+  border: none;
+  color: var(--button-text);
+  cursor: pointer;
+  position: relative;
+}
+
+.widget-previsiones .options-menu {
+  display: none;
+  position: absolute;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  top: 20px;
+  right: 0;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.widget-previsiones .options-btn:hover .options-menu,
+.widget-previsiones .options-menu:hover {
+  display: block;
+}
+
+.widget-previsiones .dropdown-item {
+  display: block;
+  padding: 5px 10px;
+  color: var(--button-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.widget-previsiones .dropdown-item:hover {
+  background: var(--button-hover-bg);
+}
+
+.Prevprevisiones-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  padding-top: 25px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 4px;
+  border: none;
+}
+
+.Prevfilter-field {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.Prevfilter-field label {
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.Prevfilter-field input {
+  padding: 5px;
+  background: var(--button-bg);
+  border-radius: 4px;
+  color: var(--button-text);
+  width: 140px;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+}
+
+.Prevfilter-field button {
+  padding: 3px;
+  background: var(--button-bg);
+  border: none;
+  border-radius: 4px;
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+}
+
+.Prevfilter-field button.active {
+  background: var(--button-hover-bg);
+}
+
+.Prevdropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  padding: 10px;
+  border-radius: 4px;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.Prevdropdown:hover .Prevdropdown-menu {
+  display: block;
+}
+
+.Prevdropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.Prevdropdown-item input {
+  margin-right: 10px;
+  color: var(--button-text);
+}

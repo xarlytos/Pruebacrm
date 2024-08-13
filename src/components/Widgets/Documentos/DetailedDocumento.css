@@ -1,0 +1,123 @@
+/* DetailedDocumento.css */
+.detailed-documento-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.detailed-documento-content {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.detailed-documento-content.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.detailed-documento-content.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.close-modal-btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+
+.close-modal-btn:hover {
+  background: var(--button-hover-bg);
+}
+
+.program-alarm-btn,
+.set-alarm-btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.close-alarm-popup-btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding-right: 9px;
+  padding-left: 8px;
+  padding-top: 0px;
+  padding-bottom: 1px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.close-modal-btn:hover,
+.program-alarm-btn:hover,
+.close-alarm-popup-btn:hover,
+.set-alarm-btn:hover {
+  background: var(--button-hover-bg);
+}
+
+.program-alarm-btn {
+  align-self: center;
+  width: 500px;
+  margin-top: 50px;
+}
+
+.alarm-popup {
+  position: fixed;
+  top: 110px;
+  right: 40%;
+  width: 300px;
+  background: var(--background);
+  border: 1px solid var(--button-border);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  color: var(--text);
+}
+
+.alarm-popup h3 {
+  margin-top: 0;
+}
+
+.alarm-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alarm-popup li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--button-border);
+}
+
+.alarm-popup li:last-child {
+  border-bottom: none;
+}

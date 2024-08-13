@@ -1,0 +1,167 @@
+/* Ajustes.css */
+
+/* Estilos generales para ambos modos */
+.ajustes-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ajustes-container h1 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2em;
+  padding-bottom: 10px;
+}
+
+.ajustes-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ajustes-section h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  padding-bottom: 5px;
+}
+
+.ajustes-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.ajustes-section input,
+.ajustes-section select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 1em;
+}
+
+.ajustes-section input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.profile-photo-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+.profile-photo-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.change-photo-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile-details input {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Botón Guardar */
+.save-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.save-button-container {
+  text-align: center;
+}
+
+/* Estilos específicos para el modo claro */
+body.light .ajustes-container {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+body.light .ajustes-section {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+}
+
+body.light .ajustes-section h2 {
+  color: #007bff;
+}
+
+body.light .change-photo-button {
+  background-color: #007bff;
+  color: white;
+}
+
+body.light .save-button {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Estilos específicos para el modo oscuro */
+body.dark .ajustes-container {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark .ajustes-section {
+  background-color: #1e1e1e;
+  border: 1px solid #555;
+}
+
+body.dark .ajustes-section h2 {
+  color: #00aaff;
+}
+
+body.dark .ajustes-section input,
+body.dark .ajustes-section select {
+  background-color: #2e2e2e; /* Fondo de los inputs y selects */
+  color: #ffffff; /* Color del texto en los inputs y selects */
+  border: 1px solid #555; /* Borde de los inputs y selects */
+}
+
+.photo-upload-input {
+  display: none; /* Oculta el input de tipo file */
+}
+
+body.dark .change-photo-button {
+  background-color: #00aaff;
+  color: white;
+}
+
+body.dark .save-button {
+  background-color: #00aaff;
+  color: white;
+}

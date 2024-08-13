@@ -1,0 +1,110 @@
+.cc-client-filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.cc-filter-button {
+    background-color: var(--primary-light);
+    color: var(--text-dark);
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.cc-filter-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.cc-cliente-dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: var(--background-light);
+    min-width: 200px;
+    max-height: 300px; /* Limitar la altura máxima */
+    overflow-y: auto; /* Agregar desplazamiento vertical */
+    overflow-x: hidden; /* Ocultar desplazamiento horizontal */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 12px 16px;
+    transition: background-color 0.3s;
+}
+
+.cc-cliente-dropdown-content.light {
+    background-color: var(--background-light);
+}
+
+.cc-cliente-dropdown-content.dark {
+    background-color: var(--background-dark);
+}
+
+.cc-client-filter-item {
+    margin-bottom: 10px;
+}
+
+.cc-client-filter-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.cc-client-filter-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--secondary-light);
+    border-radius: 4px;
+    background-color: var(--background-light);
+    color: var(--text-light);
+    transition: border-color 0.3s;
+}
+
+.cc-client-filter-input.dark {
+    border-color: var(--secondary-dark);
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+.cc-client-filter-input:focus {
+    border-color: var(--primary-light);
+}
+
+.cc-client-filter-input.dark:focus {
+    border-color: var(--primary-dark);
+}
+
+.cc-apply-filters-button {
+    width: 100%;
+    background-color: var(--primary-light);
+    color: var(--text-dark);
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.cc-apply-filters-button:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Estilizar la barra de desplazamiento vertical */
+.cc-cliente-dropdown-content::-webkit-scrollbar {
+    width: 12px;
+}
+
+
+.cc-cliente-dropdown-content::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-light);
+    border-radius: 6px;
+    border: 3px solid var(--background-light);
+}
+
+.cc-cliente-dropdown-content.dark::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-dark);
+    border: 3px solid var(--background-dark);
+}
+
+.cc-cliente-dropdown-content::-webkit-scrollbar-track {
+    background-color: transparent;
+}

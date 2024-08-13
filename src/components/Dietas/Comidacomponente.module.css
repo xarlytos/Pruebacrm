@@ -1,0 +1,135 @@
+/* src/components/Dietas/Comidacomponente.module.css */
+
+.comidaItem {
+    background-color: #E0F7FA; /* Ligero cambio para mejorar la visibilidad */
+    border: 1px solid #345A66; /* Dark slate gray */
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .comidaItem h4 {
+    margin: 0;
+    font-size: 1.25em;
+    color: #12313D; /* Gunmetal */
+  }
+  
+  .comidaItem p {
+    margin: 8px 0;
+    font-size: 1em;
+    color: #12313D; /* Gunmetal */
+  }
+  
+  .macroInfo {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  
+  .macroInfo span {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .topButtons {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+  
+  .viewButton {
+    background-color: #508991; /* Blue (Munsell) */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .viewButton:hover {
+    background-color: #345A66; /* Dark slate gray */
+  }
+  
+  .deleteButton {
+    background-color: #ff4b4b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .deleteButton:hover {
+    background-color: #e63939;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  
+  .editButton, .addOptionsButton {
+    background-color: #09BC8A; /* Mint */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .editButton:hover, .addOptionsButton:hover {
+    background-color: #00897B; /* Similar a Mint pero más oscuro */
+  }
+  
+  button {
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .comidasContainer {
+    margin-top: 16px;
+  }
+  
+  button.bg-blue-500 {
+    background-color: #75DDDD; /* Tiffany Blue */
+  }
+  
+  button.bg-blue-500:hover {
+    background-color: #508991; /* Blue (Munsell) */
+  }
+  
+  button.bg-blue-500:active {
+    background-color: #345A66; /* Dark slate gray */
+  }
+  
+  button.bg-blue-500:focus {
+    box-shadow: 0 0 0 3px rgba(117, 221, 221, 0.5); /* Tiffany Blue */
+  }
+  
+  button.bg-blue-500:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:active {
+    transform: translateY(2px);
+  }
+  
+  .donutContainer {
+    width: 200px;
+    height: 200px;
+  }
+  

@@ -1,0 +1,155 @@
+/* Contenedor principal de la tarjeta */
+.card {
+    background: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Título de la tarjeta */
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+/* Contenedor para macros */
+.macrosContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de las barras */
+.barsContainer {
+    flex: 1;
+    margin-right: 20px;
+}
+
+/* Cada barra de macros */
+.barChart {
+    margin-bottom: 10px;
+}
+
+/* Etiqueta de cada barra */
+.barLabel {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-color);
+}
+
+/* Fondo de la barra */
+.barBackground {
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    height: 24px;
+    width: 100%;
+}
+
+/* Relleno de la barra */
+.barFill {
+    height: 100%;
+    border-radius: 4px;
+    background-color: #4CAF50; /* Color de relleno de la barra */
+}
+
+/* Valor de la barra (gramos) */
+.barValue {
+    position: absolute;
+    right: 10px; /* Posicionamos a la derecha */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 1; /* Asegura que el valor esté sobre la barra */
+}
+
+/* Contenedor de donut */
+.donutContainer {
+    flex: 1;
+    max-width: 150px;
+}
+
+/* Botón de editar macros */
+.editButton {
+    background: #007bff; /* Azul para el botón de Editar Macros */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Hover en el botón de editar macros */
+.editButton:hover {
+    background: #0056b3; /* Azul más oscuro en el hover */
+}
+
+/* Botón de agregar comida */
+.addButton {
+    background: #4CAF50; /* Verde para el botón de agregar */
+    color: #fff;
+    font-size: 20px;
+    padding: 12px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Forma circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease; /* Suavizar la transición */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
+
+/* Hover en el botón de agregar comida */
+.addButton:hover {
+    background: #45a049; /* Verde más oscuro en el hover */
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño en hover */
+}
+
+/* Contenedor de comidas */
+.comidasContainer {
+    margin-top: 20px;
+}
+
+/* Variables para tema claro y oscuro */
+:root {
+    --bg-color: #fff;
+    --text-color: #333;
+}
+
+.dark {
+    --bg-color: #1c1c1c; /* Fondo oscuro */
+    --text-color: #fff; /* Texto blanco en modo oscuro */
+}
+
+/* Aplicar las variables a los estilos relevantes */
+.dark .card {
+    background: var(--bg-color);
+}
+
+.dark .title {
+    color: var(--text-color);
+}
+
+.dark .barLabel {
+    color: var(--text-color);
+}
+
+.dark .barBackground {
+    background: #333;
+}
+
+.dark .barValue {
+    color: #ddd;
+}

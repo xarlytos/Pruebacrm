@@ -1,0 +1,44 @@
+.large-modal {
+    width: 90%;
+    height: 90%;
+  }
+  
+  .grapesjs-container {
+    height: 100%;
+  }
+  
+  .modal {
+    max-width: 90%;
+    max-height: 90%;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .button-group button {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  

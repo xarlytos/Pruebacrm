@@ -1,0 +1,62 @@
+.panelcontrol-metric-card {
+  background: none;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.3s, transform 0.3s;
+  min-width: 250px;
+}
+
+.panelcontrol-metric-card:hover {
+  background: #2c2c2e;
+  transform: scale(1.05);
+}
+
+.panelcontrol-metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.detailed-metrics-grid.light .metrics-column .panelcontrol-metric-card .panelcontrol-metric-header span{
+  color: var(--text-light);
+}
+
+.detailed-metrics-grid.dark .metrics-column .panelcontrol-metric-card .panelcontrol-metric-header span{
+  color: var(--text-dark);
+}
+
+.panelcontrol-metric-icon {
+  font-size: 24px;
+}
+
+.panelcontrol-metric-value {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.panelcontrol-metric-value-green {
+  color: #4caf50;
+}
+
+.panelcontrol-metric-description {
+  font-size: 14px;
+  color: #a9a9a9;
+}
+
+.detailed-metrics-grid.dark .metrics-column .panelcontrol-metric-card .panelcontrol-metric-description{
+  font-size: 14px;
+  color: #a9a9a9;
+}
+
+.detailed-metrics-grid.light .metrics-column .panelcontrol-metric-card .panelcontrol-metric-description{
+  font-size: 14px;
+  color: #DDDD;
+}

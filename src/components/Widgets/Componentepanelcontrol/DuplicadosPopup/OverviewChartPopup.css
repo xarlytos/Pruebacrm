@@ -1,0 +1,114 @@
+/* Estilos generales */
+.panelcontrol-overview-popup {
+  padding: 20px;
+  border-radius: 8px;
+  flex: 2;
+  min-width: 300px;
+}
+
+.panelcontrol-overview-popup.detailed {
+  width: 100%;
+  height: auto;
+}
+
+.panelcontrol-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0px;
+  margin-top: 20px;
+}
+
+.panelcontrol-overview-title {
+  color: inherit;
+}
+
+.panelcontrol-overview-popup-chart-wrapper {
+  position: relative;
+  height: 300px; /* Ajusta la altura según sea necesario */
+}
+
+.panelcontrol-dropdown-grafico {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--text);
+  background-color: var(--secondary);
+  color: var(--text);
+  margin-left: 0px;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.year-navigation, .month-navigation, .week-navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.year-navigation button, .month-navigation button, .week-navigation button {
+  background-color: var(--secondary);
+  color: var(--text);
+  border: none;
+  padding: 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.year-navigation span, .month-navigation span, .week-navigation span {
+  font-size: 1.2em;
+  color: inherit;
+}
+
+/* Estilos para tema claro */
+.panelcontrol-overview-popup.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.panelcontrol-dropdown-grafico.light {
+  border: 1px solid var(--button-border-light);
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.year-navigation button.light {
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+/* Estilos para tema oscuro */
+.panelcontrol-overview-popup.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.panelcontrol-dropdown-grafico.dark {
+  border: 1px solid var(--button-border-dark);
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.year-navigation button.dark {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+/* Botón de cambio de tema */
+.panelcontrol-theme-toggle-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.panelcontrol-theme-toggle-btn.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.panelcontrol-theme-toggle-btn.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}

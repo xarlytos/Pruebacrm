@@ -1,0 +1,18 @@
+.tablinks {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    margin: 0 5px;
+}
+
+.tablinks.active {
+    background-color: #333;
+    font-weight: bold;
+}
+
+.draggable-handle {
+    cursor: move; /* Indicate that this area is draggable */
+}

@@ -1,0 +1,130 @@
+.funnels-list {
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.header {
+  position: relative; /* Añadido para el posicionamiento absoluto del botón "Leads" */
+  text-align: center; /* Centra el texto */
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.leads-button {
+  background-color: #32cd32;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100px;  /* Ancho fijo */
+  text-align: center;
+  position: absolute; /* Posicionamiento absoluto */
+  right: 0; /* Alineado a la derecha */
+  top: 50%; /* Centrado verticalmente */
+  transform: translateY(-50%); /* Ajuste de centrado vertical */
+}
+
+.create-button {
+  background-color: #00bfff;
+  color: #ffffff;
+  border: none;
+  padding: 5px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  cursor: pointer;
+  font-size: 15px;
+  width: 25px;
+  height: 25px;
+}
+
+.funnels-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.funnel-card {
+  background-color: #333333;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.funnel-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.funnel-info h3 {
+  margin: 0 0 10px;
+}
+
+.funnel-info p {
+  margin: 0 0 20px;
+}
+
+.funnel-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  gap: 200px;
+}
+
+.funnel-actions button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.edit-button {
+  background-color: #28a745;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.toggle-button {
+  background-color: #ffc107;
+}
+
+.edit-button,
+.delete-button,
+.toggle-button {
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #218838;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.toggle-button:hover {
+  background-color: #e0a800;
+}
+
+.flex-grow.p-4 {
+  padding: 0;
+  height: 100vh !important;
+  background-color: #1a1a1a;
+  border: 5px solid rgba(128, 128, 128, 0.651);
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+}

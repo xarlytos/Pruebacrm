@@ -1,0 +1,141 @@
+/* Alertas.css */
+.alertas-column {
+    width: 30%;
+    background-color: #2a2a2a;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 20px auto;
+}
+
+.alertas-column h3 {
+    margin-top: 0;
+}
+
+.alertas-alerts-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.alertas-alerts-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.alertas-alerts-container::-webkit-scrollbar-track {
+    background: #444;
+    border-radius: 10px;
+}
+
+.alertas-alerts-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.alertas-alerts-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.alertas-item {
+    background-color: #d5f4f2;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.alertas-item:hover {
+    transform: scale(1.05);
+}
+
+.alertas-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.alertas-status.red {
+    background-color: red;
+}
+
+.alertas-status.green {
+    background-color: green;
+}
+
+.alertas-status.purple {
+    background-color: purple;
+}
+
+.alertas-item p {
+    margin: 5px 0;
+    color: #000;
+}
+
+.alertas-status-text {
+    display: flex;
+    align-items: center;
+}
+
+.alertas-date {
+    display: flex;
+    align-items: center;
+    color: gray;
+}
+
+.alertas-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.alertas-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.alertas-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.alertas-close:hover,
+.alertas-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.alertas-personalizar-button {
+    background-color: #ff7373;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.alertas-personalizar-button:hover {
+    background-color: #ff4c4c;
+}

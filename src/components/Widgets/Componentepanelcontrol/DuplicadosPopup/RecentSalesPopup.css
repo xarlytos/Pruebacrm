@@ -1,0 +1,216 @@
+/* Estilos generales */
+.popup-recent-sales {
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.popup-recent-sales.detailed {
+  width: 90%;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.popup-recent-sales.collapsed {
+  min-height: 150px; /* Altura mínima para el modo reducido */
+}
+
+.popup-recent-sales.expanded {
+  min-height: 600px; /* Mínimo alto de 600px */
+  border: 1px solid #4444443b;
+}
+
+.popup-sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  flex-grow: 1;
+  overflow-y: auto; /* Hace la tabla desplazable si el contenido es demasiado grande */
+}
+
+.popup-sales-table th,
+.popup-sales-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.popup-sales-table tr {
+  border-bottom: 1px solid #444;
+}
+
+.popup-filter-input {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.popup-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.popup-dropdown-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.popup-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px;
+  padding: 5px 0;
+}
+
+.popup-dropdown:hover .popup-dropdown-content {
+  display: block;
+}
+
+.popup-dropdown-content button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.popup-pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+}
+
+.popup-pagination button {
+  padding: 3px;
+  padding-top: 0px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 25px;
+  margin-top: 10px;
+}
+
+.popup-pagination-info {
+  color: inherit;
+}
+
+.popup-letras.dark {
+  color: var(--text-dark);
+}
+
+.popup-letras.light {
+  color: var(--text-light);
+}
+
+.popup-filasseleccionadas {
+  color: wheat;
+}
+
+.expand-btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 50%;
+}
+
+.popup-recent-sales-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expand-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Estilos para tema claro */
+.popup-recent-sales.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.popup-filter-input.light {
+  background: var(--input-bg-light);
+  color: var(--input-text-light);
+}
+
+.popup-dropdown-content.light {
+  background: var(--dropdown-bg-light);
+  color: var(--dropdown-text-light);
+}
+
+.popup-pagination button.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.popup-dropdown-btn.light {
+  color: var(--button-text-light);
+}
+
+/* Estilos para tema oscuro */
+.popup-recent-sales.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.popup-filter-input.dark {
+  background: var(--input-bg-dark);
+  color: var(--input-text-dark);
+}
+
+.popup-dropdown-content.dark {
+  background: var(--dropdown-bg-dark);
+  color: var(--dropdown-text-dark);
+}
+
+.popup-pagination button.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.popup-dropdown-btn.dark {
+  color: var(--button-text-dark);
+}
+
+/* Botón de cambio de tema */
+.popup-theme-toggle-btn {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup-theme-toggle-btn.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.popup-theme-toggle-btn.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}

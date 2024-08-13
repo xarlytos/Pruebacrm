@@ -1,0 +1,312 @@
+/* Variables para temas */
+:root {
+  --background-light: #f8f1ec;
+  --background-dark: #333333;
+  --text-light: #000000;
+  --text-dark: #ffffff;
+  --primary-light: #d9bfae;
+  --primary-dark: #4a4a4a;
+  --secondary-light: #ddd;
+  --secondary-dark: #555;
+  --button-bg-light: #ffffff;
+  --button-border-light: #000000;
+  --button-text-light: #000000;
+  --button-bg-dark: #444444;
+  --button-border-dark: #ffffff;
+  --button-text-dark: #ffffff;
+  --header-bg-light: #ddd;
+  --header-bg-dark: #444444;
+  --header-text-light: #000;
+  --header-text-dark: #fff;
+  --search-button-bg-light: #fff;
+  --search-button-border-light: #000;
+  --search-button-text-light: #000;
+  --search-button-bg-dark: #444;
+  --search-button-border-dark: #fff;
+  --search-button-text-dark: #fff;
+  --create-button-bg-light: #09BC8A;
+  --create-button-bg-dark: #006B5A;
+}
+
+/* Estilos para el contenedor principal */
+.Calendarioclass-main-container {
+  display: flex;
+  height: calc(100vh - 20px);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Calendarioclass-main-container.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.Calendarioclass-main-container.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Estilos para el contenedor del calendario */
+.Calendarioclass-calendar-container {
+  flex: 1;
+  border-radius: 8px;
+  padding: 20px;
+  margin-left: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Calendarioclass-calendar-container.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.Calendarioclass-calendar-container.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Estilos para rbc-today dependiendo del tema */
+.Calendarioclass-calendar-container.light .rbc-today {
+  background-color: var(--primary-light) !important;
+  color: var(--text-light);
+}
+
+.Calendarioclass-calendar-container.dark .rbc-today {
+  background-color: var(--primary-dark) !important;
+  color: var(--text-dark);
+}
+
+/* Otros estilos existentes */
+.Calendarioclass-rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Calendarioclass-rbc-toolbar.light {
+  background-color: var(--header-bg-light);
+  color: var (--header-text-light);
+}
+
+.Calendarioclass-rbc-toolbar.dark {
+  background-color: var(--header-bg-dark);
+  color: var(--header-text-dark);
+}
+
+.Calendarioclass-rbc-toolbar button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.Calendarioclass-rbc-toolbar.light button {
+  background-color: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
+  color: var(--button-text-light);
+}
+
+.Calendarioclass-rbc-toolbar.dark button {
+  background-color: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
+  color: var(--button-text-dark);
+}
+
+.Calendarioclass-rbc-toolbar button:hover {
+  transform: scale(1.05);
+}
+
+/* Otros estilos adicionales */
+.Calendarioclass-rbc-calendar {
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  height: calc(100vh - 100px);
+  max-width: 1400px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.Calendarioclass-rbc-calendar.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.Calendarioclass-rbc-calendar.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Estilos para eventos en el calendario */
+.Calendarioclass-rbc-event {
+  color: #fff;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 2px 0;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.Calendarioclass-rbc-event:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* Otros estilos adicionales */
+.Calendarioclass-add-event-modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Calendarioclass-add-event-modal-content {
+  background-color: var(--background-light);
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s;
+}
+
+.Calendarioclass-add-event-modal-content.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Otros estilos adicionales */
+.Calendarioclass-add-event-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.Calendarioclass-add-event-modal-close:hover,
+.Calendarioclass-add-event-modal-close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Otros estilos adicionales */
+.Calendarioclass-add-event-modal-content form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.Calendarioclass-add-event-modal-content form input,
+.Calendarioclass-add-event-modal-content form button,
+.Calendarioclass-add-event-modal-content form select,
+.Calendarioclass-add-event-modal-content form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.Calendarioclass-add-event-modal-content form input:focus,
+.Calendarioclass-add-event-modal-content form select:focus,
+.Calendarioclass-add-event-modal-content form textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Calendarioclass-add-event-modal-content form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.Calendarioclass-add-event-modal-content form button {
+  background-color: #61dafb;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.Calendarioclass-add-event-modal-content form button:hover {
+  background-color: #21a1f1;
+  transform: scale(1.05);
+}
+
+.Calendarioclass-event-tooltip {
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--background-light);
+  padding: 10px;
+  border: 1px solid var(--secondary-light);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.Calendarioclass-event-tooltip.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--secondary-dark);
+}
+
+.Calendarioclass-event-tooltip h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-light);
+}
+
+.Calendarioclass-event-tooltip h3.dark {
+  color: var(--text-dark);
+}
+
+.Calendarioclass-event-tooltip p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.Calendarioclass-event-tooltip p.dark {
+  color: var(--text-dark);
+}
+
+.Calendarioclass-event-tooltip p strong {
+  color: var(--text-light);
+}
+
+.Calendarioclass-event-tooltip p strong.dark {
+  color: var(--text-dark);
+}

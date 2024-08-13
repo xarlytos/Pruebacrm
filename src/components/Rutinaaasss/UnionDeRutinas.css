@@ -1,0 +1,97 @@
+.union-de-rutinas-modal {
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.union-de-rutinas-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  max-width: 90%;
+}
+
+.union-de-rutinas-modal-content.light {
+  background-color: var(--listaderutinas-card);
+  color: var(--listaderutinas-card-foreground);
+}
+
+.union-de-rutinas-modal-content.dark {
+  background-color: var(--listaderutinas-card-dark);
+  color: var(--listaderutinas-card-foreground-dark);
+}
+
+.union-de-rutinas-close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--text-light);
+}
+
+.union-de-rutinas-close.light {
+  color: var(--text-light);
+}
+
+.union-de-rutinas-close.dark {
+  color: var(--text-dark);
+}
+
+.routine-select {
+  margin-bottom: 20px;
+}
+
+.routine-select label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.routine-select select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.routine-select select.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+  border: 1px solid #747474;
+}
+
+.routine-select select.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--button-text-dark);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-actions button.light {
+  background-color: var(--button-background-light);
+  color: var(--button-text-light);
+}
+
+.form-actions button.dark {
+  background-color: var(--button-background-dark);
+  color: var(--button-text-dark);
+}

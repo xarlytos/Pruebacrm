@@ -1,0 +1,82 @@
+.modal-previsualizacion-ejercicio-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-previsualizacion-ejercicio {
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 90vh;
+  transform: scale(0.7);
+  animation: scaleIn 0.3s forwards;
+}
+
+.modal-previsualizacion-ejercicio.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.modal-previsualizacion-ejercicio.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+.modal-previsualizacion-ejercicio h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.modal-previsualizacion-ejercicio p {
+  margin-bottom: 20px;
+}
+
+.modal-previsualizacion-ejercicio .video-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal-previsualizacion-ejercicio button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-previsualizacion-ejercicio button.red {
+  background-color: #dc3545;
+  color: white;
+}
+
+.modal-previsualizacion-ejercicio button.red:hover {
+  background-color: #c82333;
+}

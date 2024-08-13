@@ -1,0 +1,341 @@
+.WidgetFacturas-widget-facturas {
+  padding: 10px;
+  background: var(--background);
+  color: var(--widget-text);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: calc(100%);
+  height: calc(100%);
+  box-sizing: border-box;
+}
+
+.WidgetFacturas-widget-facturas h2 {
+  color: var(--primary-color);
+
+  cursor: pointer;
+}
+
+.WidgetFacturas-facturas-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow-x: hidden;
+}
+
+.WidgetFacturas-facturas-table th, .WidgetFacturas-facturas-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.WidgetFacturas-facturas-table th {
+  background: var(--table-header-bg);
+  color: var(--widget-text);
+  border-bottom: 2px solid var(--table-border);
+}
+
+.WidgetFacturas-facturas-table td {
+  background: var(--table-row-bg);
+  border-bottom: 1px solid var(--table-border);
+}
+
+.WidgetFacturas-facturas-table tr:hover td {
+  background: var(--table-row-hover-bg);
+}
+
+.WidgetFacturas-filter-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.WidgetFacturas-filter-container button {
+  padding: 8px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+  margin-left: 5px;
+}
+
+.WidgetFacturas-filter-container input {
+  padding: 8px;
+  background: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 5px;
+  height: 36px;
+  border: 1px solid var(--button-border);
+}
+
+.WidgetFacturas-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.WidgetFacturas-facturas-button-container {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.WidgetFacturas-facturas-button-container button {
+  padding: 10px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+  height: 36px;
+}
+
+.WidgetFacturas-facturas-button-container button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.WidgetFacturas-dropdown-campos {
+  position: relative;
+  display: inline-block;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 5px;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+}
+
+.WidgetFacturas-dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--dropdown-bg);
+  color: var(--dropdown-text);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  border: 1px solid var(--dropdown-border);
+  border-radius: 5px;
+}
+
+.WidgetFacturas-dropdown-content.WidgetFacturas-column-dropdown {
+  right: 0;
+}
+
+.WidgetFacturas-dropdown-content.WidgetFacturas-form-dropdown {
+  right: 0;
+}
+
+.WidgetFacturas-dropdown-content.WidgetFacturas-options-dropdown {
+  left: -100px;
+}
+
+.WidgetFacturas-dropdown-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.WidgetFacturas-dropdown-content form input,
+.WidgetFacturas-dropdown-content form select {
+  margin: 5px 0;
+  padding: 8px;
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+}
+
+.WidgetFacturas-dropdown-content form button {
+  padding: 10px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.WidgetFacturas-dropdown-content form button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.WidgetFacturas-dropdown-content .WidgetFacturas-dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.WidgetFacturas-dropdown-content .WidgetFacturas-close-dropdown-btn {
+  margin-top: 10px;
+  align-self: flex-end;
+  padding: 5px 10px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.WidgetFacturas-dropdown-content .WidgetFacturas-close-dropdown-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.WidgetFacturas-filter-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 13px;
+  margin-bottom: 25px;
+}
+
+.WidgetFacturas-dropdown-campos button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+  padding: 3px 8px;
+}
+
+.WidgetFacturas-campos-btn {
+  padding: 10px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+  position: relative;
+}
+
+.WidgetFacturas-dropdown-options button {
+  background: none;
+  border: none;
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.WidgetFacturas-dropdown-options .WidgetFacturas-dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--dropdown-bg);
+  color: var(--dropdown-text);
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 8px 12px;
+  z-index: 1;
+  border: 1px solid var(--dropdown-border);
+  border-radius: 5px;
+}
+
+.WidgetFacturas-dropdown-options .WidgetFacturas-dropdown-content button {
+  padding: 5px;
+  text-align: left;
+}
+
+.WidgetFacturas-dropdown-options .WidgetFacturas-dropdown-content button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.WidgetFacturas-scan-btn {
+  padding: 8px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  height: 36px;
+}
+
+.WidgetFacturas-scan-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.WidgetFacturas-add-btn {
+  padding: 8px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+  height: 36px;
+}
+
+.WidgetFacturas-add-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.Prevdropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--dropdown-bg);
+  color: var(--dropdown-text);
+  width: 290px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border: 1px solid var(--dropdown-border);
+  border-radius: 5px;
+  height: 304px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.Prevprevisiones-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  padding-top: 25px;
+  background-color: var(--dropdown-bg);
+  color: var(--dropdown-text);
+  border-radius: 4px;
+}
+
+.Prevfilter-field {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  height: 30px;
+}
+
+.Prevfilter-field label {
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.Prevfilter-field input {
+  padding: 5px;
+  background: var(--input-bg);
+  border-radius: 4px;
+  color: var(--input-text);
+  width: 140px;
+  font-size: 12px;
+  border: 1px solid var(--input-border);
+  border: 1px solid var(--button-border);
+  height: 30px;
+}
+
+.Prevfilter-field button {
+  padding: 3px;
+  background: var(--button-bg);
+  border: none;
+  border-radius: 4px;
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 12px;
+  border: 1px solid var(--button-border);
+}
+
+.Prevfilter-field button.active {
+  background: var(--button-active-bg);
+}

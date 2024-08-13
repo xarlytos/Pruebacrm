@@ -1,0 +1,305 @@
+/* Estilos generales */
+.popup-widget-previsiones {
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  border: 1px solid #4444443b;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.popup-previsiones-title {
+  margin-bottom: 10px;
+  color: rgb(12, 211, 151);
+}
+
+.popup-widget-previsiones .controls {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.popup-widget-previsiones input[type="text"] {
+  padding: 5px;
+  border-radius: 4px;
+  width: 300px;
+  margin: 0;
+}
+
+.ingreso-button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.ingreso-button-container .dropdown {
+  position: relative;
+}
+
+.ingreso-button-container .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 300px;
+  padding: 12px 16px;
+  z-index: 1;
+  border-radius: 5px;
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.ingreso-button-container .dropdown-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.ingreso-button-container .dropdown-content form input {
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 4px;
+  width: 250px !important;
+}
+
+.ingreso-button-container .dropdown-content form button {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-widget-previsiones table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.popup-widget-previsiones th,
+.popup-widget-previsiones td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.popup-widget-previsiones tr:nth-child(even) {
+}
+
+.popup-widget-previsiones tr:hover {
+}
+
+.popup-widget-previsiones .confirm-btn {
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.popup-widget-previsiones .options-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.method-popup,
+.status-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.method-popup-content,
+.status-popup-content {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+}
+
+.method-popup h4,
+.status-popup h4 {
+  margin-bottom: 20px;
+}
+
+.method-btn,
+.status-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+.method-btn:hover,
+.status-btn:hover {
+}
+
+.close-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+.close-btn:hover {
+}
+
+.status-popup .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  padding: 0;
+}
+
+.translucent {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Estilos para el tema light */
+.popup-widget-previsiones.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.popup-widget-previsiones.light input[type="text"] {
+  border: 1px solid var(--button-border-light);
+  background: var(--input-bg-light);
+  color: var(--input-text-light);
+}
+
+.ingreso-button-container.light .dropdown-toggle {
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
+  color: var(--button-text-light);
+}
+
+.ingreso-button-container.light .dropdown-content {
+  background-color: var(--dropdown-bg-light);
+  color: var(--dropdown-text-light);
+  border: 1px solid var(--dropdown-border-light);
+}
+
+.ingreso-button-container.light .dropdown-content form input {
+  background: var(--input-bg-light);
+  border: 1px solid var(--input-border-light);
+  color: var(--input-text-light);
+}
+
+.ingreso-button-container.light .dropdown-content form button {
+  background-color: var(--create-button-bg-light);
+}
+
+.popup-widget-previsiones.light th {
+  background: var(--header-bg-light);
+}
+
+.popup-widget-previsiones.light tr:hover {
+  background: var(--table-row-hover-bg-light);
+}
+
+.popup-widget-previsiones.light .confirm-btn {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.popup-widget-previsiones.light .options-btn {
+  color: var(--button-text-light);
+}
+
+.method-popup-content.light,
+.status-popup-content.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.method-btn.light,
+.status-btn.light {
+  background: var(--button-bg-light);
+}
+
+.close-btn.light {
+  background: var(--button-bg-light);
+}
+
+/* Estilos para el tema dark */
+.popup-widget-previsiones.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.popup-widget-previsiones.dark input[type="text"] {
+  border: 1px solid var(--button-border-dark);
+  background: var(--input-bg-dark);
+  color: var(--input-text-dark);
+}
+
+.ingreso-button-container.dark .dropdown-toggle {
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
+  color: var(--button-text-dark);
+}
+
+.ingreso-button-container.dark .dropdown-content {
+  background-color: var(--dropdown-bg-dark);
+  color: var(--dropdown-text-dark);
+  border: 1px solid var(--dropdown-border-dark);
+}
+
+.ingreso-button-container.dark .dropdown-content form input {
+  background: var(--input-bg-dark);
+  border: 1px solid var(--input-border-dark);
+  color: var(--input-text-dark);
+}
+
+.ingreso-button-container.dark .dropdown-content form button {
+  background-color: var(--create-button-bg-dark);
+}
+
+.popup-widget-previsiones.dark th {
+  background: var(--header-bg-dark);
+}
+
+.popup-widget-previsiones.dark tr:hover {
+  background: var(--table-row-hover-bg-dark);
+}
+
+.popup-widget-previsiones.dark .confirm-btn {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.popup-widget-previsiones.dark .options-btn {
+  color: var(--button-text-dark);
+}
+
+.method-popup-content.dark,
+.status-popup-content.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.method-btn.dark,
+.status-btn.dark {
+  background: var(--button-bg-dark);
+}
+
+.close-btn.dark {
+  background: var(--button-bg-dark);
+}
+
+.theme-toggle-btn.light {
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.theme-toggle-btn.dark {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}

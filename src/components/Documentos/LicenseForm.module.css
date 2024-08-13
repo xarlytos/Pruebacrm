@@ -1,0 +1,71 @@
+/* src/components/LicenseForm.module.css */
+.licenseForm {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.licenseForm h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.gridContainer label {
+  align-self: center;
+}
+
+.gridContainer input,
+.gridContainer select,
+.gridContainer textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.gridContainer textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttonContainer button {
+  flex: 1;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  margin: 0 5px;
+}
+
+.buttonContainer button:hover {
+  background-color: #0056b3;
+}
+
+.buttonContainer button:last-of-type {
+  background-color: #6c757d;
+}
+
+.buttonContainer button:last-of-type:hover {
+  background-color: #5a6268;
+}

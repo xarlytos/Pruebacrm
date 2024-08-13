@@ -1,0 +1,195 @@
+:root {
+  --background-light: #ffffff; /* Fondo blanco para modo claro */
+  --background-dark: #1e1e1e; /* Fondo negro para modo oscuro */
+  --text-light: #000000; /* Texto negro para modo claro */
+  --text-dark: #f0f0f0; /* Texto blanco para modo oscuro */
+  --box-shadow-light: rgba(0, 0, 0, 0.1); /* Sombra ligera para modo claro */
+  --box-shadow-dark: rgba(255, 255, 255, 0.1); /* Sombra ligera para modo oscuro */
+  --border-light: #ccc; /* Borde gris para modo claro */
+  --border-dark: #444; /* Borde gris oscuro para modo oscuro */
+  --primary-light: #007bff; /* Azul primario para modo claro */
+  --primary-dark: #0056b3; /* Azul más oscuro para modo oscuro */
+}
+
+body.light {
+  --background: var(--background-light);
+  --text: var(--text-light);
+  --box-shadow: var(--box-shadow-light);
+  --border: var(--border-light);
+}
+
+body.dark {
+  --background: var(--background-dark);
+  --text: var(--text-dark);
+  --box-shadow: var(--box-shadow-dark);
+  --border: var(--border-dark);
+}
+
+.client-detail-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--background); /* Fondo según el modo */
+  color: var(--text); /* Color de texto según el modo */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.client-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.client-detail-grid > div {
+  border: 1px solid var(--border); /* Borde según el modo */
+  border-radius: 10px;
+  padding: 20px;
+  background-color: var(--background); /* Fondo de cada tarjeta según el modo */
+  box-shadow: 0 4px 8px var(--box-shadow); /* Sombra según el modo */
+  transition: transform 0.2s, background-color 0.3s, color 0.3s;
+}
+
+body.dark .client-detail-grid > div {
+  background-color: #2a2a2a; /* Fondo oscuro para las tarjetas en modo oscuro */
+  color: var(--text-dark); /* Asegura que el texto sea blanco en modo oscuro */
+}
+
+body.light .client-detail-grid > div {
+  background-color: #ffffff; /* Fondo blanco para las tarjetas en modo claro */
+  color: var(--text-light); /* Asegura que el texto sea negro en modo claro */
+}
+
+.client-detail-grid > div:hover {
+  transform: translateY(-5px);
+}
+
+.client-detail-grid h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+  color: var(--text); /* Color de texto según el modo */
+}
+
+.client-detail-grid p {
+  margin: 10px 0;
+  color: var(--text); /* Color de texto según el modo */
+}
+
+.client-detail-grid .btn {
+  display: inline-block;
+  padding: 10px 15px;
+  margin-top: 10px;
+  color: #fff;
+  background-color: var(--primary-light); /* Color de fondo del botón */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.client-detail-grid .btn:hover {
+  background-color: var(--primary-dark); /* Color de fondo al pasar el cursor */
+}
+
+/* Estilos para el modal */
+.notas-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro translúcido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.notas-modal-content {
+  background-color: var(--background); /* Fondo según el modo */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--box-shadow); /* Sombra según el modo */
+  width: 100%;
+  max-width: 500px;
+  color: var(--text); /* Color de texto según el modo */
+}
+
+body.dark .notas-modal-content {
+  background-color: #2a2a2a; /* Fondo oscuro para el modal en modo oscuro */
+}
+
+body.light .notas-modal-content {
+  background-color: #ffffff; /* Fondo blanco para el modal en modo claro */
+}
+
+.notas-close {
+  color: var(--text); /* Color de la X para cerrar */
+  float: right;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.notas-close:hover {
+  color: var(--primary-dark); /* Color de la X al pasar el cursor */
+}
+
+.notas-modal h4 {
+  margin: 0 0 10px 0;
+  color: var(--text); /* Color de texto según el modo */
+}
+
+.notas-modal input, .notas-modal textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border); /* Borde según el modo */
+  border-radius: 5px;
+  background-color: var(--background); /* Fondo según el modo */
+  color: var(--text); /* Color de texto según el modo */
+}
+
+body.dark .notas-modal input, 
+body.dark .notas-modal textarea {
+  background-color: #2a2a2a; /* Fondo oscuro para inputs en modo oscuro */
+  color: var(--text-dark); /* Texto claro para inputs en modo oscuro */
+}
+
+body.light .notas-modal input, 
+body.light .notas-modal textarea {
+  background-color: #ffffff; /* Fondo blanco para inputs en modo claro */
+  color: var(--text-light); /* Texto oscuro para inputs en modo claro */
+}
+
+.notas-modal input:focus, .notas-modal textarea:focus {
+  outline: none;
+  border-color: var(--primary-light); /* Color de borde al enfocar */
+}
+
+.notasButton {
+  background-color: var(--primary-light); /* Color del botón */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.notasButton:hover {
+  background-color: var(--primary-dark); /* Color del botón al pasar el cursor */
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .client-detail-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+  }
+
+  .client-detail-grid > div {
+      min-width: 100%; /* Asegura que los elementos ocupen todo el ancho del contenedor */
+  }
+}

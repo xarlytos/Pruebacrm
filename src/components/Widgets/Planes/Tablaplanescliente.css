@@ -1,0 +1,268 @@
+.Tablaplanescliente-container {
+  padding: 20px;
+  background: var(--background);
+  border-radius: 8px;
+  color: var(--text-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-height: 600px; /* Limita la altura máxima del contenedor */
+  overflow: hidden; /* Esconde el desbordamiento del contenido */
+}
+
+.Tablaplanescliente-table-wrapper {
+  max-height: 500px; /* Define la altura máxima de la tabla */
+  height: 200px;
+  overflow: auto; /* Habilita el desplazamiento si es necesario */
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); /* Añade una ligera sombra interior */
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dropdown-menu button:hover {
+  background-color: #ddd;
+}
+
+.Tablaplanescliente-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.Tablaplanescliente-popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.Tablaplanescliente-container h2 {
+  color: var(--widget-title-color);
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.Tablaplanescliente-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.Tablaplanescliente-controls input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  background: var(--input-bg);
+  color: var(--input-text);
+  width: 300px;
+  transition: border-color 0.3s ease;
+}
+
+.Tablaplanescliente-controls input[type="text"]:focus {
+  border-color: var(--button-bg);
+  outline: none;
+}
+
+.Tablaplanescliente-button-group {
+  display: flex;
+  gap: 15px;
+}
+
+.Tablaplanescliente-button-group button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.3s ease;
+}
+
+.Tablaplanescliente-button-group button:hover {
+  background: var(--button-hover-bg);
+}
+
+.Tablaplanescliente-dropdown {
+  position: relative;
+}
+
+.Tablaplanescliente-dropdown-toggle {
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  padding: 5px;
+  color: var(--button-text);
+  cursor: pointer;
+}
+
+.Tablaplanescliente-dropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  padding: 10px;
+  border-radius: 4px;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.Tablaplanescliente-dropdown:hover .Tablaplanescliente-dropdown-menu {
+  display: block;
+}
+
+.Tablaplanescliente-container table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: var(--table-bg);
+}
+
+.Tablaplanescliente-container th,
+.Tablaplanescliente-container td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--table-border);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.Tablaplanescliente-container th {
+  background: var(--table-header-bg);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.Tablaplanescliente-container tr:nth-child(even) {
+  background: var(--table-row-even-bg);
+}
+
+.Tablaplanescliente-container tr:hover {
+  background: var(--table-row-hover-bg);
+}
+
+.Tablaplanescliente-options-btn {
+  background: none;
+  border: none;
+  color: var(--button-text);
+  cursor: pointer;
+  position: relative;
+}
+
+.Tablaplanescliente-options-menu {
+  display: none;
+  position: absolute;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: 4px;
+  top: 20px;
+  right: 0;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.Tablaplanescliente-options-btn:hover .Tablaplanescliente-options-menu,
+.Tablaplanescliente-options-menu:hover {
+  display: block;
+}
+
+.Tablaplanescliente-dropdown-item {
+  display: block;
+  padding: 8px 12px;
+  color: var(--dropdown-item-text);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.Tablaplanescliente-dropdown-item:hover {
+  background: var(--dropdown-item-hover-bg);
+}
+
+.Tablaplanescliente-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.Tablaplanescliente-popup-content {
+  background: var(--widget-bg);
+  padding: 30px;
+  border-radius: 8px;
+  color: var(--text-color);
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Tablaplanescliente-popup-content h3 {
+  margin-bottom: 20px;
+  font-size: 1.25rem;
+}
+
+.Tablaplanescliente-popup-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  margin: 0 10px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.Tablaplanescliente-popup-content button:hover {
+  background: var(--button-hover-bg);
+}

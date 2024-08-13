@@ -1,0 +1,31 @@
+/* src/components/Dietas.css */
+
+.section {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h3 {
+    margin-right: 10px;
+}
+
+.notasButton {
+    background-color: #F0F0F0;
+    color: black;
+    border: 0.25px solid black;
+    padding: 3px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notasButton:hover {
+    background-color: #0056b3;
+}

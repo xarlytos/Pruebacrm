@@ -1,0 +1,307 @@
+/* src/components/Campaigns/Campaigns.css */
+.campaigns-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 1000px;
+  background-color: var(--background-light);
+}
+
+.campaigns-container.dark {
+  background-color: var(--background-dark);
+}
+
+.campaigns-tab-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  background-color: var(--tab-container-light);
+  border-radius: 5px;
+  padding-bottom: 10px;
+}
+
+.campaigns-tab-container.dark {
+  background-color: var(--tab-container-dark);
+}
+
+.campaigns-tab {
+  background-color: var(--button-light);
+  color: var(--button-text-light);
+  border: none;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  height: 45px;
+}
+
+.campaigns-tab.dark {
+  background-color: var(--button-dark);
+  color: var(--button-text-dark);
+}
+
+.campaigns-tab.active {
+  background-color: var(--primary-dark);
+}
+
+.campaigns-tab:hover {
+  background-color: var(--primary-dark);
+}
+
+.campaigns-button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.campaigns-action-button {
+  background-color: var(--button-light);
+  color: var(--button-text-light);
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.campaigns-action-button:hover {
+  background-color: var(--primary-dark);
+}
+
+.campaigns-action-button.dark {
+  background-color: var(--button-dark);
+  color: var(--button-text-dark);
+}
+
+.campaigns-content-container {
+  background-color: var(--background-light);
+  padding: 20px;
+  border-radius: 10px;
+  color: var(--text-light);
+}
+
+.campaigns-content-container.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.organico-container, .anuncios-container, .correos-container {
+  text-align: center;
+}
+
+.anuncios-container .button-crear-anuncio,
+.correos-container .button-correo-masivo,
+.correos-container .button-ia-creacion-correos {
+  margin-bottom: 20px;
+}
+
+.ad-table, .email-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.ad-table th, .ad-table td,
+.email-table th, .email-table td {
+  border: 3px solid var(--color1-light);
+  padding: 8px;
+}
+
+.ad-table th, .email-table th {
+  background-color: var(--primary-light);
+  color: var(--text-light);
+}
+
+.ad-table th.dark, .email-table th.dark {
+  background-color: var(--primary-dark);
+  color: var(--text-dark);
+}
+
+.ad-table tr:nth-child(even), .email-table tr:nth-child(even) {
+  background-color: var(--secondary-light);
+}
+
+.ad-table tr:nth-child(even).dark, .email-table tr:nth-child(even).dark {
+  background-color: var(--secondary-dark);
+}
+
+.ad-table tr:hover, .email-table tr:hover {
+  background-color: var(--secondary-dark);
+}
+
+.ad-table tr:hover.dark, .email-table tr:hover.dark {
+  background-color: var(--secondary-light);
+}
+
+.ad-table th, .ad-table td,
+.email-table th, .email-table td {
+  text-align: left;
+}
+
+.button-publicacion-masiva,
+.button-subir-publicaciones,
+.button-crear-anuncio,
+.button-editar,
+.button-eliminar,
+.button-correo-masivo,
+.button-ia-creacion-correos {
+  background-color: var(--button-light);
+  color: var(--button-text-light);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-publicacion-masiva:hover,
+.button-subir-publicaciones:hover,
+.button-crear-anuncio:hover,
+.button-editar:hover,
+.button-eliminar:hover,
+.button-correo-masivo:hover,
+.button-ia-creacion-correos:hover {
+  background-color: var(--primary-dark);
+}
+
+.button-publicacion-masiva.dark,
+.button-subir-publicaciones.dark,
+.button-crear-anuncio.dark,
+.button-editar.dark,
+.button-eliminar.dark,
+.button-correo-masivo.dark,
+.button-ia-creacion-correos.dark {
+  background-color: var(--button-dark);
+  color: var(--button-text-dark);
+}
+
+.react-calendar {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.react-calendar.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.react-calendar.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: inherit;
+  color: inherit;
+  border-bottom: 1px solid var(--secondary-light);
+  padding: 10px;
+}
+
+.react-calendar__navigation.dark {
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+.react-calendar__navigation button {
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: var(--secondary-light);
+  border-radius: 50%;
+}
+
+.react-calendar__navigation button:enabled:hover.dark,
+.react-calendar__navigation button:enabled:focus.dark {
+  background-color: var(--secondary-dark);
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  background-color: var(--secondary-light);
+  font-weight: bold;
+  color: inherit;
+}
+
+.react-calendar__month-view__weekdays.dark {
+  background-color: var(--secondary-dark);
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 10px 0;
+}
+
+.react-calendar__month-view__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  padding: 10px;
+}
+
+.react-calendar__tile {
+  background: var(--background-light);
+  color: var(--text-light);
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__tile.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: var(--secondary-light);
+}
+
+.react-calendar__tile:enabled:hover.dark,
+.react-calendar__tile:enabled:focus.dark {
+  background-color: var(--secondary-dark);
+}
+
+.react-calendar__tile--now {
+  background: var(--color1-light);
+  color: var(--text-dark);
+  border-radius: 50%;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: var(--color1-dark);
+}
+
+.react-calendar__tile--active {
+  background: var(--primary-light);
+  color: var(--text-dark);
+  border-radius: 50%;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: var(--primary-dark);
+}
+
+.react-calendar__tile--weekend {
+  color: var(--color2-light);
+}

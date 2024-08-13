@@ -1,0 +1,140 @@
+.Contratos-widget {
+    padding: 20px;
+    background: var(--background);
+    color: var(--text);
+    border-radius: 10px;
+    width: 85%;
+    margin: 20px 0;
+    border: 1px solid var(--secondary);
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  .Contratos-widget.light {
+    background: var(--background-light);
+    color: var(--text-light);
+  }
+  
+  .Contratos-widget.dark {
+    background: var(--background-dark);
+    color: var(--text-dark);
+  }
+  
+  .Contratos-widget h2 {
+    color: #E67E22;
+  }
+  
+  .Contratos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .Contratos-table th, .Contratos-table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .Contratos-table th {
+    background: var(--header-bg);
+    color: var(--header-text);
+    border-bottom: 2px solid var(--secondary);
+  }
+  
+  .Contratos-table td {
+    background: var(--background);
+    border-bottom: 1px solid var(--secondary);
+  }
+  
+  .Contratos-table tr:hover td {
+    background: var(--primary);
+  }
+  
+  .Contratos-filter-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  .Contratos-filter-input {
+    padding: 8px;
+    background: var(--search-button-bg);
+    color: var(--search-button-text);
+    border: none !important;
+    border-radius: 5px;
+    width: 200px !important;
+    height: 40px;
+    border: 1px solid var(--search-button-border) !important;
+  }
+  
+  .Contratos-pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .Contratos-pagination-button {
+    padding: 8px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--button-border);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .Contratos-pagination-button:disabled {
+    background: var(--secondary);
+    cursor: not-allowed;
+  }
+  
+  .Contratos-pagination-info {
+    align-self: center;
+  }
+  
+  .Contratos-action-button {
+    padding: 4px 8px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .Contratos-action-button:hover {
+    background: var(--primary);
+  }
+  
+  .Contratos-action-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .Contratos-action-content {
+    display: block;
+    position: absolute;
+    background-color: var(--background);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    padding: 8px;
+    border-radius: 5px;
+    top: 20px;
+    right: 0;
+  }
+  
+  .Contratos-action-item {
+    padding: 8px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .Contratos-action-item:hover {
+    background: var(--primary);
+  }
+  

@@ -1,0 +1,45 @@
+.panelcontrol-metric-card {
+
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.3s, transform 0.3s;
+  min-width: 250px;
+  cursor: pointer;
+}
+
+.panelcontrol-metric-card:hover {
+  background: #3a3a3c;
+  transform: scale(1.05);
+}
+
+.panelcontrol-metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.panelcontrol-metric-icon {
+  font-size: 24px;
+}
+
+.panelcontrol-metric-value {
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.panelcontrol-metric-value-green {
+  color: #24d92b;;
+}
+
+.panelcontrol-metric-description {
+  font-size: 14px;
+  color: #a9a9a9;
+}

@@ -1,0 +1,66 @@
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    text-align: center;
+    color: #3F0071; /* Cambiado a uno de los colores proporcionados */
+}
+
+.popup-field {
+    margin-bottom: 20px;
+}
+
+.popup-field label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #FB2576; /* Cambiado a uno de los colores proporcionados */
+}
+
+.popup-field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.report-button {
+    padding: 10px 20px;
+    background-color: #0002A1; /* Cambiado a uno de los colores proporcionados */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.close-button {
+    padding: 10px 20px;
+    background-color: #332FD0; /* Cambiado a uno de los colores proporcionados */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}

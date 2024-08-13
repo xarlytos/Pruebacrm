@@ -1,0 +1,77 @@
+/* src/components/Planes.css */
+
+.section {
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+    padding: 15px;
+    background-color: var(--background-light);
+}
+
+.section.dark {
+    border: 1px solid var(--secondary-dark);
+    background-color: var(--background-dark);
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h3 {
+    margin-right: 10px;
+}
+
+.notasButton {
+    background-color: var(--secondary-light);
+    color: var(--text-light);
+    border: 0.25px solid var(--text-light);
+    padding: 3px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notasButton:hover {
+    background-color: var(--primary-dark);
+}
+
+.modal {
+    display: block; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: var(--background-light);
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid var(--secondary-light);
+    width: 80%; 
+    max-width: 500px;
+    border-radius: 5px;
+}
+
+.modal-content.dark {
+    background-color: var(--background-dark);
+    border: 1px solid var(--secondary-dark);
+}
+
+.close {
+    color: var(--text-light);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--text-dark);
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -1,0 +1,143 @@
+/* src/components/Notas.css */
+
+.section {
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+    padding: 15px;
+    background-color: var(--background-light);
+}
+
+.section.dark {
+    border: 1px solid var(--secondary-dark);
+    background-color: var(--background-dark);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h3 {
+    margin-right: 10px;
+}
+
+.notasButton {
+    background-color: var(--secondary-light);
+    color: var(--text-light);
+    border: 0.25px solid var(--text-light);
+    padding: 3px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notasButton:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+}
+
+.notas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.nota-card {
+    background-color: var(--background-light);
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.nota-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nota-card.dark {
+    background-color: var(--background-dark);
+    border: 1px solid var(--secondary-dark);
+    color: var(--text-dark);
+}
+
+.notas-modal {
+    display: block; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.notas-modal-content {
+    background-color: var(--background-light);
+    margin: 10% auto; 
+    padding: 20px;
+    border: 1px solid var(--secondary-light);
+    width: 80%; 
+    max-width: 600px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.modal-content.dark {
+    background-color: var(--background-dark);
+    border: 1px solid var(--secondary-dark);
+    color: var(--text-dark);
+}
+
+.nota-edit-modal {
+    max-width: 800px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    flex-grow: 1;
+    border: none;
+    font-size: 1.5em;
+    padding: 0.5em 0;
+}
+
+.modal-textarea {
+    width: 100%;
+    height: 200px;
+    border: none;
+    padding: 10px;
+    resize: none;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.modal-footer .notasButton {
+    margin-left: 10px;
+}
+
+.close {
+    color: var(--text-light);
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--text-dark);
+    text-decoration: none;
+    cursor: pointer;
+}

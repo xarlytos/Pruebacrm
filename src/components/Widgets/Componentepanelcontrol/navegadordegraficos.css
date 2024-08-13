@@ -1,0 +1,29 @@
+.panelcontrol-navegador {
+  display: flex;
+  justify-content: left;
+  background: var(--background);
+  padding: 15px;
+  border-radius: 8px;
+  width: 475px;
+  margin-bottom: 10px;
+}
+
+.panelcontrol-nav-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.3s, background 0.3s;
+}
+
+.panelcontrol-nav-btn:hover {
+  text-decoration: underline;
+}
+
+.panelcontrol-nav-btn.active {
+  color: var(--text);
+  background: var(--primary);
+  border-radius: 8px;
+}

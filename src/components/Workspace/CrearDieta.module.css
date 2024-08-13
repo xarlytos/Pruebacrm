@@ -1,0 +1,123 @@
+/* Overlay for modal */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal content container */
+.modalContent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1001;
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Form and input styles */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputField {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Button group */
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Primary button */
+.btnPrimary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btnPrimary:hover {
+    background-color: #0056b3;
+}
+
+/* Secondary button */
+.btnSecondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btnSecondary:hover {
+    background-color: #5a6268;
+}
+
+/* Dark mode */
+.dark .modalOverlay {
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semi-transparente */
+}
+
+.dark .modalContent {
+    background-color: rgba(51, 51, 51, 0.85); /* Fondo gris oscuro con transparencia */
+    color: white;
+}
+
+.dark .inputField {
+    background-color: #555;
+    border: 1px solid #666;
+    color: white;
+}
+
+.dark .btnPrimary {
+    background-color: #0062cc;
+}
+
+.dark .btnPrimary:hover {
+    background-color: #004085;
+}
+
+.dark .btnSecondary {
+    background-color: #5a6268;
+}
+
+.dark .btnSecondary:hover {
+    background-color: #494e54;
+}

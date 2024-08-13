@@ -1,0 +1,30 @@
+.navbar-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px 10px;
+  background-color: #1d1d1d;
+  color: white;
+  border-radius: 4px 4px 0px 0px;
+  font-size: 10px;
+}
+
+.filter-tag {
+  background-color: #444;
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.filter-clear {
+  cursor: pointer;
+  background-color: #1f1f1f9f;
+  border-radius: 50%;
+  padding-right: 5px;
+  padding-left: 5px;
+  font-size: 9px;
+  padding-top: 1px;
+  padding-bottom: 2px;
+}
