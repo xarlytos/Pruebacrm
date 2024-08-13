@@ -46,6 +46,7 @@ const Listadedietas = ({ theme, setTheme }) => {
     const fetchDietas = async () => {
        try {
           const response = await axios.get(`${API_BASE_URL}/api/dietas`);
+          console.log('Respuesta de la API /api/dietas:', response.data);
           if (Array.isArray(response.data)) {
              setDietas(response.data);
           } else {
@@ -61,6 +62,7 @@ const Listadedietas = ({ theme, setTheme }) => {
     const fetchClientes = async () => {
        try {
           const response = await axios.get(`${API_BASE_URL}/api/clientes`);
+          console.log('Respuesta de la API /api/clientes:', response.data);
           if (Array.isArray(response.data)) {
              setClientes(response.data);
           } else {
@@ -79,6 +81,7 @@ const Listadedietas = ({ theme, setTheme }) => {
  
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(`Cambiando el campo ${name} a:`, value);
     setDieta({
       ...dieta,
       [name]: value,
@@ -90,6 +93,7 @@ const Listadedietas = ({ theme, setTheme }) => {
   };
 
   const handleCustomObjetivoChange = (e) => {
+    console.log('Cambiando objetivo personalizado a:', e.target.value);
     setCustomObjetivo(e.target.value);
   };
 
@@ -97,7 +101,9 @@ const Listadedietas = ({ theme, setTheme }) => {
     e.preventDefault();
     try {
       const objetivoFinal = dieta.objetivo === 'Otro' ? customObjetivo : dieta.objetivo;
-      const response = await axios.post('${API_BASE_URL}/api/dietas', { ...dieta, objetivo: objetivoFinal });
+      console.log('Enviando nueva dieta a la API:', { ...dieta, objetivo: objetivoFinal });
+      const response = await axios.post(`${API_BASE_URL}/api/dietas`, { ...dieta, objetivo: objetivoFinal });
+      console.log('Respuesta de la API al crear dieta:', response.data);
       setDietas([...dietas, response.data]);
       setDieta({
         nombre: '',
@@ -115,11 +121,13 @@ const Listadedietas = ({ theme, setTheme }) => {
   };
 
   const handleEditDieta = (dietaId) => {
+    console.log('Redirigiendo para editar la dieta con ID:', dietaId);
     navigate(`/edit-dieta/${dietaId}`);
   };
 
   const handleDeleteDieta = async (dietaId) => {
     try {
+      console.log('Eliminando dieta con ID:', dietaId);
       await axios.delete(`${API_BASE_URL}/api/dietas/${dietaId}`);
       setDietas(dietas.filter((dieta) => dieta._id !== dietaId));
     } catch (error) {
@@ -128,22 +136,27 @@ const Listadedietas = ({ theme, setTheme }) => {
   };
 
   const filteredDietas = Array.isArray(dietas) 
-  ? dietas.filter((dieta) =>
-      dieta.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  : [];
+    ? dietas.filter((dieta) =>
+        dieta.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
+
+  console.log('Dietas filtradas:', filteredDietas);
 
   const openPopup = (comida = null) => {
+    console.log('Abriendo popup para comida:', comida);
     setComidaToEdit(comida);
     setIsPopupOpen(true); // Abre el popup
   };
 
   const closePopup = () => {
+    console.log('Cerrando popup');
     setIsPopupOpen(false); // Cierra el popup
     setComidaToEdit(null);
   };
 
   const refreshComidas = async () => {
+    console.log('Refrescando lista de comidas...');
     // Lógica para refrescar la lista de comidas después de crear o editar una
   };
 
