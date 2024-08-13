@@ -54,12 +54,12 @@ const ClientesLista = ({ theme, setTheme }) => {
 
     useEffect(() => {
         cargarClientes();
-    }, []);
+    }, [API_BASE_URL]);
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
     const cargarClientes = () => {
-        axios.get('${API_BASE_URL}/api/clientes')
-            .then(response => {
+        axios.get(`${API_BASE_URL}/api/clientes`)
+        .then(response => {
                 setClientes(response.data);
                 toast.success('Clientes cargados correctamente');
             })
@@ -97,7 +97,7 @@ const ClientesLista = ({ theme, setTheme }) => {
     };
 
     const handleEliminarClientes = () => {
-        axios.delete('${API_BASE_URL}/api/clientes', { data: { ids: clientesSeleccionados } })
+        axios.delete(`${API_BASE_URL}/api/clientes`, { data: { ids: clientesSeleccionados } })
             .then(() => {
                 setClientes(prev => prev.filter(cliente => !clientesSeleccionados.includes(cliente._id)));
                 setClientesSeleccionados([]);

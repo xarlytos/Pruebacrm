@@ -24,8 +24,12 @@ const Listaderutinas = ({ theme, setTheme }) => {
     const fetchPlans = async () => {
       try {
         const response = await axios.get('/api/routines');
-        setPlans(response.data);
-        console.log('Fetched plans:', response.data);
+        if (Array.isArray(response.data)) {
+          setPlans(response.data);
+          console.log('Fetched plans:', response.data);
+        } else {
+          console.error('Unexpected response data for plans:', response.data);
+        }
       } catch (error) {
         console.error('Error fetching plans:', error);
       }
@@ -34,8 +38,12 @@ const Listaderutinas = ({ theme, setTheme }) => {
     const fetchClients = async () => {
       try {
         const response = await axios.get('/api/clientes');
-        setClients(response.data);
-        console.log('Fetched clients:', response.data);
+        if (Array.isArray(response.data)) {
+          setClients(response.data);
+          console.log('Fetched clients:', response.data);
+        } else {
+          console.error('Unexpected response data for clients:', response.data);
+        }
       } catch (error) {
         console.error('Error fetching clients:', error);
       }
@@ -72,9 +80,9 @@ const Listaderutinas = ({ theme, setTheme }) => {
     }
   };
 
-  const filteredPlans = plans.filter((plan) =>
+  const filteredPlans = Array.isArray(plans) ? plans.filter((plan) =>
     plan.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ) : [];
 
   const getAvailableClients = (plan) => {
     const associatedClientIds = plan.cliente ? [plan.cliente._id] : [];
