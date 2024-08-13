@@ -4,6 +4,7 @@ import styles from './Listadedietas.module.css';
 import axios from 'axios';
 import Tablacomidas from './Tablacomidas'; // Importamos el componente Tablacomidas
 import PopupDeComidas from './PopupDeComidas'; // Importamos el componente PopupDeComidas
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const Listadedietas = ({ theme, setTheme }) => {
   const navigate = useNavigate();
@@ -40,7 +41,6 @@ const Listadedietas = ({ theme, setTheme }) => {
     'Rehabilitación y recuperación',
     'Otro'
   ];
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
   useEffect(() => {
     const fetchDietas = async () => {

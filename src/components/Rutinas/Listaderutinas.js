@@ -84,7 +84,7 @@ const Listaderutinas = ({ theme, setTheme }) => {
   const filteredPlans = Array.isArray(plans) ? plans.filter((plan) =>
     plan.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   ) : [];
-  
+    
   const getAvailableClients = (plan) => {
     const associatedClientIds = plan.cliente ? [plan.cliente._id] : [];
     return Array.isArray(clients) ? clients.filter(client => !associatedClientIds.includes(client._id)) : [];

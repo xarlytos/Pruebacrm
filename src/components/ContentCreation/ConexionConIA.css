@@ -1,48 +1,82 @@
 /* src/components/ConexionConIA.css */
 
 .conexionconia-chat-container {
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 300px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px; /* Aumentamos el ancho */
+    background-color: #f9f9f9;
     font-family: Arial, sans-serif;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+  }
+  
+  .conexionconia-chat-header {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.5rem; /* Tamaño de texto más grande */
   }
   
   .conexionconia-chat-messages {
-    max-height: 200px;
+    max-height: 300px; /* Aumentamos la altura */
     overflow-y: auto;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
   }
   
   .conexionconia-chat-message {
-    background-color: #f1f1f1;
-    padding: 5px;
-    margin: 5px 0;
+    background-color: #e9f1ff;
+    padding: 10px;
+    margin: 7px 0;
     border-radius: 5px;
+    word-wrap: break-word;
   }
   
   .conexionconia-chat-input-container {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
   
   .conexionconia-chat-input {
     flex: 1;
-    padding: 5px;
-    margin-right: 5px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
   }
   
   .conexionconia-chat-send-button {
-    padding: 5px 10px;
+    padding: 10px 20px; /* Botón más grande */
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem; /* Tamaño de fuente del botón */
   }
   
   .conexionconia-chat-send-button:hover {
     background-color: #0056b3;
+  }
+  
+  .conexionconia-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #007bff;
+    transition: color 0.3s ease;
+  }
+  
+  .conexionconia-close-button:hover {
+    color: #0056b3;
   }
   
