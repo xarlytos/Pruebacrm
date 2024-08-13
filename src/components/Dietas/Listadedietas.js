@@ -127,9 +127,11 @@ const Listadedietas = ({ theme, setTheme }) => {
     }
   };
 
-  const filteredDietas = dietas.filter((dieta) =>
-    dieta.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredDietas = Array.isArray(dietas) 
+  ? dietas.filter((dieta) =>
+      dieta.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : [];
 
   const openPopup = (comida = null) => {
     setComidaToEdit(comida);
