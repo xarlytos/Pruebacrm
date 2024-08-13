@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CrearCliente.css';
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const CrearCliente = ({ onClose, onClienteCreado, theme }) => {
@@ -54,14 +55,14 @@ const CrearCliente = ({ onClose, onClienteCreado, theme }) => {
                 <form onSubmit={handleSubmit} className="form-grid">
                     {Object.keys(cliente).map(key => (
                         <div key={key}>
-                            <label className={theme}>{key.charAt(0).toUpperCase() + key.slice(1)} <span className="required">*</span></label>
+                            <label className={theme}>{key.charAt(0).toUpperCase() + key.slice(1)}{key === 'email' && <span className="required">*</span>}</label>
                             <input 
                                 type={key === 'email' ? 'email' : 'text'} 
                                 name={key} 
                                 value={cliente[key]} 
                                 onChange={handleChange} 
                                 className={theme} 
-                                required={['nombre', 'email'].includes(key)}
+                                required={key === 'email'}
                             />
                         </div>
                     ))}
