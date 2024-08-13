@@ -44,27 +44,39 @@ const Listadedietas = ({ theme, setTheme }) => {
 
   useEffect(() => {
     const fetchDietas = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/dietas`);
-        setDietas(response.data);
-      } catch (error) {
-        console.error('Error fetching dietas:', error);
-      }
+       try {
+          const response = await axios.get(`${API_BASE_URL}/api/dietas`);
+          if (Array.isArray(response.data)) {
+             setDietas(response.data);
+          } else {
+             console.error('La respuesta de dietas no es un array:', response.data);
+             setDietas([]); // Establecer un array vacío si la respuesta no es un array
+          }
+       } catch (error) {
+          console.error('Error fetching dietas:', error);
+          setDietas([]); // Establecer un array vacío en caso de error
+       }
     };
-
+ 
     const fetchClientes = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/clientes`);
-        setClientes(response.data);
-      } catch (error) {
-        console.error('Error fetching clientes:', error);
-      }
+       try {
+          const response = await axios.get(`${API_BASE_URL}/api/clientes`);
+          if (Array.isArray(response.data)) {
+             setClientes(response.data);
+          } else {
+             console.error('La respuesta de clientes no es un array:', response.data);
+             setClientes([]); // Establecer un array vacío si la respuesta no es un array
+          }
+       } catch (error) {
+          console.error('Error fetching clientes:', error);
+          setClientes([]); // Establecer un array vacío en caso de error
+       }
     };
-
+ 
     fetchDietas();
     fetchClientes();
-  }, []);
-
+ }, []);
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDieta({
