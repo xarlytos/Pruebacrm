@@ -44,41 +44,41 @@ const Listadedietas = ({ theme, setTheme }) => {
 
   useEffect(() => {
     const fetchDietas = async () => {
-       try {
-          const response = await axios.get(`${API_BASE_URL}/api/dietas`);
-          console.log('Respuesta de la API /api/dietas:', response.data);
-          if (Array.isArray(response.data)) {
-             setDietas(response.data);
-          } else {
-             console.error('La respuesta de dietas no es un array:', response.data);
-             setDietas([]); // Establecer un array vacío si la respuesta no es un array
-          }
-       } catch (error) {
-          console.error('Error fetching dietas:', error);
-          setDietas([]); // Establecer un array vacío en caso de error
-       }
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/dietas`);
+            console.log('Respuesta de dietas:', response.data); // <-- Agrega este log
+            if (Array.isArray(response.data)) {
+                setDietas(response.data);
+            } else {
+                console.error('La respuesta de dietas no es un array:', response.data);
+                setDietas([]); // Establecer un array vacío si la respuesta no es un array
+            }
+        } catch (error) {
+            console.error('Error fetching dietas:', error);
+            setDietas([]); // Establecer un array vacío en caso de error
+        }
     };
- 
+
     const fetchClientes = async () => {
-       try {
-          const response = await axios.get(`${API_BASE_URL}/api/clientes`);
-          console.log('Respuesta de la API /api/clientes:', response.data);
-          if (Array.isArray(response.data)) {
-             setClientes(response.data);
-          } else {
-             console.error('La respuesta de clientes no es un array:', response.data);
-             setClientes([]); // Establecer un array vacío si la respuesta no es un array
-          }
-       } catch (error) {
-          console.error('Error fetching clientes:', error);
-          setClientes([]); // Establecer un array vacío en caso de error
-       }
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/clientes`);
+            console.log('Respuesta de clientes:', response.data); // <-- Agrega este log
+            if (Array.isArray(response.data)) {
+                setClientes(response.data);
+            } else {
+                console.error('La respuesta de clientes no es un array:', response.data);
+                setClientes([]); // Establecer un array vacío si la respuesta no es un array
+            }
+        } catch (error) {
+            console.error('Error fetching clientes:', error);
+            setClientes([]); // Establecer un array vacío en caso de error
+        }
     };
- 
+
     fetchDietas();
     fetchClientes();
- }, []);
- 
+}, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(`Cambiando el campo ${name} a:`, value);
@@ -134,6 +134,8 @@ const Listadedietas = ({ theme, setTheme }) => {
       console.error('Error deleting dieta:', error);
     }
   };
+
+  console.log('Estado actual de dietas:', dietas); // <-- Agrega este log
 
   const filteredDietas = Array.isArray(dietas) 
     ? dietas.filter((dieta) =>
