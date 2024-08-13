@@ -299,8 +299,8 @@ const ClientesLista = ({ theme, setTheme }) => {
                 )}
             </ResizableBox>
             <div className="clientes-lista-contenido">
-                <h1 className="tituloClientes">¡Bienvenido de nuevo!</h1>
-                <p className="subtituloClientes">¡Aquí tienes una lista de tus clientes!</p>
+                <h1 className="tituloClientes">¡Bienveaaaanido de nuevo!</h1>
+                <p className="subtituloClientes">¡Aqsuí tienes una lista de tus clientes!</p>
                 <div className="actions">
                     <input
                         type="text"
