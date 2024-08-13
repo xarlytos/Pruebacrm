@@ -40,11 +40,12 @@ const Listadedietas = ({ theme, setTheme }) => {
     'Rehabilitación y recuperación',
     'Otro'
   ];
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://tudominio.vercel.app';
 
   useEffect(() => {
     const fetchDietas = async () => {
       try {
-        const response = await axios.get('/api/dietas');
+        const response = await axios.get('${API_BASE_URL}/api/dietas');
         setDietas(response.data);
       } catch (error) {
         console.error('Error fetching dietas:', error);
@@ -53,7 +54,7 @@ const Listadedietas = ({ theme, setTheme }) => {
 
     const fetchClientes = async () => {
       try {
-        const response = await axios.get('/api/clientes');
+        const response = await axios.get('${API_BASE_URL}/api/clientes');
         setClientes(response.data);
       } catch (error) {
         console.error('Error fetching clientes:', error);
@@ -84,7 +85,7 @@ const Listadedietas = ({ theme, setTheme }) => {
     e.preventDefault();
     try {
       const objetivoFinal = dieta.objetivo === 'Otro' ? customObjetivo : dieta.objetivo;
-      const response = await axios.post('/api/dietas', { ...dieta, objetivo: objetivoFinal });
+      const response = await axios.post('${API_BASE_URL}/api/dietas', { ...dieta, objetivo: objetivoFinal });
       setDietas([...dietas, response.data]);
       setDieta({
         nombre: '',
@@ -107,7 +108,7 @@ const Listadedietas = ({ theme, setTheme }) => {
 
   const handleDeleteDieta = async (dietaId) => {
     try {
-      await axios.delete(`/api/dietas/${dietaId}`);
+      await axios.delete(`${API_BASE_URL}/api/dietas/${dietaId}`);
       setDietas(dietas.filter((dieta) => dieta._id !== dietaId));
     } catch (error) {
       console.error('Error deleting dieta:', error);
