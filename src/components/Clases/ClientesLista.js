@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './ClientesLista.module.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const ClientesLista = ({ onClientesSeleccionados, clientesSeleccionados, onClose }) => {
   const [clientes, setClientes] = useState([]);
   const [selectedClientes, setSelectedClientes] = useState(clientesSeleccionados || []);
@@ -15,7 +17,7 @@ const ClientesLista = ({ onClientesSeleccionados, clientesSeleccionados, onClose
 
   const fetchClientes = async () => {
     try {
-      const response = await axios.get('/api/clientes');
+      const response = await axios.get(`${API_BASE_URL}/api/clientes`);
       // Filtrar clientes ya seleccionados
       const filteredClientes = response.data.filter(cliente => 
         !clientesSeleccionados.some(selected => selected._id === cliente._id)

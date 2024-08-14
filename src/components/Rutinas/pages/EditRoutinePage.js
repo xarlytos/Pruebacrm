@@ -10,6 +10,8 @@ import VistaCSVmodalsemanaaa from '../Centroderutinas/VistaCSVmodalsemanaaa';
 import Modaltransferenciarutinas from '../Centroderutinas/Modaltransferenciarutinas';
 import styles from './EditRoutinePage.module.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const EditRoutinePage = ({ theme }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ const EditRoutinePage = ({ theme }) => {
   useEffect(() => {
     const fetchRoutine = async () => {
       try {
-        const response = await axios.get(`/api/routines/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/api/routines/${id}`);
         console.log('Fetched routine from API:', response.data);
         if (!response.data.semanas.length) {
           const { duracion, fechaInicio } = location.state || {};
@@ -236,7 +238,7 @@ const EditRoutinePage = ({ theme }) => {
   const handleSaveAndReturn = async () => {
     try {
       console.log('Saving routine:', routine);
-      await axios.put(`/api/routines/${routine._id}`, routine);
+      await axios.put(`${API_BASE_URL}/api/routines/${routine._id}`, routine);
       console.log('Routine saved successfully.');
       navigate('/crear-rutina');
     } catch (error) {
@@ -254,6 +256,7 @@ const EditRoutinePage = ({ theme }) => {
     };
     reader.readAsText(file);
   };
+
 
   useEffect(() => {
     const link = document.createElement('link');

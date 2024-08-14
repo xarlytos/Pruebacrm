@@ -362,6 +362,9 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                               />
                             </div>
                           )}
+                             {item.i === 'previsiones' && (
+                            <WidgetPrevisiones isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} handleRemoveItem={handleRemoveItem} theme={theme} setTheme={setTheme} />
+                          )}
                           {item.i === 'gastos' && (
                             <WidgetGastos onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} />
                           )}
@@ -371,9 +374,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'facturas' && (
                             <WidgetFacturas isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} onTitleClick={handleOpenScanModal} theme={theme} setTheme={setTheme} />
                           )}
-                          {item.i === 'previsiones' && (
-                            <WidgetPrevisiones isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} handleRemoveItem={handleRemoveItem} theme={theme} setTheme={setTheme} />
-                          )}
+                       
                           {item.i === 'gasto' && (
                             <WidgetGasto isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} gastos={gastos} />
                           )}
