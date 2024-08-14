@@ -12,6 +12,7 @@ import DetailedIngresoBeneficio from './DetailedIngresoBeneficio';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 
 const data = [
+  // Your data here
 ];
 
 const columns = [
@@ -42,8 +43,8 @@ const columns = [
     accessor: 'email',
   },
   {
-    Header: 'Cantidad',
-    accessor: 'amount',
+    Header: 'Dinero',
+    accessor: 'dinero',  // Change the accessor to "dinero"
     Cell: ({ value }) => {
       const formatted = new Intl.NumberFormat('es-ES', {
         style: 'currency',
@@ -71,7 +72,7 @@ const columns = [
 function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
   const [emailFilter, setEmailFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [amountFilter, setAmountFilter] = useState('');
+  const [dineroFilter, setDineroFilter] = useState('');  // Change variable to "dineroFilter"
   const [isFilterApplied, setIsFilterApplied] = useState(false);
   const defaultColumn = React.useMemo(() => ({
     Filter: DefaultColumnFilter,
@@ -116,14 +117,14 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     setStatusFilter(e.target.value);
   };
 
-  const handleAmountFilterChange = (e) => {
-    setAmountFilter(e.target.value);
+  const handleDineroFilterChange = (e) => {  // Update to "handleDineroFilterChange"
+    setDineroFilter(e.target.value);
   };
 
   const applyFilters = () => {
     setFilter('email', emailFilter || undefined);
     setFilter('status', statusFilter || undefined);
-    setFilter('amount', amountFilter || undefined);
+    setFilter('dinero', dineroFilter || undefined);  // Apply filter to "dinero"
     setIsFilterApplied(true);
   };
 
@@ -131,7 +132,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     let count = 0;
     if (emailFilter) count++;
     if (statusFilter) count++;
-    if (amountFilter) count++;
+    if (dineroFilter) count++;  // Count "dineroFilter"
     return count;
   };
 
@@ -183,12 +184,12 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
               </select>
             </div>
             <div>
-              <label>Cantidad</label>
+              <label>Dinero</label>  {/* Update label to "Dinero" */}
               <input
                 type="number"
-                value={amountFilter}
-                onChange={handleAmountFilterChange}
-                placeholder="Filtrar por cantidad..."
+                value={dineroFilter}
+                onChange={handleDineroFilterChange}  // Update handler to "handleDineroFilterChange"
+                placeholder="Filtrar por dinero..."
                 className={`panelcontrol-filter-input ${theme}`}
               />
             </div>

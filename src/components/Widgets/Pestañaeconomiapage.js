@@ -48,16 +48,16 @@ function Pestañaeconomiapage({ theme, setTheme }) {
     { i: 'planesVendidos', x: 6, y: 0, w: 3, h: 2 },
     { i: 'clientesActuales', x: 9, y: 0, w: 3, h: 2 },
     { i: 'overviewChart', x: 0, y: 2, w: 6, h: 5 },
-    { i: 'recentSales', x: 6, y: 2, w: 6, h: 6 },
-    { i: 'gastos', x: 6, y: 3, w: 6, h: 4 },
-    { i: 'documentos', x: 0, y: 4, w: 6, h: 5 },
-    { i: 'facturas', x: 6, y: 4, w: 6, h: 6 },
-    { i: 'previsiones', x: 0, y: 5, w: 6, h: 4 },
-    { i: 'gasto', x: 6, y: 5, w: 6, h: 4 },
-    { i: 'beneficioGrafico', x: 0, y: 6, w: 6, h: 4 },
-    { i: 'tablaPlanes', x: 0, y: 7, w: 6, h: 4 },
-    { i: 'bonos', x: 6, y: 7, w: 6, h: 4 }
-  ]);
+    { i: 'recentSales', x: 6, y: 2, w: 6, h: 5 },
+    { i: 'previsiones', x: 0, y: 7, w: 6, h: 4 }, // Place previsiones directly beneath overviewChart
+    { i: 'gasto', x: 6, y: 7, w: 6, h: 4 }, // Place gastos next to previsiones
+    { i: 'documentos', x: 0, y: 11, w: 6, h: 5 }, // Adjust position of documentos
+    { i: 'facturas', x: 6, y: 11, w: 6, h: 5 }, // Adjust position of facturas
+    { i: 'cuenta', x: 0, y: 16, w: 6, h: 4 }, // New widget or existing one
+    { i: 'beneficioGrafico', x: 6, y: 16, w: 6, h: 4 },
+    { i: 'tablaPlanes', x: 0, y: 20, w: 6, h: 4 },
+    { i: 'bonos', x: 6, y: 20, w: 6, h: 4 }
+]);
 
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [suscripciones, setSuscripciones] = useState(0);
@@ -312,9 +312,9 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           )}
                           {item.i === 'suscripciones' && (
                             <MetricCard
-                              title="Suscripciones"
+                              title="Ultimos Planes vendidos"
                               value={planesVendidos}
-                              description="Total suscripciones"
+                              description="Ultimos Planes vendidos"
                               icon="👥"
                               valueClass="panelcontrol-metric-value-green"
                               titleColor="#2E86C1"

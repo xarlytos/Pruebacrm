@@ -7,6 +7,8 @@ import axios from 'axios';
 
 const metodoOptions = ['stripe', 'banco', 'efectivo', 'mixto'];
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }) => {
   const [data, setData] = useState([]);
   const [clients, setClients] = useState([]);
@@ -43,7 +45,7 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
     const next30Days = new Date(today);
     next30Days.setDate(today.getDate() + 30);
 
-    axios.get('http://localhost:5005/api/incomes/')
+    axios.get(`${API_BASE_URL}/api/incomes/`)
       .then(response => {
         const upcomingIncomes = response.data.filter(income => {
           const incomeDate = new Date(income.fecha);
@@ -56,7 +58,7 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
       });
 
     // Obtener la lista de clientes
-    axios.get('http://localhost:5005/api/clientes/')
+    axios.get(`${API_BASE_URL}/api/clientes/`)
       .then(response => {
         setClients(response.data);
       })
@@ -100,7 +102,7 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
   const handleAddIngreso = (e) => {
     e.preventDefault();
     
-    axios.post('http://localhost:5005/api/incomes/', newIngreso)
+    axios.post(`${API_BASE_URL}/api/incomes/`, newIngreso)
       .then(response => {
         setData([...data, response.data]);
         setNewIngreso({
