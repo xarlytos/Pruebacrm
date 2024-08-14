@@ -1,33 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TablaplanesclienteDuplicado.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 
-const clientesData = [
-  {
-    id: 'C001',
-    nombre: 'Cliente A',
-    email: 'clienteA@example.com',
-    telefono: '123456789',
-    plan: 'Plan Básico'
-  },
-  {
-    id: 'C002',
-    nombre: 'Cliente B',
-    email: 'clienteB@example.com',
-    telefono: '987654321',
-    plan: 'Plan Pro'
-  },
-  {
-    id: 'C003',
-    nombre: 'Cliente C',
-    email: 'clienteC@example.com',
-    telefono: '456123789',
-    plan: 'Plan Empresarial'
-  }
-];
-
 const TablaClientesDuplicado = ({ isEditMode, theme }) => {
-  const [data, setData] = useState(clientesData);
+  const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
     id: true,
@@ -36,6 +12,33 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
     telefono: true,
     plan: true
   });
+
+  useEffect(() => {
+    const fetchClientes = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/clientes/');
+        if (!response.ok) {
+          throw new Error('Error al obtener los clientes');
+        }
+        const clientes = await response.json();
+
+        // Mapear los datos para que coincidan con los campos usados en la tabla
+        const mappedClientes = clientes.map(cliente => ({
+          id: cliente._id,
+          nombre: cliente.nombre,
+          email: cliente.email,
+          telefono: cliente.telefono,
+          plan: cliente.plan || 'Sin plan'
+        }));
+
+        setData(mappedClientes);
+      } catch (error) {
+        console.error('Error al obtener los clientes:', error);
+      }
+    };
+
+    fetchClientes();
+  }, []);
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);

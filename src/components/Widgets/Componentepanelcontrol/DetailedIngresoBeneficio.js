@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import OverviewChartPopup from './DuplicadosPopup/OverviewChartPopup';
 import MetricCardPopup from './DuplicadosPopup/MetricCardPopup';
 import RecentSalesPopup from './DuplicadosPopup/RecentSalesPopup';
@@ -13,24 +13,41 @@ const DetailedIngresoBeneficio = ({
   theme, 
   setTheme, 
   totalIngresos, 
-  gastos, 
-  clientesActuales // Añadimos la prop aquí
+  clientesActuales 
 }) => {
+  const [gastos, setGastos] = useState([]); 
+
+  useEffect(() => {
+    const fetchGastos = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/expenses/');
+        if (!response.ok) {
+          throw new Error('Error al obtener los gastos');
+        }
+        const result = await response.json();
+        console.log('Datos de gastos obtenidos:', result); // Verificar los datos obtenidos
+        setGastos(result);
+      } catch (error) {
+        console.error('Error al cargar los gastos:', error);
+      }
+    };
+
+    fetchGastos();
+  }, []);
+
+  const totalGastos = gastos.reduce((acc, gasto) => {
+    console.log('Sumando gasto:', gasto.amount); // Verificar cada valor de gasto que se suma
+    return acc + gasto.amount;
+  }, 0);
+
+  const beneficioNeto = totalIngresos - totalGastos;
+  const margenGanancia = totalIngresos > 0 ? (beneficioNeto / totalIngresos) * 100 : 0;
+  const proyeccionMes = beneficioNeto;
+
+  // Definir toggleTheme
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
-
-  // Calcular el total de gastos
-  const totalGastos = gastos.reduce((acc, gasto) => acc + gasto.amount, 0);
-
-  // Beneficio neto es la diferencia entre ingresos y gastos
-  const beneficioNeto = totalIngresos - totalGastos;
-
-  // Margen de ganancia es el beneficio neto dividido entre los ingresos, multiplicado por 100 para obtener el porcentaje
-  const margenGanancia = totalIngresos > 0 ? (beneficioNeto / totalIngresos) * 100 : 0;
-
-  // Proyección del mes es ingresos menos gastos (esencialmente el beneficio neto)
-  const proyeccionMes = beneficioNeto;
 
   return (
     <div className={`detailed-ingreso-beneficio-modal ${theme}`}>

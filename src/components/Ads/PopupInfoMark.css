@@ -9,58 +9,60 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 30px; /* Añade padding para que no se pegue a los bordes */
 }
 
 .popup-content {
     background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    width: 400px;
+    padding: 30px; /* Aumenta el padding para mayor espacio interior */
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    width: 90%; /* Aumenta el ancho al 90% del viewport */
+    max-width: 600px; /* Aumenta el ancho máximo */
     text-align: center;
-    color: #3F0071; /* Cambiado a uno de los colores proporcionados */
+    color: #3F0071; /* Color del texto */
 }
 
 .popup-field {
-    margin-bottom: 20px;
+    margin-bottom: 25px; /* Aumenta el margen inferior para mayor espacio entre campos */
 }
 
 .popup-field label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px; /* Aumenta el margen inferior para mejor separación */
     font-weight: bold;
-    color: #FB2576; /* Cambiado a uno de los colores proporcionados */
+    color: #FB2576; /* Color del texto de la etiqueta */
 }
 
 .popup-field select {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* Aumenta el padding para mayor comodidad */
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px; /* Bordes más redondeados */
+    box-sizing: border-box;
 }
 
 .popup-buttons {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-top: 30px; /* Añade margen superior para separar los botones de los campos */
+    gap: 15px; /* Añade espacio entre los botones */
+}
+
+.report-button, .close-button {
+    flex: 1; /* Asegura que ambos botones tengan el mismo tamaño */
+    padding: 12px 25px; /* Aumenta el padding para botones más cómodos */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Bordes más redondeados */
+    cursor: pointer;
+    font-size: 16px; /* Aumenta el tamaño de la fuente para mayor legibilidad */
 }
 
 .report-button {
-    padding: 10px 20px;
-    background-color: #0002A1; /* Cambiado a uno de los colores proporcionados */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    background-color: #0002A1; /* Color del botón report */
 }
 
 .close-button {
-    padding: 10px 20px;
-    background-color: #332FD0; /* Cambiado a uno de los colores proporcionados */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    background-color: #332FD0; /* Color del botón close */
 }

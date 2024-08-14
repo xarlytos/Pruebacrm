@@ -1,59 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TablaplanesclienteDuplicado.css';
 import Modalcreacionplanes from './ModalcreacionplanesDuplicado';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 import AsociarClientesDropdown from './AsociarClientesDropdown';
 
-const planesData = [
-  {
-    id: 'P001',
-    nombre: 'Plan Básico',
-    clientes: 120,
-    precio: '$10/mes',
-    duracion: '1 mes'
-  },
-  {
-    id: 'P002',
-    nombre: 'Plan Pro',
-    clientes: 75,
-    precio: '$20/mes',
-    duracion: '1 año'
-  },
-  {
-    id: 'P003',
-    nombre: 'Plan Empresarial',
-    clientes: 30,
-    precio: '$50/mes',
-    duracion: '1 año'
-  }
-];
-
-const initialClientesData = [
-  {
-    id: 'C001',
-    nombre: 'Cliente A',
-    plan: 'Plan Básico'
-  },
-  {
-    id: 'C002',
-    nombre: 'Cliente B',
-    plan: 'Plan Pro'
-  },
-  {
-    id: 'C003',
-    nombre: 'Cliente C',
-    plan: 'Plan Empresarial'
-  },
-  {
-    id: 'C004',
-    nombre: 'Cliente D',
-    plan: null
-  }
-];
-
 const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
-  const [data, setData] = useState(planesData);
-  const [clientes, setClientes] = useState(initialClientesData);
+  const [data, setData] = useState([]);
+  const [clientes, setClientes] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
     id: true,
@@ -65,6 +18,50 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
   const [showCreatePlanModal, setShowCreatePlanModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showAsociarClientes, setShowAsociarClientes] = useState(false);
+
+  useEffect(() => {
+    const fetchPlanes = async () => {
+      try {
+        const [planesFijosResponse, planesVariablesResponse] = await Promise.all([
+          fetch('http://localhost:5005/plans/fixed/'),
+          fetch('http://localhost:5005/plans/variable/')
+        ]);
+
+        if (!planesFijosResponse.ok || !planesVariablesResponse.ok) {
+          throw new Error('Error al obtener los planes');
+        }
+
+        const [planesFijos, planesVariables] = await Promise.all([
+          planesFijosResponse.json(),
+          planesVariablesResponse.json()
+        ]);
+
+        // Combine ambos tipos de planes
+        const combinedData = [
+          ...planesFijos.map(plan => ({
+            id: plan._id,
+            nombre: plan.name,
+            clientes: plan.clientsCount || 0, // Asumiendo que tienes un campo `clientsCount`
+            precio: `$${plan.price}/mes`, // Asumiendo que tienes un campo `price`
+            duracion: plan.duration // Asumiendo que tienes un campo `duration`
+          })),
+          ...planesVariables.map(plan => ({
+            id: plan._id,
+            nombre: plan.name,
+            clientes: plan.clientsCount || 0,
+            precio: `$${plan.price}/mes`,
+            duracion: plan.duration
+          }))
+        ];
+
+        setData(combinedData);
+      } catch (error) {
+        console.error('Error al obtener los planes:', error);
+      }
+    };
+
+    fetchPlanes();
+  }, []);
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);

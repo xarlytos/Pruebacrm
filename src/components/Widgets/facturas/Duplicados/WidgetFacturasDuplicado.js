@@ -111,27 +111,27 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
   };
 
   if (loading) {
-    return <div className={`Facturas-widget ${theme}`}>Cargando...</div>;
+    return <div className={`WidgetFacturasDuplicado-widget ${theme}`}>Cargando...</div>;
   }
 
   if (error) {
-    return <div className={`Facturas-widget ${theme}`}>{error}</div>;
+    return <div className={`WidgetFacturasDuplicado-widget ${theme}`}>{error}</div>;
   }
 
   return (
-    <div className={`Facturas-widget ${theme}`}>
+    <div className={`WidgetFacturasDuplicado-widget ${theme}`}>
       <FacturasActionButtons onScanClick={handleScanClick} onOpenClick={handleOpenClick} />
-      <div className="Facturas-filter-container">
+      <div className="WidgetFacturasDuplicado-filter-container">
         <h2>Facturas</h2>
         <input
           type="text"
           placeholder="Filtrar..."
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          className={`Facturas-filter-input ${theme}`}
+          className={`WidgetFacturasDuplicado-filter-input ${theme}`}
         />
       </div>
-      <table className={`Facturas-table ${theme}`}>
+      <table className={`WidgetFacturasDuplicado-table ${theme}`}>
         <thead>
           <tr>
             <th>
@@ -159,19 +159,19 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
               {selectedColumns.tipo && <td>{item.tipo}</td>}
               {selectedColumns.numeroFactura && <td>{item.numeroFactura}</td>}
               <td>
-                <div className="Facturas-action-dropdown">
+                <div className="WidgetFacturasDuplicado-action-dropdown">
                   <button
-                    className="Facturas-action-button"
+                    className="WidgetFacturasDuplicado-action-button"
                     onClick={() => toggleActionDropdown(index)}
                   >
                     ...
                   </button>
                   {actionDropdownOpen[index] && (
-                    <div className="Facturas-action-content">
+                    <div className="WidgetFacturasDuplicado-action-content">
                       {item.tipo === 'Factura Recibida' && (
-                        <button className="Facturas-action-item">Añadir como Gasto</button>
+                        <button className="WidgetFacturasDuplicado-action-item">Añadir como Gasto</button>
                       )}
-                      <button className="Facturas-action-item" onClick={() => openShowInvoiceModal(item)}>Mostrar Factura</button>
+                      <button className="WidgetFacturasDuplicado-action-item" onClick={() => openShowInvoiceModal(item)}>Mostrar Factura</button>
                     </div>
                   )}
                 </div>
@@ -180,48 +180,49 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
           ))}
         </tbody>
       </table>
-      <div className="Facturas-pagination">
+      <div className="WidgetFacturasDuplicado-pagination">
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="Facturas-pagination-button"
+          className={`WidgetFacturasDuplicado-pagination-button ${theme}`}
         >
           Anterior
         </button>
-        <span className="Facturas-pagination-info">
+        <span className={`WidgetFacturasDuplicado-pagination-info ${theme}`}>
           Página {currentPage} de {totalPages}
         </span>
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="Facturas-pagination-button"
+          className={`WidgetFacturasDuplicado-pagination-button ${theme}`}
         >
           Siguiente
         </button>
       </div>
 
-      {isInvoiceModalOpen && (
-        <div className="WFacturas-modal-overlay">
-          <div className="WFacturas-modal">
-            <button className="WFacturas-modal-close-button" onClick={closeInvoiceModal}>Cerrar</button>
-            <InvoiceForm closeModal={closeInvoiceModal} />
-          </div>
-        </div>
-      )}
-
+      {/* Pop-up para el formulario de escanear factura */}
       {isScanModalOpen && (
-        <div className="WFacturas-modal-overlay">
-          <div className="WFacturas-modal">
-            <button className="WFacturas-modal-close-button" onClick={closeScanModal}>Cerrar</button>
+        <div className="WidgetFacturasDuplicado-popup-overlay">
+          <div className="WidgetFacturasDuplicado-popup-content">
             <ScanInvoiceForm closeModal={closeScanModal} />
           </div>
         </div>
       )}
 
+      {/* Pop-up para el formulario de abrir factura */}
+      {isInvoiceModalOpen && (
+        <div className="WidgetFacturasDuplicado-popup-overlay">
+          <div className="WidgetFacturasDuplicado-popup-content">
+            <InvoiceForm closeModal={closeInvoiceModal} />
+          </div>
+        </div>
+      )}
+
+      {/* Modal para mostrar la factura seleccionada */}
       {isShowInvoiceModalOpen && (
-        <div className="WFacturas-modal-overlay">
-          <div className="WFacturas-modal">
-            <button className="WFacturas-modal-close-button" onClick={closeShowInvoiceModal}>Cerrar</button>
+        <div className="WidgetFacturasDuplicado-modal-overlay">
+          <div className={`WidgetFacturasDuplicado-modal ${theme}`}>
+            <button className={`WidgetFacturasDuplicado-modal-close-button ${theme}`} onClick={closeShowInvoiceModal}>Cerrar</button>
             {pdfUrl && (
               <div>
                 <h2>Factura {selectedInvoice.numeroFactura}</h2>

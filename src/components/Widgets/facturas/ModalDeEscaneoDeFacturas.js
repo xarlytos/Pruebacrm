@@ -13,6 +13,7 @@ function ModalDeEscaneoDeFacturas({ isOpen, onClose, theme }) {
     const [total, setTotal] = useState('');
     const [invoiceDate, setInvoiceDate] = useState('');
 
+    // Si no está abierto, retorna null, no renderiza nada
     if (!isOpen) return null;
 
     const handleFileChange = (e) => {

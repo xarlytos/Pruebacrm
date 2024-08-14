@@ -1,38 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './WidgetGastoPopup.css';
 
-const initialData = [
-  {
-    numero: 'G001',
-    fecha: '2024-07-18',
-    estado: 'Pagado',
-    proveedor: 'Proveedor A',
-    monto: '$500',
-    tipo: 'Fijo'
-  },
-  {
-    numero: 'G002',
-    fecha: '2024-07-19',
-    estado: 'Pendiente',
-    proveedor: 'Proveedor B',
-    monto: '$1200',
-    tipo: 'Variable'
-  },
-  // Añade más filas según sea necesario
-];
-
 const WidgetGastoPopup = ({ theme, setTheme }) => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]); 
   const [filterText, setFilterText] = useState('');
   const [isGastoDropdownOpen, setIsGastoDropdownOpen] = useState(false);
   const [newGasto, setNewGasto] = useState({
-    numero: '',
-    fecha: '',
-    estado: '',
-    proveedor: '',
-    monto: '',
-    tipo: ''
+    concept: '',
+    description: '',
+    category: '',
+    amount: '',
+    status: '',
+    date: '',
+    frequency: '',
+    duration: '',
+    client: '',
+    plan: '',
+    planType: ''
   });
+
+  // Hacer una solicitud para obtener los gastos desde la API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/expenses/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        console.error('Error al cargar los gastos:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);
@@ -40,7 +43,7 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
 
   const handleChangeStatus = (index) => {
     const newData = [...data];
-    newData[index].estado = newData[index].estado === 'Pagado' ? 'Pendiente' : 'Pagado';
+    newData[index].status = newData[index].status === 'Pagado' ? 'Pendiente' : 'Pagado';
     setData(newData);
   };
 
@@ -53,23 +56,46 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
     setNewGasto({ ...newGasto, [name]: value });
   };
 
-  const handleAddGasto = (e) => {
+  const handleAddGasto = async (e) => {
     e.preventDefault();
-    setData([...data, newGasto]);
-    setNewGasto({
-      numero: '',
-      fecha: '',
-      estado: '',
-      proveedor: '',
-      monto: '',
-      tipo: ''
-    });
-    setIsGastoDropdownOpen(false);
+
+    try {
+      const response = await fetch('http://localhost:5005/api/expenses/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newGasto)
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al crear el gasto');
+      }
+
+      const createdGasto = await response.json();
+      setData([...data, createdGasto]);
+      setNewGasto({
+        concept: '',
+        description: '',
+        category: '',
+        amount: '',
+        status: '',
+        date: '',
+        frequency: '',
+        duration: '',
+        client: '',
+        plan: '',
+        planType: ''
+      });
+      setIsGastoDropdownOpen(false);
+    } catch (error) {
+      console.error('Error al añadir el gasto:', error);
+    }
   };
 
   const filteredData = data.filter(item =>
     Object.values(item).some(val =>
-      val.toLowerCase().includes(filterText.toLowerCase())
+      val && val.toString().toLowerCase().includes(filterText.toLowerCase())
     )
   );
 
@@ -97,52 +123,103 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
                 <form onSubmit={handleAddGasto}>
                   <input 
                     type="text" 
-                    name="numero" 
-                    placeholder="Número de Gasto" 
-                    value={newGasto.numero} 
+                    name="concept" 
+                    placeholder="Concepto" 
+                    value={newGasto.concept} 
                     onChange={handleGastoChange} 
                     className={`${theme}`}
+                    required
                   />
                   <input 
                     type="text" 
-                    name="fecha" 
-                    placeholder="Fecha" 
-                    value={newGasto.fecha} 
+                    name="description" 
+                    placeholder="Descripción" 
+                    value={newGasto.description} 
                     onChange={handleGastoChange} 
                     className={`${theme}`}
+                    required
                   />
                   <input 
                     type="text" 
-                    name="estado" 
-                    placeholder="Estado" 
-                    value={newGasto.estado} 
+                    name="category" 
+                    placeholder="Categoría" 
+                    value={newGasto.category} 
                     onChange={handleGastoChange} 
                     className={`${theme}`}
+                    required
                   />
                   <input 
-                    type="text" 
-                    name="proveedor" 
-                    placeholder="Proveedor" 
-                    value={newGasto.proveedor} 
-                    onChange={handleGastoChange} 
-                    className={`${theme}`}
-                  />
-                  <input 
-                    type="text" 
-                    name="monto" 
+                    type="number" 
+                    name="amount" 
                     placeholder="Monto" 
-                    value={newGasto.monto} 
+                    value={newGasto.amount} 
+                    onChange={handleGastoChange} 
+                    className={`${theme}`}
+                    required
+                  />
+                  <input 
+                    type="text" 
+                    name="status" 
+                    placeholder="Estado" 
+                    value={newGasto.status} 
+                    onChange={handleGastoChange} 
+                    className={`${theme}`}
+                    required
+                  />
+                  <input 
+                    type="date" 
+                    name="date" 
+                    placeholder="Fecha" 
+                    value={newGasto.date} 
+                    onChange={handleGastoChange} 
+                    className={`${theme}`}
+                    required
+                  />
+                  <select 
+                    name="frequency" 
+                    value={newGasto.frequency} 
+                    onChange={handleGastoChange} 
+                    className={`${theme}`}
+                  >
+                    <option value="">Frecuencia</option>
+                    <option value="weekly">Semanal</option>
+                    <option value="biweekly">Quincenal</option>
+                    <option value="monthly">Mensual</option>
+                  </select>
+                  <input 
+                    type="number" 
+                    name="duration" 
+                    placeholder="Duración (meses)" 
+                    value={newGasto.duration} 
                     onChange={handleGastoChange} 
                     className={`${theme}`}
                   />
                   <input 
                     type="text" 
-                    name="tipo" 
-                    placeholder="Tipo (Fijo/Variable)" 
-                    value={newGasto.tipo} 
+                    name="client" 
+                    placeholder="ID Cliente" 
+                    value={newGasto.client} 
                     onChange={handleGastoChange} 
                     className={`${theme}`}
                   />
+                  <input 
+                    type="text" 
+                    name="plan" 
+                    placeholder="ID Plan" 
+                    value={newGasto.plan} 
+                    onChange={handleGastoChange} 
+                    className={`${theme}`}
+                  />
+                  <select 
+                    name="planType" 
+                    value={newGasto.planType} 
+                    onChange={handleGastoChange} 
+                    className={`${theme}`}
+                  >
+                    <option value="">Tipo de Plan</option>
+                    <option value="FixedPlan">Plan Fijo</option>
+                    <option value="VariablePlan">Plan Variable</option>
+                  </select>
                   <button type="submit">Añadir</button>
                 </form>
               </div>
@@ -154,12 +231,17 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
         <thead>
           <tr>
             <th></th>
-            <th>Número de Gasto</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Proveedor</th>
+            <th>Concepto</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
             <th>Monto</th>
-            <th>Gasto (Fijo/Variable)</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Frecuencia</th>
+            <th>Duración</th>
+            <th>ID Cliente</th>
+            <th>ID Plan</th>
+            <th>Tipo de Plan</th>
             <th></th>
           </tr>
         </thead>
@@ -167,12 +249,17 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
           {filteredData.map((item, index) => (
             <tr key={index}>
               <td><input type="checkbox" /></td>
-              <td>{item.numero}</td>
-              <td>{item.fecha}</td>
-              <td>{item.estado}</td>
-              <td>{item.proveedor}</td>
-              <td>{item.monto}</td>
-              <td>{item.tipo}</td>
+              <td>{item.concept}</td>
+              <td>{item.description}</td>
+              <td>{item.category}</td>
+              <td>{item.amount}</td>
+              <td>{item.status}</td>
+              <td>{new Date(item.date).toLocaleDateString()}</td>
+              <td>{item.frequency}</td>
+              <td>{item.duration}</td>
+              <td>{item.client}</td>
+              <td>{item.plan}</td>
+              <td>{item.planType}</td>
               <td>
                 <div className="dropdown options-dropdown">
                   <button className={`dropdown-toggle options-btn ${theme}`}>...</button>

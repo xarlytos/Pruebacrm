@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './WidgetPrevisionesPopup.css';
 
-const WidgetPrevisionesPopup = ({ theme, setTheme, ingresosEsperados = [], setIngresosEsperados }) => { // Default to empty array
-  const [data, setData] = useState(ingresosEsperados); 
+const WidgetPrevisionesPopup = ({ theme, setTheme, setIngresosEsperados }) => {
+  const [data, setData] = useState([]); 
   const [filterText, setFilterText] = useState('');
   const [selectedRow, setSelectedRow] = useState(null);
   const [statusPopupRow, setStatusPopupRow] = useState(null);
@@ -16,9 +16,24 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, ingresosEsperados = [], setIn
     estatus: ''
   });
 
+  // Hacer una solicitud para obtener los ingresos desde la API
   useEffect(() => {
-    setData(ingresosEsperados); // Actualiza data cuando cambian los ingresosEsperados
-  }, [ingresosEsperados]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/incomes/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result);
+        setIngresosEsperados(result); // Actualiza el estado en el componente padre si es necesario
+      } catch (error) {
+        console.error('Error al cargar los ingresos:', error);
+      }
+    };
+
+    fetchData();
+  }, [setIngresosEsperados]);
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);
@@ -50,7 +65,7 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, ingresosEsperados = [], setIn
 
   const filteredData = data.filter(item => 
     Object.values(item).some(val => 
-      val.toLowerCase().includes(filterText.toLowerCase())
+      val && val.toString().toLowerCase().includes(filterText.toLowerCase())
     )
   );
 
@@ -110,7 +125,7 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, ingresosEsperados = [], setIn
                     className={`${theme}`}
                   />
                   <input 
-                    type="text" 
+                    type="date" 
                     name="fecha" 
                     placeholder="Fecha" 
                     value={newIngreso.fecha} 
@@ -118,7 +133,7 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, ingresosEsperados = [], setIn
                     className={`${theme}`}
                   />
                   <input 
-                    type="text" 
+                    type="number" 
                     name="monto" 
                     placeholder="Monto" 
                     value={newIngreso.monto} 
@@ -173,14 +188,14 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, ingresosEsperados = [], setIn
           {filteredData.map((item, index) => (
             <tr key={index}>
               <td><input type="checkbox" /></td>
-              <td>{item.numero}</td>
-              <td>{item.fecha}</td>
-              <td>{item.monto}</td>
-              <td>{item.pagadoPor}</td>
+              <td>{item._id}</td>
+              <td>{new Date(item.fecha).toLocaleDateString()}</td>
+              <td>{item.cantidad}</td>
+              <td>{item.cliente?.nombre}</td>
               <td className={item.estatus === 'Pendiente' ? 'translucent' : ''}>
-                {item.estatus === 'Pendiente' ? 'vacío' : item.metodo}
+                {item.metodoPago}
               </td>
-              <td>{item.estatus}</td>
+              <td>{item.estatus || 'Pendiente'}</td>
               <td>
                 {item.estatus === 'Pendiente' ? (
                   <button className="confirm-btn" onClick={() => handleConfirm(index)}>Confirmar</button>

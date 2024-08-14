@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useTable,
   useSortBy,
@@ -9,102 +9,110 @@ import {
 } from 'react-table';
 import './RecentSalesPopup.css';
 
-const data = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-];
-
-const columns = [
-  {
-    Header: 'Seleccionar',
-    id: 'selection',
-    Cell: ({ row }) => (
-      <input type="checkbox" {...row.getToggleRowSelectedProps()} />
-    ),
-    Header: ({ getToggleAllRowsSelectedProps }) => (
-      <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
-    ),
-  },
-  {
-    Header: 'Estado',
-    accessor: 'status',
-    Cell: ({ value }) => {
-      const status = {
-        success: 'Éxito',
-        processing: 'Procesando',
-        failed: 'Fallido'
-      };
-      return status[value] || value;
-    }
-  },
-  {
-    Header: 'Correo Electrónico',
-    accessor: 'email',
-  },
-  {
-    Header: 'Cantidad',
-    accessor: 'amount',
-    Cell: ({ value }) => {
-      const formatted = new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(value);
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    Header: 'Acciones',
-    Cell: ({ row }) => (
-      <div className="popup-dropdown">
-        <button className="popup-dropdown-btn">...</button>
-        <div className="popup-dropdown-content">
-          <button>Copiar ID de Pago</button>
-          <button>Ver Cliente</button>
-          <button>Ver Detalles del Pago</button>
-        </div>
-      </div>
-    ),
-  },
-];
-
 function RecentSalesPopup({ detailed, theme, setTheme }) {
   const [filterInput, setFilterInput] = useState('');
-  const defaultColumn = React.useMemo(() => ({
-    Filter: DefaultColumnFilter,
-  }), []);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const columns = React.useMemo(() => [
+    {
+      Header: 'Seleccionar',
+      id: 'selection',
+      Cell: ({ row }) => (
+        <input type="checkbox" {...row.getToggleRowSelectedProps()} />
+      ),
+      Header: ({ getToggleAllRowsSelectedProps }) => (
+        <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
+      ),
+    },
+    {
+      Header: 'Estado',
+      accessor: 'metodoPago',
+      Cell: ({ value }) => {
+        const status = {
+          efectivo: 'Efectivo',
+          stripe: 'Stripe',
+          tarjeta: 'Tarjeta'
+        };
+        return status[value] || value;
+      }
+    },
+    {
+      Header: 'Correo Electrónico',
+      accessor: 'cliente.email',
+    },
+    {
+      Header: 'Cantidad',
+      accessor: 'cantidad',
+      Cell: ({ value }) => {
+        const formatted = !isNaN(value) ? new Intl.NumberFormat('es-ES', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(value) : 'Cantidad Inválida';
+        return <div className="text-right font-medium">{formatted}</div>;
+      },
+    },
+    {
+      Header: 'Acciones',
+      Cell: ({ row }) => (
+        <div className="popup-dropdown">
+          <button className="popup-dropdown-btn">...</button>
+          <div className="popup-dropdown-content">
+            <button>Copiar ID de Pago</button>
+            <button>Ver Cliente</button>
+            <button>Ver Detalles del Pago</button>
+          </div>
+        </div>
+      ),
+    },
+  ], []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/incomes/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+
+        // Obtener la fecha actual
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
+        // Filtrar los registros del mes actual y el mes anterior
+        const filteredData = result.filter(item => {
+          const itemDate = new Date(item.fecha);
+          const itemMonth = itemDate.getMonth();
+          const itemYear = itemDate.getFullYear();
+
+          return (
+            (itemYear === currentYear && (itemMonth === currentMonth || itemMonth === currentMonth - 1)) ||
+            (itemMonth === 11 && itemYear === currentYear - 1 && currentMonth === 0) // Manejo del caso de enero
+          );
+        });
+
+        setData(filteredData);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const defaultColumn = React.useMemo(() => ({
+    Filter: DefaultColumnFilter,
+  }), []);
 
   const tableInstance = useTable(
     {
@@ -138,13 +146,21 @@ function RecentSalesPopup({ detailed, theme, setTheme }) {
 
   const handleFilterChange = (e) => {
     const value = e.target.value || undefined;
-    setFilter('email', value);
+    setFilter('cliente.email', value);
     setFilterInput(value);
   };
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
+
+  if (isLoading) {
+    return <div>Cargando datos...</div>;
+  }
+
+  if (error) {
+    return <div>Error al cargar los datos: {error.message}</div>;
+  }
 
   return (
     <div className={`popup-recent-sales ${detailed ? 'detailed' : ''} ${isExpanded ? 'expanded' : 'collapsed'} ${theme}`}>
@@ -238,7 +254,7 @@ function RecentSalesPopup({ detailed, theme, setTheme }) {
         </>
       )}
     </div>
-  );  
+  );
 }
 
 function DefaultColumnFilter({

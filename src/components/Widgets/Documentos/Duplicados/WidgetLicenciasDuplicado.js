@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './widget-LicenciasDuplicado.css';
 
 function WidgetLicenciasDuplicado({ isEditMode, theme }) {
@@ -10,13 +10,45 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   });
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [licencias, setLicencias] = useState([]); // Estado para las licencias
+  const [showAddLicenseModal, setShowAddLicenseModal] = useState(false); // Estado para mostrar/ocultar el modal
+  const [newLicense, setNewLicense] = useState({
+    name: '',
+    type: '',
+    organization: '',
+    issueDate: '',
+    expirationDate: '',
+    attachment: '',
+    renewalState: '',
+    notes: '',
+    reminderDate: '',
+  });
   const itemsPerPage = 5;
 
-  const licencias = [
-    { id: 1, titulo: 'Licencia 1', fecha: '2023-01-01' },
-    { id: 3, titulo: 'Licencia 2', fecha: '2023-01-03' },
-    { id: 5, titulo: 'Licencia 3', fecha: '2023-01-05' },
-  ];
+  useEffect(() => {
+    const fetchLicenses = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/licenses/');
+        if (!response.ok) {
+          throw new Error('Error al obtener las licencias');
+        }
+        const licensesData = await response.json();
+
+        // Mapeamos los datos obtenidos para que coincidan con las columnas de la tabla
+        const mappedLicencias = licensesData.map((license, index) => ({
+          id: license._id,
+          titulo: license.name,
+          fecha: new Date(license.issueDate).toLocaleDateString(),
+        }));
+
+        setLicencias(mappedLicencias);
+      } catch (error) {
+        console.error('Error al obtener las licencias:', error);
+      }
+    };
+
+    fetchLicenses();
+  }, []);
 
   const filteredLicencias = licencias.filter(licencia =>
     licencia.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -36,6 +68,65 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
 
   const totalPages = Math.ceil(filteredLicencias.length / itemsPerPage);
 
+  const handleAddLicense = () => {
+    setShowAddLicenseModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowAddLicenseModal(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewLicense({ ...newLicense, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5005/api/licenses/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newLicense),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al crear la licencia');
+      }
+
+      const createdLicense = await response.json();
+
+      // Actualizar la lista de licencias con la nueva licencia
+      setLicencias([
+        ...licencias,
+        {
+          id: createdLicense._id,
+          titulo: createdLicense.name,
+          fecha: new Date(createdLicense.issueDate).toLocaleDateString(),
+        },
+      ]);
+
+      // Cerrar el modal y resetear el formulario
+      setShowAddLicenseModal(false);
+      setNewLicense({
+        name: '',
+        type: '',
+        organization: '',
+        issueDate: '',
+        expirationDate: '',
+        attachment: '',
+        renewalState: '',
+        notes: '',
+        reminderDate: '',
+      });
+    } catch (error) {
+      console.error('Error al crear la licencia:', error);
+    }
+  };
+
   return (
     <div className={`Licencias-widget ${theme}`}>
       <h2>Licencias</h2>
@@ -47,6 +138,9 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
           onChange={e => setSearchTerm(e.target.value)}
           className={`Licencias-filter-input ${theme}`}
         />
+        <button className={`Licencias-add-button ${theme}`} onClick={handleAddLicense}>
+          Añadir Licencia
+        </button>
       </div>
       <table className={`Licencias-table ${theme}`}>
         <thead>
@@ -108,6 +202,89 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
           Siguiente
         </button>
       </div>
+
+      {showAddLicenseModal && (
+        <div className="modal-overlay">
+          <div className={`modal-content ${theme}`}>
+            <h3>Añadir Nueva Licencia</h3>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Nombre"
+                value={newLicense.name}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="type"
+                placeholder="Tipo"
+                value={newLicense.type}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="organization"
+                placeholder="Organización"
+                value={newLicense.organization}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="date"
+                name="issueDate"
+                placeholder="Fecha de Emisión"
+                value={newLicense.issueDate}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="date"
+                name="expirationDate"
+                placeholder="Fecha de Expiración"
+                value={newLicense.expirationDate}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="attachment"
+                placeholder="Adjunto"
+                value={newLicense.attachment}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="renewalState"
+                placeholder="Estado de Renovación"
+                value={newLicense.renewalState}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="date"
+                name="reminderDate"
+                placeholder="Fecha de Recordatorio"
+                value={newLicense.reminderDate}
+                onChange={handleInputChange}
+              />
+              <textarea
+                name="notes"
+                placeholder="Notas"
+                value={newLicense.notes}
+                onChange={handleInputChange}
+              />
+              <button type="submit">Añadir Licencia</button>
+              <button type="button" onClick={handleCloseModal}>
+                Cancelar
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

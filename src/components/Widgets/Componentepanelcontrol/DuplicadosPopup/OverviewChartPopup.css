@@ -4,6 +4,9 @@
   border-radius: 8px;
   flex: 2;
   min-width: 300px;
+  border: 1px solid #e0e0e0; /* Borde sutil */
+  background-color: var(--background); /* Fondo basado en el tema */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
 }
 
 .panelcontrol-overview-popup.detailed {
@@ -26,6 +29,9 @@
 .panelcontrol-overview-popup-chart-wrapper {
   position: relative;
   height: 300px; /* Ajusta la altura según sea necesario */
+  border-radius: 8px; /* Bordes redondeados */
+  border: 1px solid #e0e0e0; /* Borde sutil */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .panelcontrol-dropdown-grafico {
@@ -37,6 +43,7 @@
   margin-left: 0px;
   margin-bottom: 20px;
   width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .year-navigation, .month-navigation, .week-navigation {
@@ -48,11 +55,12 @@
 .year-navigation button, .month-navigation button, .week-navigation button {
   background-color: var(--secondary);
   color: var(--text);
-  border: none;
+  border: 1px solid #e0e0e0; /* Borde sutil */
   padding: 10px;
   margin: 0 10px;
   cursor: pointer;
   border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .year-navigation span, .month-navigation span, .week-navigation span {
@@ -64,51 +72,64 @@
 .panelcontrol-overview-popup.light {
   background: var(--background-light);
   color: var(--text-light);
+  border: 1px solid #e0e0e0; /* Borde sutil para el tema claro */
 }
 
 .panelcontrol-dropdown-grafico.light {
   border: 1px solid var(--button-border-light);
   background-color: var(--button-bg-light);
   color: var(--button-text-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .year-navigation button.light {
   background-color: var(--button-bg-light);
   color: var(--button-text-light);
+  border: 1px solid var(--button-border-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 /* Estilos para tema oscuro */
 .panelcontrol-overview-popup.dark {
   background: var(--background-dark);
   color: var(--text-dark);
+  border: 1px solid #444; /* Borde sutil más oscuro */
 }
 
 .panelcontrol-dropdown-grafico.dark {
   border: 1px solid var(--button-border-dark);
   background-color: var(--button-bg-dark);
   color: var(--button-text-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra más oscura */
 }
 
 .year-navigation button.dark {
   background-color: var(--button-bg-dark);
   color: var(--button-text-dark);
+  border: 1px solid var(--button-border-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra más oscura */
 }
 
 /* Botón de cambio de tema */
 .panelcontrol-theme-toggle-btn {
   padding: 10px;
-  border: none;
+  border: 1px solid #e0e0e0; /* Borde sutil */
   border-radius: 5px;
   cursor: pointer;
   margin-left: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .panelcontrol-theme-toggle-btn.light {
   background: var(--button-bg-light);
   color: var(--button-text-light);
+  border: 1px solid var(--button-border-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
 .panelcontrol-theme-toggle-btn.dark {
   background: var(--button-bg-dark);
   color: var(--button-text-dark);
+  border: 1px solid var(--button-border-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra más oscura */
 }

@@ -10,24 +10,25 @@
   padding-right: 15%;
   border: 1px solid #44444485;
   border-radius: 15px;
-  background-color: #33333383;
+  background-color: #d9bfae; /* Color de fondo beige */
 }
 
 .Facturas-scan-btn,
 .Facturas-add-btn {
   padding: 20px;  /* Aumenta el tamaño del padding para botones más grandes */
-  background-color: #4CAF50;
-  color: white;
-  border: none;
+  background-color: #ffffff; /* Fondo blanco para contraste con el fondo beige */
+  color: #000000; /* Texto negro */
+  border: 1px solid #333333; /* Borde oscuro para un buen contraste */
   border-radius: 15px;
   cursor: pointer;
   font-size: 16px;  /* Aumenta el tamaño de la fuente */
   width: 30%;  /* Ajusta el ancho del botón */
   height: 50px;
   padding-top: 13px;
+  transition: background-color 0.3s ease; /* Transición suave para el hover */
 }
 
 .Facturas-scan-btn:hover,
 .Facturas-add-btn:hover {
-  background-color: #45a049;
+  background-color: #cccccc; /* Color gris claro al pasar el ratón */
 }
