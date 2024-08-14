@@ -19,6 +19,7 @@ import WidgetGasto from './Widgetgasto/widgetgasto';
 import BeneficioGrafico from './Ingresos-beneficios/BeneficioGrafico';
 import Tablaplanescliente from './Planes/Tablaplanescliente';
 import Bonos from './Bonos/Bonos';
+import WidgetCuentaBancaria from './Gastos/widget-gastos';
 import WidgetPrevisionesPopup from './Componentepanelcontrol/DuplicadosPopup/WidgetPrevisionesPopup';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
@@ -53,7 +54,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
     { i: 'gasto', x: 6, y: 7, w: 6, h: 4 }, // Place gastos next to previsiones
     { i: 'documentos', x: 0, y: 11, w: 6, h: 5 }, // Adjust position of documentos
     { i: 'facturas', x: 6, y: 11, w: 6, h: 5 }, // Adjust position of facturas
-    { i: 'cuenta', x: 0, y: 16, w: 6, h: 4 }, // New widget or existing one
+    { i: 'cuentaBancaria', x: 0, y: 16, w: 6, h: 4 }, // New widget or existing one
     { i: 'beneficioGrafico', x: 6, y: 16, w: 6, h: 4 },
     { i: 'tablaPlanes', x: 0, y: 20, w: 6, h: 4 },
     { i: 'bonos', x: 6, y: 20, w: 6, h: 4 }
@@ -377,6 +378,10 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'facturas' && (
                             <WidgetFacturas isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} onTitleClick={handleOpenScanModal} theme={theme} setTheme={setTheme} />
                           )}
+                          {item.i === 'cuentaBancaria' && (
+  <WidgetCuentaBancaria onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} />
+)}
+
                        
                           {item.i === 'gasto' && (
                             <WidgetGasto isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} gastos={gastos} />

@@ -1,4 +1,4 @@
-.modal {
+.CreacionDeFacturasModal-modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.CreacionDeFacturasModal-modal-content {
     background-color: #1e1e1e;
     margin: 5% auto;
     padding: 20px;
@@ -24,7 +24,7 @@
     color: #fff;
 }
 
-.close {
+.CreacionDeFacturasModal-close {
     color: #aaa;
     position: absolute;
     right: 15px;
@@ -34,15 +34,15 @@
     cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
+.CreacionDeFacturasModal-close:hover,
+.CreacionDeFacturasModal-close:focus {
     color: #fff;
     text-decoration: none;
     cursor: pointer;
 }
 
 /* Estilos para el formulario */
-.CreacionDeFacturas-form {
+.CreacionDeFacturasModal-form {
     max-width: 100%;
     padding: 20px;
     background-color: #1e1e1e;
@@ -52,40 +52,40 @@
     color: #ffffff;
 }
 
-.CreacionDeFacturas-form h1,
-.CreacionDeFacturas-form h2 {
+.CreacionDeFacturasModal-form h1,
+.CreacionDeFacturasModal-form h2 {
     color: #ffffff;
 }
 
-.CreacionDeFacturas-gridContainer {
+.CreacionDeFacturasModal-gridContainer {
     display: flex;
     gap: 20px;
 }
 
-.CreacionDeFacturas-leftColumn,
-.CreacionDeFacturas-rightColumn {
+.CreacionDeFacturasModal-leftColumn,
+.CreacionDeFacturasModal-rightColumn {
     flex: 1;
 }
 
-.CreacionDeFacturas-invoiceNumberContainer {
+.CreacionDeFacturasModal-invoiceNumberContainer {
     display: flex;
     gap: 10px;
 }
 
-.CreacionDeFacturas-invoiceYear,
-.CreacionDeFacturas-invoiceNumber {
+.CreacionDeFacturasModal-invoiceYear,
+.CreacionDeFacturasModal-invoiceNumber {
     flex: 1;
 }
 
-.CreacionDeFacturas-serviceField {
+.CreacionDeFacturasModal-serviceField {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
 }
 
-.CreacionDeFacturas-form input,
-.CreacionDeFacturas-form select,
-.CreacionDeFacturas-form textarea {
+.CreacionDeFacturasModal-form input,
+.CreacionDeFacturasModal-form select,
+.CreacionDeFacturasModal-form textarea {
     width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 10px;
@@ -95,7 +95,7 @@
     color: #ffffff;
 }
 
-.CreacionDeFacturas-form button {
+.CreacionDeFacturasModal-form button {
     display: inline-block;
     padding: 10px 20px;
     margin-top: 20px;
@@ -108,14 +108,29 @@
     color: #ffffff;
 }
 
-.CreacionDeFacturas-form button:hover {
+.CreacionDeFacturasModal-form button:hover {
     background-color: #0056b3;
 }
 
-.CreacionDeFacturas-form button:last-of-type {
+.CreacionDeFacturasModal-form button:last-of-type {
     background-color: #6c757d;
 }
 
-.CreacionDeFacturas-form button:last-of-type:hover {
+.CreacionDeFacturasModal-form button:last-of-type:hover {
     background-color: #5a6268;
+}
+
+.CreacionDeFacturasModal-pdfPreview {
+    margin-top: 20px;
+}
+
+.CreacionDeFacturasModal-downloadPDF {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.CreacionDeFacturasModal-downloadPDF:hover {
+    color: #0056b3;
 }

@@ -3,7 +3,7 @@ import './widget-Documentos.css';
 import DetailedDocumento from './DetailedDocumento';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 
-function WidgetDocumentos({ isEditMode, onTitleClick, theme }) { // Recibir el tema como prop
+function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('todos');
   const [selectedColumns, setSelectedColumns] = useState({
@@ -14,10 +14,14 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) { // Recibir el t
   });
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [documentos, setDocumentos] = useState([]); // Now part of the state
+  const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false); // Control for add document modal
+  const [newDocumento, setNewDocumento] = useState({ id: '', titulo: '', fecha: '', tipo: '' }); // New document form state
+  
+  const [isDetailedDocumentoOpen, setIsDetailedDocumentoOpen] = useState(false); // Add this state
+  const [detailedDocumento, setDetailedDocumento] = useState(null); // State to hold the selected document for details view
 
-  const documentos = [
-  ];
+  const itemsPerPage = 5;
 
   const filteredDocumentos = documentos.filter(documento =>
     (filterType === 'todos' || documento.tipo === filterType) &&
@@ -46,14 +50,34 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) { // Recibir el t
 
   const totalPages = Math.ceil(filteredDocumentos.length / itemsPerPage);
 
-  const [isDetailedDocumentoOpen, setDetailedDocumentoOpen] = useState(false);
+  const handleOpenAddDocumentModal = () => {
+    setIsAddDocumentModalOpen(true);
+  };
 
-  const handleOpenDetailedDocumento = () => {
-    setDetailedDocumentoOpen(true);
+  const handleCloseAddDocumentModal = () => {
+    setIsAddDocumentModalOpen(false);
+  };
+
+  const handleAddDocumentoChange = (e) => {
+    const { name, value } = e.target;
+    setNewDocumento({ ...newDocumento, [name]: value });
+  };
+
+  const handleAddDocumentoSubmit = () => {
+    setDocumentos([...documentos, { ...newDocumento, id: documentos.length + 1 }]);
+    setNewDocumento({ id: '', titulo: '', fecha: '', tipo: '' }); // Reset form
+    handleCloseAddDocumentModal();
+  };
+
+  // Add these functions
+  const handleOpenDetailedDocumento = (documento) => {
+    setDetailedDocumento(documento);
+    setIsDetailedDocumentoOpen(true);
   };
 
   const handleCloseDetailedDocumento = () => {
-    setDetailedDocumentoOpen(false);
+    setIsDetailedDocumentoOpen(false);
+    setDetailedDocumento(null);
   };
 
   return (
@@ -83,6 +107,9 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) { // Recibir el t
           <option value="contrato">Contratos</option>
         </select>
       </div>
+      <button onClick={handleOpenAddDocumentModal} className={`Documentos-add-button ${theme}`}>
+        Añadir Documento
+      </button>
       <table className="Documentos-table">
         <thead>
           <tr>
@@ -116,6 +143,7 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) { // Recibir el t
                   </button>
                   {actionDropdownOpen[documento.id] && (
                     <div className="Documentos-action-content">
+                      <button className="Documentos-action-item" onClick={() => handleOpenDetailedDocumento(documento)}>Ver Detalles</button>
                       <button className="Documentos-action-item">Descargar</button>
                       <button className="Documentos-action-item">Borrar</button>
                     </div>
@@ -145,8 +173,45 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) { // Recibir el t
           Siguiente
         </button>
       </div>
-      {isDetailedDocumentoOpen && (
-        <DetailedDocumento onClose={handleCloseDetailedDocumento} />
+      {isAddDocumentModalOpen && (
+        <div className="Documentos-add-modal">
+          <h3>Añadir Nuevo Documento</h3>
+          <input
+            type="text"
+            name="titulo"
+            placeholder="Título"
+            value={newDocumento.titulo}
+            onChange={handleAddDocumentoChange}
+            className={`Documentos-add-input ${theme}`}
+          />
+          <input
+            type="date"
+            name="fecha"
+            placeholder="Fecha"
+            value={newDocumento.fecha}
+            onChange={handleAddDocumentoChange}
+            className={`Documentos-add-input ${theme}`}
+          />
+          <select 
+            name="tipo"
+            value={newDocumento.tipo}
+            onChange={handleAddDocumentoChange}
+            className={`Documentos-add-select ${theme}`}
+          >
+            <option value="">Seleccione un tipo</option>
+            <option value="licencia">Licencia</option>
+            <option value="contrato">Contrato</option>
+          </select>
+          <button onClick={handleAddDocumentoSubmit} className={`Documentos-add-submit ${theme}`}>
+            Guardar
+          </button>
+          <button onClick={handleCloseAddDocumentModal} className={`Documentos-add-cancel ${theme}`}>
+            Cancelar
+          </button>
+        </div>
+      )}
+      {isDetailedDocumentoOpen && detailedDocumento && (
+        <DetailedDocumento documento={detailedDocumento} onClose={handleCloseDetailedDocumento} />
       )}
     </div>
   );

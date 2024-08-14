@@ -4,6 +4,8 @@ import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import './CreacionDeFacturas.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const CreacionDeFacturas = ({ isOpen, closeModal, client, invoice, onAddFactura }) => {
     const [formType, setFormType] = useState('simple');
     const [services, setServices] = useState(invoice ? invoice.services : [{ serviceCode: '', vat: '', quantity: '', unitPrice: '', discount: '' }]);
@@ -39,7 +41,7 @@ const CreacionDeFacturas = ({ isOpen, closeModal, client, invoice, onAddFactura 
     useEffect(() => {
         const fetchClients = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/clients');
+                const response = await axios.get(`${API_BASE_URL}/clients`);
                 setClients(response.data);
             } catch (error) {
                 console.error('Error al obtener los clientes:', error);
@@ -48,7 +50,7 @@ const CreacionDeFacturas = ({ isOpen, closeModal, client, invoice, onAddFactura 
 
         const fetchInvoices = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/invoices');
+                const response = await axios.get(`${API_BASE_URL}/api/invoices`);
                 const invoices = response.data;
 
                 if (invoices.length > 0 && !invoice) {
@@ -141,9 +143,9 @@ const CreacionDeFacturas = ({ isOpen, closeModal, client, invoice, onAddFactura 
 
         try {
             const response = invoice
-                ? await axios.put(`http://localhost:5000/api/invoices/${invoice._id}`, invoiceData)
-                : await axios.post('http://localhost:5000/api/invoices', invoiceData);
-            setPdfPath(`http://localhost:5000${response.data.pdfPath}`);
+                ? await axios.put(`${API_BASE_URL}/api/invoices/${invoice._id}`, invoiceData)
+                : await axios.post(`${API_BASE_URL}/api/invoices`, invoiceData);
+            setPdfPath(`${API_BASE_URL}${response.data.pdfPath}`);
             onAddFactura(invoiceData);
             closeModal();
         } catch (error) {
@@ -154,91 +156,92 @@ const CreacionDeFacturas = ({ isOpen, closeModal, client, invoice, onAddFactura 
     if (!isOpen) return null;
 
     return (
-        <div className="modal">
-            <div className="modal-content">
-                <span className="close" onClick={closeModal}>&times;</span>
-                <form onSubmit={handleSubmit} className="CreacionDeFacturas-form">
+        <div className="CreacionDeFacturasModal-modal">
+            <div className="CreacionDeFacturasModal-modal-content">
+                <span className="CreacionDeFacturasModal-close" onClick={closeModal}>&times;</span>
+                <form onSubmit={handleSubmit} className="CreacionDeFacturasModal-form">
                     <h1>{invoice ? 'Editar Factura' : 'Crear Factura'}</h1>
-                    <div className="CreacionDeFacturas-gridContainer">
-                        <div className="CreacionDeFacturas-leftColumn">
+                    <div className="CreacionDeFacturasModal-gridContainer">
+                        <div className="CreacionDeFacturasModal-leftColumn">
                             <h2>Datos Clave de Factura</h2>
-                            <div className="CreacionDeFacturas-invoiceNumberContainer">
-                                <input type="text" name="invoiceYear" placeholder="Año" value={formData.invoiceYear} onChange={handleChange} required className="CreacionDeFacturas-invoiceYear" />
-                                <input type="text" name="invoiceNumber" placeholder="Número de Factura" value={formData.invoiceNumber} onChange={handleChange} required className="CreacionDeFacturas-invoiceNumber" />
+                            <div className="CreacionDeFacturasModal-invoiceNumberContainer">
+                                <input type="text" name="invoiceYear" placeholder="Año" value={formData.invoiceYear} onChange={handleChange} required className="CreacionDeFacturasModal-invoiceYear" />
+                                <input type="text" name="invoiceNumber" placeholder="Número de Factura" value={formData.invoiceNumber} onChange={handleChange} required className="CreacionDeFacturasModal-invoiceNumber" />
                             </div>
-                            <input type="date" name="invoiceDate" placeholder="Fecha de la Factura" value={formData.invoiceDate} onChange={handleChange} required />
-                            <input type="text" name="paymentMethod" placeholder="Método de Pago" value={formData.paymentMethod} onChange={handleChange} required />
+                            <input type="date" name="invoiceDate" placeholder="Fecha de la Factura" value={formData.invoiceDate} onChange={handleChange} required className="CreacionDeFacturasModal-date" />
+                            <input type="text" name="paymentMethod" placeholder="Método de Pago" value={formData.paymentMethod} onChange={handleChange} required className="CreacionDeFacturasModal-paymentMethod" />
                         </div>
-                        <div className="CreacionDeFacturas-rightColumn">
+                        <div className="CreacionDeFacturasModal-rightColumn">
                             <h2>Servicios</h2>
                             {services.map((service, index) => (
-                                <div key={index} className="CreacionDeFacturas-serviceField">
-                                    <input type="text" name="serviceCode" placeholder="Código de Servicio" value={service.serviceCode} onChange={(e) => handleServiceChange(index, e)} required />
-                                    <input type="number" name="vat" placeholder="IVA" value={service.vat} onChange={(e) => handleServiceChange(index, e)} required />
-                                    <input type="number" name="quantity" placeholder="Cantidad" value={service.quantity} onChange={(e) => handleServiceChange(index, e)} required />
-                                    <input type="number" name="unitPrice" placeholder="Precio Unitario" value={service.unitPrice} onChange={(e) => handleServiceChange(index, e)} required />
-                                    <input type="number" name="discount" placeholder="Descuento por Unidad" value={service.discount} onChange={(e) => handleServiceChange(index, e)} required />
+                                <div key={index} className="CreacionDeFacturasModal-serviceField">
+                                    <input type="text" name="serviceCode" placeholder="Código de Servicio" value={service.serviceCode} onChange={(e) => handleServiceChange(index, e)} required className="CreacionDeFacturasModal-serviceCode" />
+                                    <input type="number" name="vat" placeholder="IVA" value={service.vat} onChange={(e) => handleServiceChange(index, e)} required className="CreacionDeFacturasModal-vat" />
+                                    <input type="number" name="quantity" placeholder="Cantidad" value={service.quantity} onChange={(e) => handleServiceChange(index, e)} required className="CreacionDeFacturasModal-quantity" />
+                                    <input type="number" name="unitPrice" placeholder="Precio Unitario" value={service.unitPrice} onChange={(e) => handleServiceChange(index, e)} required className="CreacionDeFacturasModal-unitPrice" />
+                                    <input type="number" name="discount" placeholder="Descuento por Unidad" value={service.discount} onChange={(e) => handleServiceChange(index, e)} required className="CreacionDeFacturasModal-discount" />
                                 </div>
                             ))}
-                            <button type="button" onClick={addService}>Añadir Servicio</button>
+                            <button type="button" onClick={addService} className="CreacionDeFacturasModal-addService">Añadir Servicio</button>
                         </div>
                     </div>
                     <h2>Tipo de Factura</h2>
-                    <select onChange={(e) => setFormType(e.target.value)} value={formType}>
+                    <select onChange={(e) => setFormType(e.target.value)} value={formType} className="CreacionDeFacturasModal-formType">
                         <option value="simple">Factura Simple</option>
                         <option value="complex">Factura Completa</option>
                     </select>
                     {formType === 'complex' && (
                         <>
                             <h2>Factura Compuesta</h2>
-                            <select name="personType" onChange={handleChange} value={formData.personType}>
+                            <select name="personType" onChange={handleChange} value={formData.personType} className="CreacionDeFacturasModal-personType">
                                 <option value="individual">Persona Física</option>
                                 <option value="company">Persona Jurídica</option>
                             </select>
-                            <input type="text" name="name" placeholder="Nombre" value={formData.name} onChange={handleChange} />
-                            <input type="text" name="surname" placeholder="Apellidos" value={formData.surname} onChange={handleChange} />
-                            <input type="text" name="phone" placeholder="Teléfono" value={formData.phone} onChange={handleChange} />
-                            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
-                            <input type="text" name="street" placeholder="Calle" value={formData.street} onChange={handleChange} />
-                            <input type="text" name="number" placeholder="Número" value={formData.number} onChange={handleChange} />
-                            <input type="text" name="city" placeholder="Ciudad" value={formData.city} onChange={handleChange} />
-                            <input type="text" name="postalCode" placeholder="Código Postal" value={formData.postalCode} onChange={handleChange} />
-                            <input type="text" name="province" placeholder="Provincia" value={formData.province} onChange={handleChange} />
-                            <input type="text" name="country" placeholder="País de Residencia" value={formData.country} onChange={handleChange} />
-                            <input type="text" name="nif" placeholder="NIF" value={formData.nif} onChange={handleChange} />
+                            <input type="text" name="name" placeholder="Nombre" value={formData.name} onChange={handleChange} className="CreacionDeFacturasModal-name" />
+                            <input type="text" name="surname" placeholder="Apellidos" value={formData.surname} onChange={handleChange} className="CreacionDeFacturasModal-surname" />
+                            <input type="text" name="phone" placeholder="Teléfono" value={formData.phone} onChange={handleChange} className="CreacionDeFacturasModal-phone" />
+                            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="CreacionDeFacturasModal-email" />
+                            <input type="text" name="street" placeholder="Calle" value={formData.street} onChange={handleChange} className="CreacionDeFacturasModal-street" />
+                            <input type="text" name="number" placeholder="Número" value={formData.number} onChange={handleChange} className="CreacionDeFacturasModal-number" />
+                            <input type="text" name="city" placeholder="Ciudad" value={formData.city} onChange={handleChange} className="CreacionDeFacturasModal-city" />
+                            <input type="text" name="postalCode" placeholder="Código Postal" value={formData.postalCode} onChange={handleChange} className="CreacionDeFacturasModal-postalCode" />
+                            <input type="text" name="province" placeholder="Provincia" value={formData.province} onChange={handleChange} className="CreacionDeFacturasModal-province" />
+                            <input type="text" name="country" placeholder="País de Residencia" value={formData.country} onChange={handleChange} className="CreacionDeFacturasModal-country" />
+                            <input type="text" name="nif" placeholder="NIF" value={formData.nif} onChange={handleChange} className="CreacionDeFacturasModal-nif" />
                         </>
                     )}
                     <h2>Datos de la Empresa Emisora</h2>
-                    <input type="text" name="companyName" placeholder="Nombre de la Empresa" value={formData.companyName} onChange={handleChange} required />
-                    <input type="text" name="companyNif" placeholder="NIF de la Empresa" value={formData.companyNif} onChange={handleChange} required />
-                    <input type="email" name="companyEmail" placeholder="Email de la Empresa" value={formData.companyEmail} onChange={handleChange} required />
-                    <input type="file" name="companyLogo" placeholder="Logotipo de la Empresa" onChange={handleFileChange} />
+                    <input type="text" name="companyName" placeholder="Nombre de la Empresa" value={formData.companyName} onChange={handleChange} required className="CreacionDeFacturasModal-companyName" />
+                    <input type="text" name="companyNif" placeholder="NIF de la Empresa" value={formData.companyNif} onChange={handleChange} required className="CreacionDeFacturasModal-companyNif" />
+                    <input type="email" name="companyEmail" placeholder="Email de la Empresa" value={formData.companyEmail} onChange={handleChange} required className="CreacionDeFacturasModal-companyEmail" />
+                    <input type="file" name="companyLogo" placeholder="Logotipo de la Empresa" onChange={handleFileChange} className="CreacionDeFacturasModal-companyLogo" />
                     <h2>Comentario</h2>
-                    <textarea name="comment" placeholder="Comentario" value={formData.comment} onChange={handleChange}></textarea>
-                    <input type="hidden" name="type" value={formData.type} />
+                    <textarea name="comment" placeholder="Comentario" value={formData.comment} onChange={handleChange} className="CreacionDeFacturasModal-comment"></textarea>
+                    <input type="hidden" name="type" value={formData.type} className="CreacionDeFacturasModal-type" />
                     <h2>Seleccionar Cliente</h2>
-                    <select onChange={(e) => handleClientSelect(clients.find(client => client._id === e.target.value))}>
+                    <select onChange={(e) => handleClientSelect(clients.find(client => client._id === e.target.value))} className="CreacionDeFacturasModal-clientSelect">
                         <option value="">Seleccione un cliente</option>
                         {clients.map(client => (
                             <option key={client._id} value={client._id}>{client.firstName} {client.lastName}</option>
                         ))}
                     </select>
-                    <button type="submit">{invoice ? 'Guardar Cambios' : 'Crear Factura'}</button>
-                    <button type="button" onClick={closeModal}>Cancelar</button>
-
+                    <button type="submit" className="CreacionDeFacturasModal-submitButton">{invoice ? 'Guardar Cambios' : 'Crear Factura'}</button>
+                    <button type="button" onClick={closeModal} className="CreacionDeFacturasModal-cancelButton">Cancelar</button>
+    
                     {pdfPath && (
-                        <div>
+                        <div className="CreacionDeFacturasModal-pdfPreview">
                             <h2>Factura Generada</h2>
                             <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js`}>
                                 <Viewer fileUrl={pdfPath} />
                             </Worker>
-                            <a href={pdfPath} download={`Factura-${formData.invoiceYear}-${formData.invoiceNumber.padStart(2, '0')}.pdf`}>Descargar PDF</a>
+                            <a href={pdfPath} download={`Factura-${formData.invoiceYear}-${formData.invoiceNumber.padStart(2, '0')}.pdf`} className="CreacionDeFacturasModal-downloadPDF">Descargar PDF</a>
                         </div>
                     )}
                 </form>
             </div>
         </div>
     );
+    
 };
 
 export default CreacionDeFacturas;
