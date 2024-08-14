@@ -6,18 +6,20 @@ import { angleUp } from 'react-icons-kit/fa/angleUp';
 import { angleDown } from 'react-icons-kit/fa/angleDown';
 import styles from './Modaltransferenciarutinas.module.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Modaltransferenciarutinas = ({ show, onClose, days }) => {
   const [targetRoutineId, setTargetRoutineId] = useState('');
   const [routines, setRoutines] = useState([]);
   const [weeks, setWeeks] = useState([]);
   const [transferData, setTransferData] = useState([]);
   const [targetDays, setTargetDays] = useState([]);
-  const [collapsedWeeks, setCollapsedWeeks] = useState({}); // Estado para manejar la colapsación de semanas
+  const [collapsedWeeks, setCollapsedWeeks] = useState({});
 
   useEffect(() => {
     const fetchRoutines = async () => {
       try {
-        const response = await axios.get('/api/routines');
+        const response = await axios.get(`${API_BASE_URL}/api/routines`);
         console.log('Fetched routines:', response.data);
         setRoutines(response.data);
       } catch (error) {
@@ -32,7 +34,7 @@ const Modaltransferenciarutinas = ({ show, onClose, days }) => {
     setTargetRoutineId(routineId);
     console.log('Selected routine ID:', routineId);
     try {
-      const response = await axios.get(`/api/routines/${routineId}`);
+      const response = await axios.get(`${API_BASE_URL}/api/routines/${routineId}`);
       console.log('Fetched weeks for selected routine:', response.data.semanas);
       setWeeks(response.data.semanas);
     } catch (error) {
@@ -48,7 +50,7 @@ const Modaltransferenciarutinas = ({ show, onClose, days }) => {
     console.log('Target days before sending:', selectedTargetDays);
 
     try {
-      await axios.post('/api/routines/transfer', {
+      await axios.post(`${API_BASE_URL}/api/routines/transfer`, {
         targetRoutineId,
         transferDays: selectedTransferDays,
         targetDays: selectedTargetDays
@@ -58,6 +60,7 @@ const Modaltransferenciarutinas = ({ show, onClose, days }) => {
       console.error('Error transferring days:', error);
     }
   };
+
 
   const handleDayCheckboxChange = (dayId, weekId, isChecked) => {
     const uniqueDayId = `${weekId}-${dayId}`;
