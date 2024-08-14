@@ -1,9 +1,7 @@
-// src/components/Dietas/Calendariodieta.js
-
 import React, { useState } from 'react';
 import styles from './Calendariodieta.module.css'; // Importa los estilos
 
-const Calendariodieta = ({ weeks, onSelectWeek }) => {
+const Calendariodieta = ({ weeks, onSelectWeek, theme }) => {
   const [selectedWeek, setSelectedWeek] = useState(0);
 
   const handleWeekSelect = (index) => {
@@ -12,8 +10,8 @@ const Calendariodieta = ({ weeks, onSelectWeek }) => {
   };
 
   return (
-    <div className={styles.calendarContainer}>
-      <h2 className="text-xl font-bold mb-2">Selecciona una Semana</h2>
+    <div className={`${styles.calendarContainer} ${styles[theme]}`}>
+      <h2>Selecciona una Semana</h2>
       <div className={styles.weeksContainer}>
         {weeks.map((week, index) => (
           <button

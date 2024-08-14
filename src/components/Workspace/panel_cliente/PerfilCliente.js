@@ -1,4 +1,3 @@
-// src/components/PerfilCliente.js
 import React, { useState } from 'react';
 import EditModal from './EditModal';
 
@@ -37,38 +36,40 @@ const PerfilCliente = ({ cliente, actualizarCliente }) => {
             <p>Redes Sociales: {cliente.redesSociales.join(', ')}</p>
             <button onClick={handleEditClick}>Editar</button>
 
-            <EditModal isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
-                <h3>Editar Perfil Cliente</h3>
-                <label>
-                    Dirección:
-                    <input type="text" name="direccion" value={editedCliente.direccion} onChange={handleChange} />
-                </label>
-                <label>
-                    Ocupación:
-                    <input type="text" name="ocupacion" value={editedCliente.ocupacion} onChange={handleChange} />
-                </label>
-                <label>
-                    Nombre:
-                    <input type="text" name="nombre" value={editedCliente.nombre} onChange={handleChange} />
-                </label>
-                <label>
-                    Apellido:
-                    <input type="text" name="apellido" value={editedCliente.apellido} onChange={handleChange} />
-                </label>
-                <label>
-                    Fecha de Nacimiento:
-                    <input type="date" name="fechaNacimiento" value={formatDate(editedCliente.fechaNacimiento)} onChange={handleChange} />
-                </label>
-                <label>
-                    Tiempo con el Entrenador:
-                    <input type="number" name="tiempoConEntrenador" value={editedCliente.tiempoConEntrenador} onChange={handleChange} />
-                </label>
-                <label>
-                    Redes Sociales:
-                    <input type="text" name="redesSociales" value={editedCliente.redesSociales.join(', ')} onChange={handleChange} />
-                </label>
-                <button onClick={handleSaveClick}>Guardar</button>
-            </EditModal>
+            {isEditing && (
+                <EditModal isOpen={isEditing} onRequestClose={() => setIsEditing(false)}>
+                    <h3>Editar Perfil Cliente</h3>
+                    <label>
+                        Dirección:
+                        <input type="text" name="direccion" value={editedCliente.direccion} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Ocupación:
+                        <input type="text" name="ocupacion" value={editedCliente.ocupacion} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Nombre:
+                        <input type="text" name="nombre" value={editedCliente.nombre} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Apellido:
+                        <input type="text" name="apellido" value={editedCliente.apellido} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Fecha de Nacimiento:
+                        <input type="date" name="fechaNacimiento" value={formatDate(editedCliente.fechaNacimiento)} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Tiempo con el Entrenador:
+                        <input type="number" name="tiempoConEntrenador" value={editedCliente.tiempoConEntrenador} onChange={handleChange} />
+                    </label>
+                    <label>
+                        Redes Sociales:
+                        <input type="text" name="redesSociales" value={editedCliente.redesSociales.join(', ')} onChange={handleChange} />
+                    </label>
+                    <button onClick={handleSaveClick}>Guardar</button>
+                </EditModal>
+            )}
         </div>
     );
 };

@@ -1,44 +1,60 @@
 /* Contenedor del calendario */
 .calendarContainer {
-    background-color: var(--bg-color);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .calendarContainer h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: var(--text-color);
-    font-weight: 600;
-  }
-  
-  /* Contenedor de los botones de semanas */
-  .weeksContainer {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap; /* Permite que los botones se envuelvan en varias líneas */
-    margin-top: 15px;
-  }
-  
-  .weekButton {
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    font-size: 1rem;
-    color: var(--text-color);
-    background-color: var(--button-bg-color); /* Fondo neutral para los botones */
-  }
-  
-  .weekButton:hover {
-    background-color: var(--highlight-color);
-    color: white;
-  }
-  
-  .selected {
-    background-color: var(--highlight-color);
-    color: white;
-  }
-  
+  background-color: var(--bg-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.calendarContainer h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+/* Contenedor de los botones de semanas */
+.weeksContainer {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en varias líneas */
+  margin-top: 15px;
+}
+
+.weekButton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--button-bg-color); /* Fondo neutral para los botones */
+  border: 1px solid transparent;
+}
+
+.weekButton:hover {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.selected {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+/* Tema Claro */
+.calendarContainer.light {
+  --bg-color: #fff;
+  --text-color: #333;
+  --button-bg-color: #f0f0f0;
+  --highlight-color: #007bff; /* Color de resaltado (por ejemplo, azul) */
+}
+
+/* Tema Oscuro */
+.calendarContainer.dark {
+  --bg-color: #333;
+  --text-color: #f5f5f5;
+  --button-bg-color: #444;
+  --highlight-color: #1e90ff; /* Color de resaltado (más claro para el modo oscuro) */
+}

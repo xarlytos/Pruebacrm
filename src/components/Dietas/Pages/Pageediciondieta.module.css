@@ -17,11 +17,19 @@
   border: 1px solid var(--border-color-light);
 }
 
+.pageEdicionDieta.light .weekContainer,
+.pageEdicionDieta.light .saveButton {
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+  border: 1px solid var(--button-border-light);
+}
+
 .pageEdicionDieta.light .weekContainer button,
 .pageEdicionDieta.light .saveButton {
   background-color: var(--button-bg-light);
   color: var(--button-text-light);
   border: 1px solid var(--button-border-light);
+  margin-right: 10px; /* Espacio entre botones */
 }
 
 .pageEdicionDieta.light .weekContainer button:hover,
@@ -29,6 +37,11 @@
   background-color: var(--button-hover-bg-light);
   color: var(--button-hover-text-light);
   border-color: var(--button-hover-border-light);
+}
+
+.pageEdicionDieta.light h2,
+.pageEdicionDieta.light h3 {
+  color: var(--text-color-light); /* Color del texto en modo claro */
 }
 
 /* Tema Oscuro */
@@ -40,30 +53,48 @@
 .pageEdicionDieta.dark input,
 .pageEdicionDieta.dark select,
 .pageEdicionDieta.dark textarea {
-  background-color: var(--input-bg-dark);
-  color: var(--text-color-dark);
-  border: 1px solid var(--border-color-dark);
+  background-color: #333; /* Fondo oscuro sólido */
+  color: #fff; /* Texto blanco para mejor contraste */
+  border: 1px solid #555; /* Borde oscuro */
+  box-shadow: none; /* Sin sombra interna */
+}
+
+.pageEdicionDieta.dark input::placeholder,
+.pageEdicionDieta.dark textarea::placeholder {
+  color: #ccc; /* Placeholder más claro */
+}
+
+.pageEdicionDieta.dark .weekContainer,
+.pageEdicionDieta.dark .saveButton {
+  background-color: #444; /* Fondo oscuro para contenedor y botón */
+  color: #fff; /* Texto blanco */
+  border: 1px solid #555; /* Borde oscuro */
 }
 
 .pageEdicionDieta.dark .weekContainer button,
 .pageEdicionDieta.dark .saveButton {
-  background-color: var(--button-bg-dark);
-  color: var(--button-text-dark);
-  border: 1px solid var(--button-border-dark);
+  background-color: #666; /* Fondo oscuro para botones */
+  color: #fff; /* Texto blanco para contraste */
+  border: 1px solid #777; /* Borde un poco más claro */
+  margin-right: 10px; /* Espacio entre botones */
 }
 
 .pageEdicionDieta.dark .weekContainer button:hover,
 .pageEdicionDieta.dark .saveButton:hover {
-  background-color: var(--button-hover-bg-dark);
-  color: var(--button-hover-text-dark);
-  border-color: var(--button-hover-border-dark);
+  background-color: #888; /* Fondo más claro en hover */
+  color: #fff; /* Texto blanco en hover */
+  border-color: #999; /* Borde más claro en hover */
+}
+
+.pageEdicionDieta.dark h2,
+.pageEdicionDieta.dark h3 {
+  color: #fff; /* Asegura que el texto del título sea visible en modo oscuro */
 }
 
 /* Título principal */
 .pageEdicionDieta h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: var(--highlight-color);
   border-bottom: 2px solid var(--highlight-color);
   padding-bottom: 10px;
 }
@@ -118,6 +149,9 @@
 /* Contenedor de semanas */
 .weekContainer {
   margin-top: 30px;
+  padding: 20px; /* Aumenta el relleno interno del contenedor */
+  border-radius: 12px; /* Esquinas redondeadas */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil para el contenedor */
 }
 
 .weekContainer h3 {
