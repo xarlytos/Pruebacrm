@@ -30,6 +30,8 @@ function createLayout(id, x, y, w, h) {
   return [{ i: id, x: x, y: y, w: w, h: h }];
 }
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 function Pestañaeconomiapage({ theme, setTheme }) {
   const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
   const [isDetailedDocumentoOpen, setIsDetailedDocumentoOpen] = useState(false);
@@ -62,11 +64,11 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const [planesVendidos, setPlanesVendidos] = useState(0);
   const [clientesActuales, setClientesActuales] = useState(0);
   const [gastos, setGastos] = useState([]);
-  const [ingresosEsperados, setIngresosEsperados] = useState([]); // Compartido con WidgetPrevisionesPopup
+  const [ingresosEsperados, setIngresosEsperados] = useState([]);
 
   useEffect(() => {
     // Fetch data for totalIngresos
-    axios.get('http://localhost:5005/api/incomes/')
+    axios.get(`${API_BASE_URL}/api/incomes/`)
       .then(response => {
         const total = response.data.reduce((acc, income) => acc + income.cantidad, 0);
         setTotalIngresos(total);
@@ -77,7 +79,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       });
 
     // Fetch data for gastos
-    axios.get('http://localhost:5005/api/expenses')
+    axios.get(`${API_BASE_URL}/api/expenses`)
       .then(response => {
         if (response.status === 200) {
           setGastos(response.data);
@@ -90,11 +92,11 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       });
 
     // Fetch data for suscripciones
-    axios.get('/plans/fixed')
+    axios.get(`${API_BASE_URL}/plans/fixed`)
       .then(response => {
         const fixedPlans = response.data.length;
 
-        axios.get('/plans/variable')
+        axios.get(`${API_BASE_URL}/plans/variable`)
           .then(response => {
             const variablePlans = response.data.length;
 
@@ -110,7 +112,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       });
 
     // Fetch data for clientesActuales
-    axios.get('/api/clientes/')
+    axios.get(`${API_BASE_URL}/api/clientes/`)
       .then(response => {
         setClientesActuales(response.data.length);
       })
@@ -118,6 +120,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
         console.error('Error fetching clientes actuales:', error);
       });
   }, []);
+
 
   const handleOpenDetailedModal = () => {
     setIsDetailedModalOpen(true);
