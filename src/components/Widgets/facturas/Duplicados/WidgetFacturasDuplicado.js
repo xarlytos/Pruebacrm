@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
-import './widget-FacturasDuplicado.css';
+// src/components/WidgetFacturasDuplicado.js
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import FacturasActionButtons from './FacturasActionButtons';
+import InvoiceForm from './InvoiceForm';
+import ScanInvoiceForm from './ScanInvoiceForm';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import './widget-FacturasDuplicado.css';
 
 function WidgetFacturasDuplicado({ isEditMode, theme }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,17 +20,32 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
   });
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [invoices, setInvoices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isShowInvoiceModalOpen, setIsShowInvoiceModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState('');
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
+  const [isScanModalOpen, setIsScanModalOpen] = useState(false);
   const itemsPerPage = 5;
 
-  const data = [
-    { estado: 'Pagado', cliente: 'Juan Pérez', monto: '500,00 US$', fecha: '2023-07-10', tipo: 'Factura Hecha', numeroFactura: '2023-01' },
-    { estado: 'Pendiente', cliente: 'Ana Gómez', monto: '300,00 US$', fecha: '2023-07-11', tipo: 'Factura Hecha', numeroFactura: '2023-02' },
-    { estado: 'Pagado', cliente: 'Luis Torres', monto: '700,00 US$', fecha: '2023-07-12', tipo: 'Factura Recibida', numeroFactura: '2023-03' },
-    { estado: 'Cancelado', cliente: 'María López', monto: '200,00 US$', fecha: '2023-07-13', tipo: 'Factura Hecha', numeroFactura: '2023-04' },
-    { estado: 'Pendiente', cliente: 'Carlos Ruiz', monto: '450,00 US$', fecha: '2023-07-14', tipo: 'Factura Recibida', numeroFactura: '2023-05' },
-  ];
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const response = await axios.get('http://localhost:5005/api/invoices');
+        setInvoices(response.data);
+      } catch (error) {
+        setError('Error al obtener las facturas.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const filteredData = data.filter(
+    fetchInvoices();
+  }, []);
+
+  const filteredData = invoices.filter(
     item =>
       item.estado.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.cliente.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -41,10 +62,10 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
     });
   };
 
-  const toggleActionDropdown = (id) => {
+  const toggleActionDropdown = id => {
     setActionDropdownOpen({
       ...actionDropdownOpen,
-      [id]: !actionDropdownOpen[id]
+      [id]: !actionDropdownOpen[id],
     });
   };
 
@@ -54,12 +75,48 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleScanClick = () => {
-    console.log("Escanear Factura");
+    setIsScanModalOpen(true);
   };
 
   const handleOpenClick = () => {
-    console.log("Abrir Factura");
+    setIsInvoiceModalOpen(true);
   };
+
+  const closeInvoiceModal = () => {
+    setIsInvoiceModalOpen(false);
+  };
+
+  const closeScanModal = () => {
+    setIsScanModalOpen(false);
+  };
+
+  const openShowInvoiceModal = async (invoice) => {
+    try {
+      const response = await axios.get(`http://localhost:5005/api/invoices/download/${invoice._id}`, {
+        responseType: 'blob'
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      setPdfUrl(url);
+      setSelectedInvoice(invoice);
+      setIsShowInvoiceModalOpen(true);
+    } catch (error) {
+      console.error('Error al obtener el PDF de la factura:', error);
+    }
+  };
+
+  const closeShowInvoiceModal = () => {
+    setIsShowInvoiceModalOpen(false);
+    setSelectedInvoice(null);
+    setPdfUrl('');
+  };
+
+  if (loading) {
+    return <div className={`Facturas-widget ${theme}`}>Cargando...</div>;
+  }
+
+  if (error) {
+    return <div className={`Facturas-widget ${theme}`}>{error}</div>;
+  }
 
   return (
     <div className={`Facturas-widget ${theme}`}>
@@ -111,9 +168,10 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
                   </button>
                   {actionDropdownOpen[index] && (
                     <div className="Facturas-action-content">
-                      {item.tipo === 'Factura Recibida' && <button className="Facturas-action-item">Añadir como Gasto</button>}
-                      <button className="Facturas-action-item">Opción 1</button>
-                      <button className="Facturas-action-item">Opción 2</button>
+                      {item.tipo === 'Factura Recibida' && (
+                        <button className="Facturas-action-item">Añadir como Gasto</button>
+                      )}
+                      <button className="Facturas-action-item" onClick={() => openShowInvoiceModal(item)}>Mostrar Factura</button>
                     </div>
                   )}
                 </div>
@@ -141,6 +199,38 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
           Siguiente
         </button>
       </div>
+
+      {isInvoiceModalOpen && (
+        <div className="WFacturas-modal-overlay">
+          <div className="WFacturas-modal">
+            <button className="WFacturas-modal-close-button" onClick={closeInvoiceModal}>Cerrar</button>
+            <InvoiceForm closeModal={closeInvoiceModal} />
+          </div>
+        </div>
+      )}
+
+      {isScanModalOpen && (
+        <div className="WFacturas-modal-overlay">
+          <div className="WFacturas-modal">
+            <button className="WFacturas-modal-close-button" onClick={closeScanModal}>Cerrar</button>
+            <ScanInvoiceForm closeModal={closeScanModal} />
+          </div>
+        </div>
+      )}
+
+      {isShowInvoiceModalOpen && (
+        <div className="WFacturas-modal-overlay">
+          <div className="WFacturas-modal">
+            <button className="WFacturas-modal-close-button" onClick={closeShowInvoiceModal}>Cerrar</button>
+            {pdfUrl && (
+              <div>
+                <h2>Factura {selectedInvoice.numeroFactura}</h2>
+                <embed src={pdfUrl} width="100%" height="600px" type="application/pdf" />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
