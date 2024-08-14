@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import PopupDeCreacionDePlanificacion from '../../Rutinas/PopupDeCreacionDePlanificacion'; // Actualiza la ruta según corresponda
 import './Rutinas.css';
+import PopupDeCreacionDePlanificacion from '../../Rutinas/PopupDeCreacionDePlanificacion'; // Ajusta la ruta según corresponda
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
-const Rutinas = ({ cliente, actualizarCliente }) => {
+const Rutinas = ({ cliente, actualizarCliente, onPreviewRutina }) => {
     const [showModal, setShowModal] = useState(false);
-    const [showViewModal, setShowViewModal] = useState(false);
     const [rutinas, setRutinas] = useState([]);
     const navigate = useNavigate();
 
@@ -35,14 +34,6 @@ const Rutinas = ({ cliente, actualizarCliente }) => {
         setShowModal(false);
     };
 
-    const handleShowViewModal = () => {
-        setShowViewModal(true);
-    };
-
-    const handleCloseViewModal = () => {
-        setShowViewModal(false);
-    };
-
     const handleSaveRutina = (rutina) => {
         const nuevasRutinas = [...rutinas, rutina];
         setRutinas(nuevasRutinas);
@@ -53,12 +44,20 @@ const Rutinas = ({ cliente, actualizarCliente }) => {
         navigate(`/edit-routine/${routineId}`);
     };
 
+    const handlePreviewRutina = async (rutinaId) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/routines/${rutinaId}`);
+            onPreviewRutina(response.data); // Pasar la rutina seleccionada al componente padre
+        } catch (error) {
+            console.error('Error fetching routine details:', error);
+        }
+    };
+
     return (
         <div className="rutinas-section">
             <div className="rutinas-header">
                 <h3>Rutinas</h3>
                 <button onClick={handleShowModal} className="rutinas-notas-button">+</button>
-                <button onClick={handleShowViewModal} className="rutinas-ver-button">Ver</button>
             </div>
             <ul>
                 {rutinas.map((rutina, index) => (
@@ -70,6 +69,12 @@ const Rutinas = ({ cliente, actualizarCliente }) => {
                         >
                             Editar
                         </button>
+                        <button
+                            className="rutinas-previsualizar-button"
+                            onClick={() => handlePreviewRutina(rutina._id)}
+                        >
+                            Previsualizar Rutina
+                        </button>
                     </li>
                 ))}
             </ul>
@@ -79,31 +84,6 @@ const Rutinas = ({ cliente, actualizarCliente }) => {
                     onClose={handleCloseModal}
                     predefinedMetas={['Meta 1', 'Meta 2', 'Meta 3']} // Actualiza según sea necesario
                 />
-            )}
-            {showViewModal && (
-                <div className="rutinas-popup-overlay" onClick={handleCloseViewModal}>
-                    <div className="rutinas-popup-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>Rutinas del Cliente</h2>
-                        <ul>
-                            {rutinas.map((rutina, index) => (
-                                <li key={index}>
-                                    <h3>{rutina.nombre}</h3>
-                                    <p>Fecha Inicio: {new Date(rutina.fechaInicio).toLocaleDateString()}</p>
-                                    {rutina.fechaFin && <p>Fecha Fin: {new Date(rutina.fechaFin).toLocaleDateString()}</p>}
-                                    <p>Ejercicios:</p>
-                                    <ul>
-                                        {rutina.ejercicios.map((ejercicio, idx) => (
-                                            <li key={idx}>
-                                                {ejercicio.nombre} - {ejercicio.series} series de {ejercicio.repeticiones} repeticiones
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </li>
-                            ))}
-                        </ul>
-                        <button onClick={handleCloseViewModal}>Cerrar</button>
-                    </div>
-                </div>
             )}
         </div>
     );

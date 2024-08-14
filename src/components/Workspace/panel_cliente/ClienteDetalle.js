@@ -11,6 +11,7 @@ import Calendario from './Calendario';
 import Historialderegistrodeprogreso from './Historialderegistrodeprogreso';
 import Chequins from './Chequins';
 import './ClienteDetalle.css';
+import PopupDeCreacionDePlanificacion from '../../Rutinas/PopupDeCreacionDePlanificacion'; // Ajusta la ruta según corresponda
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
@@ -19,6 +20,8 @@ const ClienteDetalle = ({ cliente }) => {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [nuevaNota, setNuevaNota] = useState('');
     const [nuevoTitulo, setNuevoTitulo] = useState('');
+    const [mostrarRutinaModal, setMostrarRutinaModal] = useState(false); // Para mostrar el modal de rutina
+    const [rutinaSeleccionada, setRutinaSeleccionada] = useState(null); // Rutina seleccionada para visualizar
 
     useEffect(() => {
         const fetchClienteDetalle = async () => {
@@ -76,6 +79,16 @@ const ClienteDetalle = ({ cliente }) => {
         }
     };
 
+    const handlePreviewRutina = (rutina) => {
+        setRutinaSeleccionada(rutina);
+        setMostrarRutinaModal(true);
+    };
+
+    const handleCerrarRutinaModal = () => {
+        setMostrarRutinaModal(false);
+        setRutinaSeleccionada(null);
+    };
+
     const registrosEjemplo = [];
 
     const registrosChequins = [];
@@ -88,7 +101,7 @@ const ClienteDetalle = ({ cliente }) => {
                     <Notas cliente={clienteDetalle} actualizarCliente={actualizarCliente} abrirModal={abrirModal} />
                     <Finanzas cliente={clienteDetalle} actualizarCliente={actualizarCliente} />
                     <PerfilCliente cliente={clienteDetalle} actualizarCliente={actualizarCliente} />
-                    <Rutinas cliente={clienteDetalle} actualizarCliente={actualizarCliente} />
+                    <Rutinas cliente={clienteDetalle} actualizarCliente={actualizarCliente} onPreviewRutina={handlePreviewRutina} />
                     <Dietas cliente={clienteDetalle} />
                     <Planes cliente={clienteDetalle} />
                     <Calendario />
@@ -118,6 +131,65 @@ const ClienteDetalle = ({ cliente }) => {
                     </div>
                 </div>
             )}
+{mostrarRutinaModal && rutinaSeleccionada && (
+    <div className="rutinas-popup-overlay" onClick={handleCerrarRutinaModal}>
+        <div className="rutinas-popup-content" onClick={(e) => e.stopPropagation()}>
+            <span className="close" onClick={handleCerrarRutinaModal}>&times;</span>
+            <h2>Detalles de la Rutina</h2>
+            <div className="rutina-header">
+                <h3>{rutinaSeleccionada.nombre}</h3>
+                <p><strong>Descripción:</strong> {rutinaSeleccionada.descripcion}</p>
+                <p><strong>Creador:</strong> {rutinaSeleccionada.creador}</p>
+                <p><strong>Duración:</strong> {rutinaSeleccionada.duracion} semana(s)</p>
+                <p><strong>Meta:</strong> {rutinaSeleccionada.meta}</p>
+                <p><strong>Fecha Inicio:</strong> {new Date(rutinaSeleccionada.fechaInicio).toLocaleDateString()}</p>
+            </div>
+            {rutinaSeleccionada.semanas.map((semana, semanaIdx) => (
+                <div key={semanaIdx} className="semana-section">
+                    <h4>{semana.nombre}</h4>
+                    {semana.dias.map((dia, diaIdx) => (
+                        <div key={diaIdx} className="dia-section">
+                            <h5>{dia.nombre}</h5>
+                            {dia.sesiones.length > 0 ? (
+                                <ul>
+                                    {dia.sesiones.map((sesion, sesionIdx) => (
+                                        <li key={sesionIdx} className="sesion-item">
+                                            <strong>{sesion.nombre}</strong>
+                                            <ul>
+                                                {sesion.actividades.map((actividad, actIdx) => (
+                                                    <li key={actIdx}>
+                                                        <strong>Actividad:</strong> {actividad.name} ({actividad.type})<br />
+                                                        <strong>Modo:</strong> {actividad.mode}<br />
+                                                        <strong>Intensidad:</strong> {actividad.intensity}
+                                                        <ul>
+                                                            {actividad.exercises.map((exercise, exIdx) => (
+                                                                <li key={exIdx}>
+                                                                    <strong>Ejercicio:</strong> {exercise.nombre}<br />
+                                                                    {exercise.sets.map((set, setIdx) => (
+                                                                        <div key={setIdx} className="set-details">
+                                                                            <strong>Set {set.set}:</strong> {set.reps} reps @ {set.percent}% | Descanso: {set.rest} segundos
+                                                                        </div>
+                                                                    ))}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No hay sesiones programadas</p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            ))}
+            <button onClick={handleCerrarRutinaModal}>Cerrar</button>
+        </div>
+    </div>
+)}
         </div>
     );
 };

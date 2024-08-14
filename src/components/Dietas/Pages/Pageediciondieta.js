@@ -92,6 +92,11 @@ const Pageediciondieta = ({ theme }) => {
     }).toLowerCase();
   };
 
+  // Función que se pasa a Calendariodieta para manejar la selección de semana
+  const handleSelectWeek = (index) => {
+    setSelectedWeek(index);
+  };
+
   return (
     <div className={`${styles.pageEdicionDieta} ${theme}`}>
       <h2>Editar Dieta</h2>
@@ -104,7 +109,7 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, nombre: e.target.value })} 
         />
       </div>
-
+  
       <div className={styles.formGroup}>
         <label>Cliente:</label>
         <input 
@@ -113,7 +118,7 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, cliente: e.target.value })} 
         />
       </div>
-
+  
       <div className={styles.formGroup}>
         <label>Fecha de Inicio:</label>
         <input 
@@ -122,7 +127,7 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, fechaInicio: e.target.value })} 
         />
       </div>
-
+  
       <div className={styles.formGroup}>
         <label>Duración (semanas):</label>
         <input 
@@ -131,7 +136,7 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, duracionSemanas: e.target.value })} 
         />
       </div>
-
+  
       <div className={styles.formGroup}>
         <label>Objetivo:</label>
         <input 
@@ -140,7 +145,7 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, objetivo: e.target.value })} 
         />
       </div>
-
+  
       <div className={styles.formGroup}>
         <label>Restricciones:</label>
         <input 
@@ -153,16 +158,15 @@ const Pageediciondieta = ({ theme }) => {
       <div className={styles.weekContainer}>
         <h3>Selecciona una Semana</h3>
         <div>
-        <Calendariodieta weeks={weeks} setWeeks={setWeeks} />
+          <Calendariodieta weeks={weeks} onSelectWeek={handleSelectWeek} theme={theme} />
+        </div>
+        <Semanacomponente weeksData={weeks} setWeeksData={setWeeks} selectedWeek={selectedWeek} theme={theme} />
       </div>
-        <Semanacomponente weeks={weeks} setWeeks={setWeeks} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek} />
-      </div>
-
-    
-
+  
       <button className={styles.saveButton} onClick={handleSaveDieta}>Guardar Dieta</button>
     </div>
   );
+  
 };
 
 export default Pageediciondieta;

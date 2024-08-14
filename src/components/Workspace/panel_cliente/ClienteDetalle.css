@@ -193,3 +193,93 @@ body.light .notas-modal textarea {
       min-width: 100%; /* Asegura que los elementos ocupen todo el ancho del contenedor */
   }
 }
+.rutinas-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro translúcido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.rutinas-popup-content {
+  background-color: var(--background); /* Fondo según el modo */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--box-shadow); /* Sombra según el modo */
+  width: 100%;
+  max-width: 600px;
+  color: var(--text); /* Color de texto según el modo */
+  overflow-y: auto;
+  max-height: 80vh; /* Ajuste para pantallas pequeñas */
+}
+
+body.dark .rutinas-popup-content {
+  background-color: #2a2a2a; /* Fondo oscuro para el modal en modo oscuro */
+}
+
+body.light .rutinas-popup-content {
+  background-color: #ffffff; /* Fondo blanco para el modal en modo claro */
+}
+
+.rutinas-popup-content h2, 
+.rutinas-popup-content h3, 
+.rutinas-popup-content h4, 
+.rutinas-popup-content p {
+  color: var(--text); /* Color de texto según el modo */
+}
+
+.rutinas-popup-content .close {
+  color: var(--text); /* Color de la X para cerrar */
+  float: right;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.rutinas-popup-content .close:hover {
+  color: var(--primary-dark); /* Color de la X al pasar el cursor */
+}
+.rutina-header {
+  margin-bottom: 20px;
+}
+
+.semana-section {
+  margin-bottom: 15px;
+}
+
+.dia-section {
+  margin-bottom: 10px;
+  padding-left: 15px;
+  border-left: 3px solid var(--primary-light);
+}
+
+.sesion-item {
+  margin-bottom: 10px;
+}
+
+.sesion-item strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.set-details {
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+ul ul {
+  padding-left: 15px;
+}
+
+ul li {
+  margin-bottom: 5px;
+}

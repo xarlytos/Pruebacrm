@@ -2,7 +2,7 @@ import React from 'react';
 import Componentedia from './Componentedia';
 import styles from './Semanacomponente.module.css'; // Importa los estilos
 
-const Semanacomponente = ({ selectedWeek, weeksData, setWeeksData }) => {
+const Semanacomponente = ({ selectedWeek, weeksData, setWeeksData, theme }) => {
   // Validación para asegurarse de que weeksData y el selectedWeek existen
   if (!Array.isArray(weeksData) || weeksData.length === 0 || !weeksData[selectedWeek]) {
     return <div>No hay datos disponibles para las semanas seleccionadas.</div>;
@@ -70,18 +70,19 @@ const Semanacomponente = ({ selectedWeek, weeksData, setWeeksData }) => {
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">{weeksData[selectedWeek].nombre}</h2>
-      <div className={styles.diasContainer}>
+      <div className={`${styles.diasContainer} ${styles[theme]}`}>
         {weeksData[selectedWeek].dias.map((dia, index) => (
-          <Componentedia
-            key={index}
-            dia={dia.nombre}
-            macros={dia.macros}
-            comidas={dia.comidas}
-            onEditMacros={(macros) => handleEditMacros(index, macros)}
-            onSaveComida={(newComida) => handleSaveComida(index, newComida)}
-            onUpdateComida={(comidaIndex, updatedComida) => handleUpdateComida(index, comidaIndex, updatedComida)}
-            onDeleteComida={(comidaIndex) => handleDeleteComida(index, comidaIndex)}
-          />
+          <div key={index} className={styles.diaCard}>
+            <Componentedia
+              dia={dia.nombre}
+              macros={dia.macros}
+              comidas={dia.comidas}
+              onEditMacros={(macros) => handleEditMacros(index, macros)}
+              onSaveComida={(newComida) => handleSaveComida(index, newComida)}
+              onUpdateComida={(comidaIndex, updatedComida) => handleUpdateComida(index, comidaIndex, updatedComida)}
+              onDeleteComida={(comidaIndex) => handleDeleteComida(index, comidaIndex)}
+            />
+          </div>
         ))}
       </div>
     </div>

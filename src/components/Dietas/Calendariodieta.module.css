@@ -30,7 +30,7 @@
   font-size: 1rem;
   color: var(--text-color);
   background-color: var(--button-bg-color); /* Fondo neutral para los botones */
-  border: 1px solid transparent;
+  border: 1px solid var(--button-border-color); /* Borde para dar separación */
 }
 
 .weekButton:hover {
@@ -48,7 +48,8 @@
   --bg-color: #fff;
   --text-color: #333;
   --button-bg-color: #f0f0f0;
-  --highlight-color: #007bff; /* Color de resaltado (por ejemplo, azul) */
+  --button-border-color: #ccc;
+  --highlight-color: #007bff; /* Azul para selección y hover */
 }
 
 /* Tema Oscuro */
@@ -56,5 +57,6 @@
   --bg-color: #333;
   --text-color: #f5f5f5;
   --button-bg-color: #444;
-  --highlight-color: #1e90ff; /* Color de resaltado (más claro para el modo oscuro) */
+  --button-border-color: #666;
+  --highlight-color: #1e90ff; /* Azul claro para selección y hover */
 }

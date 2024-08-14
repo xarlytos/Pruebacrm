@@ -6,7 +6,7 @@ const Calendariodieta = ({ weeks, onSelectWeek, theme }) => {
 
   const handleWeekSelect = (index) => {
     setSelectedWeek(index);
-    onSelectWeek(index);
+    onSelectWeek(index); // Llama a la función pasada desde Pageediciondieta
   };
 
   return (
