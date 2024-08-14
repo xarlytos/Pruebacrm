@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import EditModal from './EditModal';
 
-const Finanzas = ({ cliente, actualizarCliente }) => {
+const Finanzas = ({ cliente, actualizarCliente, theme = 'default-theme' }) => { 
     const [isEditing, setIsEditing] = useState(false);
     const [editedCliente, setEditedCliente] = useState(cliente);
 
@@ -10,7 +10,6 @@ const Finanzas = ({ cliente, actualizarCliente }) => {
     };
 
     const handleSaveClick = () => {
-        // Verificamos si los campos son cadenas antes de intentar aplicar split
         const updatedCliente = {
             ...editedCliente,
             historialCompras: typeof editedCliente.historialCompras === 'string' 
@@ -57,7 +56,7 @@ const Finanzas = ({ cliente, actualizarCliente }) => {
                     Canal de Captación de Cliente:
                     <input type="text" name="canalCaptacionCliente" value={Array.isArray(editedCliente.canalCaptacionCliente) ? editedCliente.canalCaptacionCliente.join(', ') : editedCliente.canalCaptacionCliente} onChange={handleChange} />
                 </label>
-                <button onClick={handleSaveClick}>Guardar</button>
+                <button className={`condicion-fisica-edit-btn ${theme}`} onClick={handleSaveClick}>Guardar</button>
             </EditModal>
         </div>
     );

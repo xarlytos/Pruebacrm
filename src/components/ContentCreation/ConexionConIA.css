@@ -65,21 +65,6 @@
   }
   
   /* Estilo general de los botones */
-  button {
-    margin-top: 10px;
-    padding: 8px;
-    font-size: 0.9rem;
-    background-color: #ff4c4c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #ff1a1a;
-  }
   
   /* Estilo para los mensajes del usuario */
   .conexionconia-chat-message.user {

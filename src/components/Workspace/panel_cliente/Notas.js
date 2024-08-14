@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Notas.css';
 
-const Notas = ({ cliente, actualizarCliente, abrirModal }) => {
+const Notas = ({ cliente, actualizarCliente, abrirModal, theme }) => {
     const [notaSeleccionada, setNotaSeleccionada] = useState(null);
     const [notaEditada, setNotaEditada] = useState('');
     const [tituloEditado, setTituloEditado] = useState('');
 
     const abrirModalEditarNota = (nota) => {
-        console.log('Editando nota:', nota);
         setNotaSeleccionada(nota);
         setNotaEditada(nota.contenido);
         setTituloEditado(nota.titulo);
@@ -34,8 +33,6 @@ const Notas = ({ cliente, actualizarCliente, abrirModal }) => {
                 titulo: tituloEditado || '',
                 contenido: notaEditada
             };
-            console.log('Guardando nota editada:', notaActualizada);
-            console.log('ID de la nota seleccionada:', notaSeleccionada._id);
             const response = await axios.put(`/api/clientes/${cliente._id}/notas`, {
                 notaId: notaSeleccionada._id,
                 notaNueva: notaActualizada
@@ -49,7 +46,6 @@ const Notas = ({ cliente, actualizarCliente, abrirModal }) => {
 
     const handleEliminarNota = async () => {
         try {
-            console.log('Eliminando nota con ID:', notaSeleccionada._id);
             const response = await axios.delete(`/api/clientes/${cliente._id}/notas`, {
                 data: { notaId: notaSeleccionada._id }
             });
@@ -61,35 +57,35 @@ const Notas = ({ cliente, actualizarCliente, abrirModal }) => {
     };
 
     return (
-        <div className="section">
+        <div className={`section ${theme}`}>
             <div className="header">
                 <h3>Notas</h3>
                 <button onClick={abrirModal} className="notasButton">+</button>
             </div>
             <div className="notas-grid">
                 {(cliente.notas || []).map((nota, index) => (
-                    <div key={index} className="nota-card" onClick={() => abrirModalEditarNota(nota)}>
+                    <div key={index} className={`nota-card ${theme}`} onClick={() => abrirModalEditarNota(nota)}>
                         <strong>{nota.titulo || nota.contenido}</strong>
                     </div>
                 ))}
             </div>
 
             {notaSeleccionada !== null && (
-                <div className="modal">
-                    <div className="modal-content nota-edit-modal">
+                <div className="notas-modal">
+                    <div className={`modal-content nota-edit-modal ${theme}`}>
                         <div className="modal-header">
-                            <input 
-                                type="text" 
-                                placeholder="Título (opcional)" 
-                                className="modal-title" 
+                            <input
+                                type="text"
+                                placeholder="Título (opcional)"
+                                className="modal-title"
                                 value={tituloEditado}
                                 onChange={handleEditarTituloChange}
                             />
                             <span className="close" onClick={cerrarModalEditarNota}>&times;</span>
                         </div>
-                        <textarea 
-                            value={notaEditada} 
-                            onChange={handleEditarNotaChange} 
+                        <textarea
+                            value={notaEditada}
+                            onChange={handleEditarNotaChange}
                             className="modal-textarea"
                         />
                         <div className="modal-footer">

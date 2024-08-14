@@ -24,16 +24,12 @@ const Pageediciondieta = ({ theme }) => {
   const [weeks, setWeeks] = useState([]);
 
   useEffect(() => {
-    console.log("Dieta ID from URL:", dietaId);
-
     const fetchDieta = async () => {
       try {
         if (dietaId) {
-          console.log("Fetching dieta with ID:", dietaId);
           const response = await axios.get(`${API_BASE_URL}/api/dietas/${dietaId}`);
-          console.log("Dieta fetched from backend:", response.data);
           setDieta(response.data);
-          setWeeks(response.data.semanas || []);  // Asegura que `semanas` sea un array
+          setWeeks(response.data.semanas || []); // Asegura que `semanas` sea un array
         } else {
           console.error("No Dieta ID provided.");
         }
@@ -68,14 +64,11 @@ const Pageediciondieta = ({ theme }) => {
         }))
       }));
 
-      console.log("Saving sanitized weeks data: ", sanitizedWeeks);
-
       const response = await axios.put(`${API_BASE_URL}/api/dietas/${dietaId}`, {
         ...dieta,
         semanas: sanitizedWeeks
       });
 
-      console.log('Dieta saved:', response.data);
       navigate('/crear-dieta');
     } catch (error) {
       console.error('Error saving dieta:', error.response ? error.response.data : error.message);
@@ -92,70 +85,77 @@ const Pageediciondieta = ({ theme }) => {
     }).toLowerCase();
   };
 
-  // Función que se pasa a Calendariodieta para manejar la selección de semana
   const handleSelectWeek = (index) => {
     setSelectedWeek(index);
   };
 
   return (
-    <div className={`${styles.pageEdicionDieta} ${theme}`}>
+    <div className={`${styles.pageEdicionDieta} ${styles[theme]}`}>
       <h2>Editar Dieta</h2>
       
-      <div className={styles.formGroup}>
-        <label>Nombre de la Dieta:</label>
-        <input 
-          type="text" 
-          value={dieta.nombre} 
-          onChange={(e) => setDieta({ ...dieta, nombre: e.target.value })} 
-        />
-      </div>
-  
-      <div className={styles.formGroup}>
-        <label>Cliente:</label>
-        <input 
-          type="text" 
-          value={dieta.cliente} 
-          onChange={(e) => setDieta({ ...dieta, cliente: e.target.value })} 
-        />
-      </div>
-  
-      <div className={styles.formGroup}>
-        <label>Fecha de Inicio:</label>
-        <input 
-          type="date" 
-          value={dieta.fechaInicio} 
-          onChange={(e) => setDieta({ ...dieta, fechaInicio: e.target.value })} 
-        />
-      </div>
-  
-      <div className={styles.formGroup}>
-        <label>Duración (semanas):</label>
-        <input 
-          type="number" 
-          value={dieta.duracionSemanas} 
-          onChange={(e) => setDieta({ ...dieta, duracionSemanas: e.target.value })} 
-        />
-      </div>
-  
-      <div className={styles.formGroup}>
-        <label>Objetivo:</label>
-        <input 
-          type="text" 
-          value={dieta.objetivo} 
-          onChange={(e) => setDieta({ ...dieta, objetivo: e.target.value })} 
-        />
-      </div>
-  
-      <div className={styles.formGroup}>
-        <label>Restricciones:</label>
-        <input 
-          type="text" 
-          value={dieta.restricciones} 
-          onChange={(e) => setDieta({ ...dieta, restricciones: e.target.value })} 
-        />
+      <div className={`${styles.formContainer} ${styles[theme]}`}>
+        <div className={styles.formGroup}>
+          <label>Nombre de la Dieta:</label>
+          <input 
+            type="text" 
+            value={dieta.nombre} 
+            onChange={(e) => setDieta({ ...dieta, nombre: e.target.value })} 
+            className={`${styles.input} ${styles[theme]}`}
+          />
+        </div>
+    
+        <div className={styles.formGroup}>
+          <label>Cliente:</label>
+          <input 
+            type="text" 
+            value={dieta.cliente} 
+            onChange={(e) => setDieta({ ...dieta, cliente: e.target.value })} 
+            className={`${styles.input} ${styles[theme]}`}
+          />
+        </div>
+    
+        <div className={styles.formGroup}>
+          <label>Fecha de Inicio:</label>
+          <input 
+            type="date" 
+            value={dieta.fechaInicio} 
+            onChange={(e) => setDieta({ ...dieta, fechaInicio: e.target.value })} 
+            className={`${styles.input} ${styles[theme]}`}
+          />
+        </div>
+    
+        <div className={styles.formGroup}>
+          <label>Duración (semanas):</label>
+          <input 
+            type="number" 
+            value={dieta.duracionSemanas} 
+            onChange={(e) => setDieta({ ...dieta, duracionSemanas: e.target.value })} 
+            className={`${styles.input} ${styles[theme]}`}
+          />
+        </div>
+    
+        <div className={styles.formGroup}>
+          <label>Objetivo:</label>
+          <input 
+            type="text" 
+            value={dieta.objetivo} 
+            onChange={(e) => setDieta({ ...dieta, objetivo: e.target.value })} 
+            className={`${styles.input} ${styles[theme]}`}
+          />
+        </div>
+    
+        <div className={styles.formGroup}>
+          <label>Restricciones:</label>
+          <input 
+            type="text" 
+            value={dieta.restricciones} 
+            onChange={(e) => setDieta({ ...dieta, restricciones: e.target.value })} 
+            className={`${styles.input} ${styles[theme]}`}
+          />
+        </div>
       </div>
       
-      <div className={styles.weekContainer}>
+      <div className={`${styles.weekContainer} ${styles[theme]}`}>
         <h3>Selecciona una Semana</h3>
         <div>
           <Calendariodieta weeks={weeks} onSelectWeek={handleSelectWeek} theme={theme} />
@@ -163,10 +163,9 @@ const Pageediciondieta = ({ theme }) => {
         <Semanacomponente weeksData={weeks} setWeeksData={setWeeks} selectedWeek={selectedWeek} theme={theme} />
       </div>
   
-      <button className={styles.saveButton} onClick={handleSaveDieta}>Guardar Dieta</button>
+      <button className={`${styles.saveButton} ${styles[theme]}`} onClick={handleSaveDieta}>Guardar Dieta</button>
     </div>
   );
-  
 };
 
 export default Pageediciondieta;

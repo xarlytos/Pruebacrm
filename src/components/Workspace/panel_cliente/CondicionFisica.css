@@ -1,0 +1,526 @@
+/* CondicionFisica.css */
+
+.condicion-fisica-section {
+    border: 1px solid var(--secondary-light);
+    border-radius: 5px;
+    padding: 15px;
+    background-color: var(--background-light);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.condicion-fisica-section.dark {
+    border: 1px solid var(--secondary-dark);
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+.condicion-fisica-title {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: var(--text-light);
+}
+
+.condicion-fisica-item {
+    margin: 5px 0;
+    font-size: 1em;
+    color: var(--text-light);
+}
+
+.condicion-fisica-section.dark .condicion-fisica-title,
+.condicion-fisica-section.dark .condicion-fisica-item {
+    color: var(--text-dark);
+}
+
+/* Estilo del botón en modo claro */
+.condicion-fisica-edit-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Estilo del botón en modo oscuro */
+.condicion-fisica-section.dark .condicion-fisica-edit-btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark);
+}
+
+/* Hover state para ambos modos */
+.condicion-fisica-edit-btn:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    border-color: var(--primary-light);
+}
+
+/* Título en el modal de edición */
+.condicion-fisica-edit-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.condicion-fisica-save-btn {
+    background-color: var(--primary-light);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.condicion-fisica-save-btn:hover {
+    background-color: var(--primary-dark);
+}
+/* Estilo general para el modal */
+.condicion-fisica-modal {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    max-width: 600px;
+    margin: 0 auto;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.condicion-fisica-modal.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    box-shadow: 0 4px 8px var(--box-shadow-dark);
+}
+
+/* Estilo para los campos de entrada */
+.condicion-fisica-modal label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: inherit;
+}
+
+.condicion-fisica-modal input[type="text"],
+.condicion-fisica-modal input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 5px;
+    background-color: var(--background-light);
+    color: var(--text-light);
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.condicion-fisica-modal input[type="text"].dark,
+.condicion-fisica-modal input[type="number"].dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    border: 1px solid var(--border-dark);
+}
+
+/* Estilo para el contenedor de botones */
+.condicion-fisica-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilo para los botones */
+.condicion-fisica-save-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.condicion-fisica-save-btn.dark {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark);
+}
+
+.condicion-fisica-close-btn {
+    background-color: transparent;
+    color: var(--text-light);
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.condicion-fisica-close-btn.dark {
+    color: var(--text-dark);
+}
+
+.condicion-fisica-close-btn:hover {
+    color: var(--primary-light);
+}
+
+.condicion-fisica-close-btn.dark:hover {
+    color: var(--primary-dark);
+}
+
+/* Ajustes de diseño */
+.condicion-fisica-modal form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.condicion-fisica-modal form label {
+    flex-basis: 48%;
+}
+/* General Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+    width: 100%;
+    max-width: 600px;
+    color: var(--text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Specific Theme Adjustments */
+body.light .modal-content {
+    background-color: var(--background-light);
+    color: var(--text-light);
+}
+
+body.dark .modal-content {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+/* Input and Label Styling */
+.modal-content label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background-color: var(--background);
+    color: var(--text);
+    transition: border-color 0.3s;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary-light);
+}
+
+/* Button Styling */
+.modal-content .btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .modal-content .btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark);
+}
+
+.modal-content .btn:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+/* Close Button Styling */
+.modal-content .close {
+    color: var(--text);
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.modal-content .close:hover {
+    color: var(--primary-dark);
+}
+/* src/components/CondicionFisica.css */
+
+.condicion-fisica-section {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+    background-color: var(--background);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.condicion-fisica-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.condicion-fisica-item {
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.condicion-fisica-edit-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .condicion-fisica-edit-btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark);
+}
+
+.condicion-fisica-edit-btn:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+.condicion-fisica-modal {
+    background-color: var(--background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+}
+
+.condicion-fisica-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.condicion-fisica-save-btn,
+.condicion-fisica-close-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+body.dark .condicion-fisica-save-btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+}
+
+body.light .condicion-fisica-save-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+}
+
+.condicion-fisica-close-btn {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+}
+
+.condicion-fisica-form label {
+    display: block;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.condicion-fisica-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background-color: var(--background);
+    color: var(--text);
+    margin-top: 5px;
+}
+/* Estilo general para la sección de Condición Física */
+.condicion-fisica-section {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+    background-color: var(--background);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.condicion-fisica-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.condicion-fisica-item {
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+/* Estilo del botón en modo claro y oscuro */
+.condicion-fisica-edit-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .condicion-fisica-edit-btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark);
+}
+
+.condicion-fisica-edit-btn:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+/* Estilo general para el modal */
+.condicion-fisica-modal {
+    background-color: var(--background);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--box-shadow);
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+}
+
+body.dark .condicion-fisica-modal {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    box-shadow: 0 4px 8px var(--box-shadow-dark);
+}
+
+/* Estilo del overlay para el modal */
+.condicion-fisica-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Estilo para los campos de entrada dentro del modal */
+.condicion-fisica-modal label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: inherit;
+}
+
+.condicion-fisica-modal input[type="text"],
+.condicion-fisica-modal input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 5px;
+    background-color: var(--background-light);
+    color: var(--text-light);
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+body.dark .condicion-fisica-modal input[type="text"],
+body.dark .condicion-fisica-modal input[type="number"] {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    border: 1px solid var(--border-dark);
+}
+
+/* Estilo para el contenedor de botones */
+.condicion-fisica-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilo para los botones dentro del modal */
+.condicion-fisica-save-btn {
+    background-color: var(--button-background-light);
+    color: var(--button-text-light);
+    border: 2px dashed var(--button-text-light);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .condicion-fisica-save-btn {
+    background-color: var(--button-background-dark);
+    color: var(--button-text-dark);
+    border: 2px dashed var(--button-text-dark);
+}
+
+.condicion-fisica-close-btn {
+    background-color: transparent;
+    color: var(--text-light);
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+body.dark .condicion-fisica-close-btn {
+    color: var(--text-dark);
+}
+
+.condicion-fisica-close-btn:hover {
+    color: var(--primary-light);
+}
+
+body.dark .condicion-fisica-close-btn:hover {
+    color: var(--primary-dark);
+}
+
+/* Ajustes de diseño para el formulario */
+.condicion-fisica-modal form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.condicion-fisica-modal form label {
+    flex-basis: 48%;
+}

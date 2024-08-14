@@ -9,9 +9,13 @@
   color: var(--text-light);
 }
 
-.pageEdicionDieta.light input,
-.pageEdicionDieta.light select,
-.pageEdicionDieta.light textarea {
+.pageEdicionDieta.light .formContainer {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.pageEdicionDieta.light .input {
   background-color: var(--button-bg-light);
   color: var(--text-light);
   border: 1px solid var(--button-border-light);
@@ -30,7 +34,7 @@
   background-color: var(--button-bg-light);
   color: var(--button-text-light);
   border: 1px solid var(--button-border-light);
-  margin-right: 10px; /* Espacio entre botones */
+  margin-right: 10px;
 }
 
 .pageEdicionDieta.light .weekContainer button:hover,
@@ -51,18 +55,22 @@
   color: var(--text-dark);
 }
 
-.pageEdicionDieta.dark input,
-.pageEdicionDieta.dark select,
-.pageEdicionDieta.dark textarea {
-  background-color: #000000; /* Cambiado a negro */
+.pageEdicionDieta.dark .formContainer {
+  background-color: var(--background-dark); /* Fondo igual que el fondo de la página */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.pageEdicionDieta.dark .input {
+  background-color: var(--background-dark); /* Fondo de los inputs igual que el fondo de la página */
   color: var(--text-dark);
   border: 1px solid var(--button-border-dark);
-  box-shadow: none; /* Sin sombra interna */
+  box-shadow: none;
 }
 
 .pageEdicionDieta.dark input::placeholder,
 .pageEdicionDieta.dark textarea::placeholder {
-  color: #ccc; /* Placeholder más claro */
+  color: #ccc;
 }
 
 .pageEdicionDieta.dark .weekContainer,
@@ -77,7 +85,7 @@
   background-color: var(--button-bg-dark);
   color: var(--button-text-dark);
   border: 1px solid var(--button-border-dark);
-  margin-right: 10px; /* Espacio entre botones */
+  margin-right: 10px;
 }
 
 .pageEdicionDieta.dark .weekContainer button:hover,
@@ -91,6 +99,7 @@
 .pageEdicionDieta.dark h3 {
   color: var(--text-dark);
 }
+
 
 /* Título principal */
 .pageEdicionDieta h2 {
@@ -109,7 +118,7 @@
   display: block;
   font-size: 1rem;
   margin-bottom: 5px;
-  color: inherit; /* Usa el color del tema actual */
+  color: inherit;
 }
 
 /* Ajuste de inputs y selects */
@@ -150,9 +159,9 @@
 /* Contenedor de semanas */
 .weekContainer {
   margin-top: 30px;
-  padding: 20px; /* Aumenta el relleno interno del contenedor */
-  border-radius: 12px; /* Esquinas redondeadas */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil para el contenedor */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .weekContainer h3 {

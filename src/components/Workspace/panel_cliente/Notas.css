@@ -141,3 +141,46 @@
     text-decoration: none;
     cursor: pointer;
 }
+.section.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+}
+
+.section.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
+.nota-card.light {
+    background-color: var(--background-light);
+    border: 1px solid var(--secondary-light);
+    color: var(--text-light);
+}
+
+.nota-card.dark {
+    background-color: var(--background-dark);
+    border: 1px solid var(--secondary-dark);
+    color: var(--text-dark);
+}
+
+.modal-content.light {
+    background-color: var(--background-light);
+    border: 1px solid var(--secondary-light);
+    color: var(--text-light);
+}
+
+.modal-content.dark {
+    background-color: var(--background-dark);
+    border: 1px solid var(--secondary-dark);
+    color: var(--text-dark);
+}
+
+.notasButton {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+
+.notasButton.dark {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+}
