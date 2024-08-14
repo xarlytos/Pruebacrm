@@ -5,6 +5,8 @@ import { ic_delete_outline } from 'react-icons-kit/md/ic_delete_outline';
 import styles from './Listadeclases.module.css';
 import ClientesLista from './ClientesLista';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Listadeclases = ({ theme }) => {
   const [clases, setClases] = useState([]);
   const [selectedClase, setSelectedClase] = useState(null);
@@ -23,7 +25,7 @@ const Listadeclases = ({ theme }) => {
 
   const fetchClases = async () => {
     try {
-      const response = await axios.get('/api/clases');
+      const response = await axios.get(`${API_BASE_URL}/api/clases`);
       setClases(response.data);
     } catch (error) {
       console.error('Error fetching clases:', error);
@@ -38,9 +40,9 @@ const Listadeclases = ({ theme }) => {
   const handleClientesSeleccionados = async (clientesSeleccionados) => {
     try {
       const updatedClase = { ...selectedClase, clientes: clientesSeleccionados };
-      const response = await axios.put(`/api/clases/${selectedClase._id}`, updatedClase);
+      const response = await axios.put(`${API_BASE_URL}/api/clases/${selectedClase._id}`, updatedClase);
       await Promise.all(clientesSeleccionados.map(clienteId =>
-        axios.put(`/api/clientes/${clienteId}/clase/${selectedClase._id}`)
+        axios.put(`${API_BASE_URL}/api/clientes/${clienteId}/clase/${selectedClase._id}`)
       ));
       setClases(clases.map(clase =>
         clase._id === selectedClase._id ? response.data : clase
@@ -56,7 +58,7 @@ const Listadeclases = ({ theme }) => {
       const clase = clases.find(c => c._id === claseId);
       const updatedClientes = clase.clientes.filter(cliente => cliente._id !== clienteId);
       const updatedClase = { ...clase, clientes: updatedClientes };
-      const response = await axios.put(`/api/clases/${claseId}`, updatedClase);
+      const response = await axios.put(`${API_BASE_URL}/api/clases/${claseId}`, updatedClase);
       setClases(clases.map(c =>
         c._id === claseId ? response.data : c
       ));
@@ -68,7 +70,7 @@ const Listadeclases = ({ theme }) => {
   const handleBorrarClase = async (clase) => {
     if (window.confirm(`¿Estás seguro de que deseas borrar la clase "${clase.nombre}"?`)) {
       try {
-        await axios.delete(`/api/clases/${clase._id}`);
+        await axios.delete(`${API_BASE_URL}/api/clases/${clase._id}`);
         setClases(clases.filter(c => c._id !== clase._id));
       } catch (error) {
         console.error('Error deleting clase:', error);
@@ -87,7 +89,7 @@ const Listadeclases = ({ theme }) => {
 
   const handleCrearClase = async () => {
     try {
-      const response = await axios.post('/api/clases', { ...nuevaClase, clientes: [], sesiones: [] });
+      const response = await axios.post(`${API_BASE_URL}/api/clases`, { ...nuevaClase, clientes: [], sesiones: [] });
       setClases([...clases, response.data]);
       handleCerrarFormularioCrearClase();
     } catch (error) {
@@ -107,7 +109,7 @@ const Listadeclases = ({ theme }) => {
 
   const handleEditarClase = async () => {
     try {
-      const response = await axios.put(`/api/clases/${claseEditando._id}`, claseEditando);
+      const response = await axios.put(`${API_BASE_URL}/api/clases/${claseEditando._id}`, claseEditando);
       setClases(clases.map(clase =>
         clase._id === claseEditando._id ? response.data : clase
       ));
@@ -129,7 +131,7 @@ const Listadeclases = ({ theme }) => {
 
   const handleCrearSesion = async () => {
     try {
-      const response = await axios.post(`/api/clases/${claseEditando._id}/sesiones`, { ...nuevaSesion, fecha: new Date(nuevaSesion.fecha) });
+      const response = await axios.post(`${API_BASE_URL}/api/clases/${claseEditando._id}/sesiones`, { ...nuevaSesion, fecha: new Date(nuevaSesion.fecha) });
       setClases(clases.map(clase =>
         clase._id === claseEditando._id ? response.data : clase
       ));
