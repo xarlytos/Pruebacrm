@@ -4,6 +4,8 @@ import axios from 'axios';
 import PopupDeCreacionDePlanificacion from '../../Rutinas/PopupDeCreacionDePlanificacion'; // Actualiza la ruta según corresponda
 import './Rutinas.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Rutinas = ({ cliente, actualizarCliente }) => {
     const [showModal, setShowModal] = useState(false);
     const [showViewModal, setShowViewModal] = useState(false);
@@ -13,14 +15,16 @@ const Rutinas = ({ cliente, actualizarCliente }) => {
     useEffect(() => {
         const fetchRutinas = async () => {
             try {
-                const response = await axios.get(`/api/clientes/${cliente._id}/rutinas`);
+                const response = await axios.get(`${API_BASE_URL}/api/clientes/${cliente._id}/rutinas`);
                 setRutinas(response.data);
             } catch (error) {
                 console.error('Error fetching rutinas:', error);
             }
         };
 
-        fetchRutinas();
+        if (cliente && cliente._id) {
+            fetchRutinas();
+        }
     }, [cliente._id]);
 
     const handleShowModal = () => {
