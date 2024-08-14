@@ -33,7 +33,7 @@ const Pageediciondieta = ({ theme }) => {
           const response = await axios.get(`${API_BASE_URL}/api/dietas/${dietaId}`);
           console.log("Dieta fetched from backend:", response.data);
           setDieta(response.data);
-          setWeeks(response.data.semanas);
+          setWeeks(response.data.semanas || []);  // Asegura que `semanas` sea un array
         } else {
           console.error("No Dieta ID provided.");
         }
@@ -82,12 +82,10 @@ const Pageediciondieta = ({ theme }) => {
     }
   };
 
-  // Función para verificar si un ObjectId es válido utilizando una expresión regular
   const isValidObjectId = (id) => {
     return /^[0-9a-fA-F]{24}$/.test(id);
   };
 
-  // Función para generar un ObjectId "falso" en el frontend
   const generateObjectId = () => {
     return Math.floor(Date.now() / 1000).toString(16) + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => {
       return (Math.random() * 16 | 0).toString(16);
@@ -97,7 +95,8 @@ const Pageediciondieta = ({ theme }) => {
   return (
     <div className={`${styles.pageEdicionDieta} ${theme}`}>
       <h2>Editar Dieta</h2>
-      <div>
+      
+      <div className={styles.formGroup}>
         <label>Nombre de la Dieta:</label>
         <input 
           type="text" 
@@ -105,7 +104,8 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, nombre: e.target.value })} 
         />
       </div>
-      <div>
+
+      <div className={styles.formGroup}>
         <label>Cliente:</label>
         <input 
           type="text" 
@@ -113,7 +113,8 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, cliente: e.target.value })} 
         />
       </div>
-      <div>
+
+      <div className={styles.formGroup}>
         <label>Fecha de Inicio:</label>
         <input 
           type="date" 
@@ -121,7 +122,8 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, fechaInicio: e.target.value })} 
         />
       </div>
-      <div>
+
+      <div className={styles.formGroup}>
         <label>Duración (semanas):</label>
         <input 
           type="number" 
@@ -129,7 +131,8 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, duracionSemanas: e.target.value })} 
         />
       </div>
-      <div>
+
+      <div className={styles.formGroup}>
         <label>Objetivo:</label>
         <input 
           type="text" 
@@ -137,7 +140,8 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, objetivo: e.target.value })} 
         />
       </div>
-      <div>
+
+      <div className={styles.formGroup}>
         <label>Restricciones:</label>
         <input 
           type="text" 
@@ -145,13 +149,18 @@ const Pageediciondieta = ({ theme }) => {
           onChange={(e) => setDieta({ ...dieta, restricciones: e.target.value })} 
         />
       </div>
-      <div>
-        <Semanacomponente weeks={weeks} setWeeks={setWeeks} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek} />
-      </div>
-      <div>
+      
+      <div className={styles.weekContainer}>
+        <h3>Selecciona una Semana</h3>
+        <div>
         <Calendariodieta weeks={weeks} setWeeks={setWeeks} />
       </div>
-      <button onClick={handleSaveDieta}>Guardar Dieta</button>
+        <Semanacomponente weeks={weeks} setWeeks={setWeeks} selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek} />
+      </div>
+
+    
+
+      <button className={styles.saveButton} onClick={handleSaveDieta}>Guardar Dieta</button>
     </div>
   );
 };

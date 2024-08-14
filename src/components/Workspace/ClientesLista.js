@@ -17,6 +17,13 @@ import ClientFilterDropdown from '../Workspace/ClientFilterDropdown';
 import './ClientesLista.css';
 import { MdDelete, MdViewModule, MdViewList, MdUpload, MdOpenInBrowser, MdWbSunny, MdBrightness3, MdFilterList, MdClose, MdExpandMore, MdNoteAdd, MdFitnessCenter, MdFlag, MdRestaurant, MdMessage, MdPayment, MdCardGiftcard, MdBarChart, MdFileDownload } from 'react-icons/md';
 import { Menu, MenuItem } from '@mui/material';
+import AgregarNotaModal from './AgregarNotaModal';
+import PlanEntrenamientoModal from './PlanEntrenamientoModal';
+import AsignarObjetivosModal from './AsignarObjetivosModal';
+import DietaModalActual from './Dietamodalactual'; // Corregido para coincidir con el archivo existente
+import ActualizarMetodoPagoModal from './Actualizarmetodopago';
+import ModalBonos from './ModalBonos'; // Importa el componente ModalBonos
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const camposDisponibles = [
@@ -52,6 +59,12 @@ const ClientesLista = ({ theme, setTheme }) => {
     const [appliedFilters, setAppliedFilters] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
+    const [mostrarModalAgregarNota, setMostrarModalAgregarNota] = useState(false);
+    const [mostrarPlanEntrenamientoModal, setMostrarPlanEntrenamientoModal] = useState(false);
+    const [mostrarAsignarObjetivosModal, setMostrarAsignarObjetivosModal] = useState(false);
+    const [mostrarDietaModalActual, setMostrarDietaModalActual] = useState(false);
+    const [mostrarActualizarMetodoPagoModal, setMostrarActualizarMetodoPagoModal] = useState(false);
+    const [mostrarModalBonos, setMostrarModalBonos] = useState(false); // Añade estado para mostrar el modal de bonos
 
     useEffect(() => {
         cargarClientes();
@@ -74,9 +87,13 @@ const ClientesLista = ({ theme, setTheme }) => {
 
     const handleCheckboxChange = (e, cliente) => {
         e.stopPropagation();
-        setClientesSeleccionados(prev =>
-            prev.includes(cliente._id) ? prev.filter(id => id !== cliente._id) : [...prev, cliente._id]
-        );
+        if (clientesSeleccionados.includes(cliente._id)) {
+            setClientesSeleccionados(prev => prev.filter(id => id !== cliente._id));
+            setSelectedCliente(null); // Limpiar la selección si se deselecciona
+        } else {
+            setClientesSeleccionados([cliente._id]); // Solo permitimos un cliente seleccionado
+            setSelectedCliente(cliente); // Actualizar el cliente seleccionado
+        }
     };
 
     const handleFiltroChange = (e) => {
@@ -141,7 +158,7 @@ const ClientesLista = ({ theme, setTheme }) => {
             return 0;
         });
     };
-        const clientesFiltrados = applyAdvancedFilters(sortClientes(clientes), filtrosAvanzados);
+    const clientesFiltrados = applyAdvancedFilters(sortClientes(clientes), filtrosAvanzados);
 
     const handleFileUpload = () => {
         setMostrarPopupCSV(true);
@@ -219,29 +236,84 @@ const ClientesLista = ({ theme, setTheme }) => {
     };
 
     const handleAgregarNota = () => {
-        // Lógica para agregar una nota
-        toast.info('Agregar Nota seleccionado');
-        setAnchorEl(null);
+        if (clientesSeleccionados.length === 1) {
+            const clienteSeleccionado = clientes.find(cliente => cliente._id === clientesSeleccionados[0]);
+            if (clienteSeleccionado) {
+                setSelectedCliente(clienteSeleccionado);
+                setMostrarModalAgregarNota(true); // Actualiza el estado para mostrar el modal
+                toast.info(`Agregar Nota seleccionado para: ${clienteSeleccionado.nombre}`);
+            }
+        } else {
+            toast.error('Por favor, selecciona un cliente primero.');
+        }
     };
 
-    const handlePlanEntrenamiento = () => {
-        // Lógica para ver el plan de entrenamiento actual
-        toast.info('Plan de Entrenamiento Actual seleccionado');
-        setAnchorEl(null);
+    // Función para manejar cuando la nota ha sido agregada
+    const handleNotaAgregada = (nota) => {
+        setClientes(prevClientes =>
+            prevClientes.map(cliente =>
+                cliente._id === selectedCliente._id
+                    ? { ...cliente, notas: [...cliente.notas, nota] }
+                    : cliente
+            )
+        );
     };
 
+    const handlePlanEntrenamiento = async () => {
+        if (clientesSeleccionados.length === 1) {
+            const clienteSeleccionado = clientes.find(cliente => cliente._id === clientesSeleccionados[0]);
+            if (clienteSeleccionado) {
+                try {
+                    const response = await axios.get(`/api/clientes/${clienteSeleccionado._id}/rutinas`);
+                    const rutina = response.data;
+    
+                    setSelectedCliente({ ...clienteSeleccionado, rutina }); // Guardar la rutina en el cliente seleccionado
+                    setMostrarPlanEntrenamientoModal(true); // Mostrar el modal de plan de entrenamiento
+                    toast.info(`Plan de Entrenamiento Actual seleccionado para: ${clienteSeleccionado.nombre}`);
+                } catch (error) {
+                    toast.error('Error al obtener la rutina del cliente.');
+                }
+            }
+        } else {
+            toast.error('Por favor, selecciona un cliente primero.');
+        }
+        setAnchorEl(null);
+    };
+    
+    const handleClosePlanEntrenamientoModal = () => {
+        setMostrarPlanEntrenamientoModal(false);
+    };
+    
+    
     const handleAsignarObjetivos = () => {
-        // Lógica para asignar objetivos
-        toast.info('Asignar Objetivos seleccionado');
+        if (clientesSeleccionados.length === 1) {
+            const clienteSeleccionado = clientes.find(cliente => cliente._id === clientesSeleccionados[0]);
+            if (clienteSeleccionado) {
+                setSelectedCliente(clienteSeleccionado);
+                setMostrarAsignarObjetivosModal(true);
+                toast.info(`Asignar Objetivos seleccionado para: ${clienteSeleccionado.nombre}`);
+            }
+        } else {
+            toast.error('Por favor, selecciona un cliente primero.');
+        }
         setAnchorEl(null);
     };
+    
 
     const handlePlanDieta = () => {
-        // Lógica para ver el plan de dieta actual
-        toast.info('Plan de Dieta Actual seleccionado');
+        if (clientesSeleccionados.length === 1) {
+            const clienteSeleccionado = clientes.find(cliente => cliente._id === clientesSeleccionados[0]);
+            if (clienteSeleccionado) {
+                setSelectedCliente(clienteSeleccionado);
+                setMostrarDietaModalActual(true);
+                toast.info(`Plan de Dieta Actual seleccionado para: ${clienteSeleccionado.nombre}`);
+            }
+        } else {
+            toast.error('Por favor, selecciona un cliente primero.');
+        }
         setAnchorEl(null);
     };
-
+    
     const handleVerMensajes = () => {
         // Lógica para ver los mensajes
         toast.info('Ver Mensajes seleccionado');
@@ -249,17 +321,48 @@ const ClientesLista = ({ theme, setTheme }) => {
     };
 
     const handleActualizarMetodoPago = () => {
-        // Lógica para actualizar el método de pago
-        toast.info('Actualizar Método de Pago seleccionado');
+        if (clientesSeleccionados.length === 1) {
+            const clienteSeleccionado = clientes.find(cliente => cliente._id === clientesSeleccionados[0]);
+            if (clienteSeleccionado) {
+                setSelectedCliente(clienteSeleccionado);
+                setMostrarActualizarMetodoPagoModal(true);
+                toast.info(`Actualizar Método de Pago seleccionado para: ${clienteSeleccionado.nombre}`);
+            }
+        } else {
+            toast.error('Por favor, selecciona un cliente primero.');
+        }
         setAnchorEl(null);
     };
 
     const handleVerBonos = () => {
-        // Lógica para ver los bonos asociados
-        toast.info('Ver Bonos Asociados seleccionado');
+        if (clientesSeleccionados.length === 1) {
+            const clienteSeleccionado = clientes.find(cliente => cliente._id === clientesSeleccionados[0]);
+            if (clienteSeleccionado) {
+                setSelectedCliente(clienteSeleccionado);
+                setMostrarModalBonos(true); // Muestra el modal de bonos
+                toast.info(`Ver Bonos Asociados para: ${clienteSeleccionado.nombre}`);
+            }
+        } else {
+            toast.error('Por favor, selecciona un cliente primero.');
+        }
         setAnchorEl(null);
     };
 
+    const handleCloseModalBonos = () => {
+        setMostrarModalBonos(false);
+    };
+    const handleCloseAsignarObjetivosModal = () => {
+        setMostrarAsignarObjetivosModal(false);
+    };
+    
+    const handleCloseDietaModalActual = () => {
+        setMostrarDietaModalActual(false);
+    };
+    
+    const handleCloseActualizarMetodoPagoModal = () => {
+        setMostrarActualizarMetodoPagoModal(false);
+    };
+    
     const handleVerEstadisticas = () => {
         // Lógica para ver estadísticas generadas
         toast.info('Ver Estadísticas seleccionado');
@@ -301,7 +404,7 @@ const ClientesLista = ({ theme, setTheme }) => {
             </ResizableBox>
             <div className="clientes-lista-contenido">
                 <h1 className="tituloClientes">¡Bienvenido de nuevo!</h1>
-                <p className="subtituloClientes">¡Aqsuí tienes una lista de tus clientes!</p>
+                <p className="subtituloClientes">¡Aquí tienes una lista de tus clientes!</p>
                 <div className="actions">
                     <input
                         type="text"
@@ -352,18 +455,57 @@ const ClientesLista = ({ theme, setTheme }) => {
                                 <MdNoteAdd size={20} />
                                 Agregar Nota
                             </MenuItem>
+                            <AgregarNotaModal
+                                open={mostrarModalAgregarNota}
+                                onClose={() => setMostrarModalAgregarNota(false)}
+                                cliente={selectedCliente}
+                                onNotaAgregada={handleNotaAgregada}
+                            />
+
+
                             <MenuItem onClick={handlePlanEntrenamiento} disabled={clientesSeleccionados.length !== 1}>
                                 <MdFitnessCenter size={20} />
                                 Plan de Entrenamiento Actual
                             </MenuItem>
+                            <PlanEntrenamientoModal
+                open={mostrarPlanEntrenamientoModal}
+                onClose={handleClosePlanEntrenamientoModal}
+                cliente={selectedCliente}
+                theme={theme}
+            />
+
                             <MenuItem onClick={handleAsignarObjetivos} disabled={clientesSeleccionados.length !== 1}>
                                 <MdFlag size={20} />
                                 Asignar Objetivos
                             </MenuItem>
+                            <AsignarObjetivosModal
+    open={mostrarAsignarObjetivosModal}
+    onClose={handleCloseAsignarObjetivosModal}
+    cliente={selectedCliente}
+    theme={theme}
+    onObjetivosAsignados={(nuevosObjetivos) => {
+        // Actualizar el cliente con los nuevos objetivos en la lista
+        setClientes(prevClientes => 
+            prevClientes.map(cliente =>
+                cliente._id === selectedCliente._id
+                    ? { ...cliente, objetivos: nuevosObjetivos }
+                    : cliente
+            )
+        );
+    }}
+/>
+
                             <MenuItem onClick={handlePlanDieta} disabled={clientesSeleccionados.length !== 1}>
                                 <MdRestaurant size={20} />
                                 Plan de Dieta Actual
                             </MenuItem>
+                            <DietaModalActual
+                open={mostrarDietaModalActual}
+                onClose={handleCloseDietaModalActual}
+                cliente={selectedCliente}
+                theme={theme}
+            />
+
                             <MenuItem onClick={handleVerMensajes} disabled={clientesSeleccionados.length !== 1}>
                                 <MdMessage size={20} />
                                 Ver Mensajes
@@ -372,10 +514,24 @@ const ClientesLista = ({ theme, setTheme }) => {
                                 <MdPayment size={20} />
                                 Actualizar Método de Pago
                             </MenuItem>
+                            <ActualizarMetodoPagoModal
+                open={mostrarActualizarMetodoPagoModal}
+                onClose={handleCloseActualizarMetodoPagoModal}
+                cliente={selectedCliente}
+                theme={theme}
+            />
+
                             <MenuItem onClick={handleVerBonos} disabled={clientesSeleccionados.length !== 1}>
                                 <MdCardGiftcard size={20} />
                                 Ver Bonos Asociados
                             </MenuItem>
+                            <ModalBonos
+                    open={mostrarModalBonos}
+                    onClose={handleCloseModalBonos}
+                    cliente={selectedCliente}
+                    theme={theme}
+                />
+
                             <MenuItem onClick={handleVerEstadisticas} disabled={clientesSeleccionados.length !== 1}>
                                 <MdBarChart size={20} />
                                 Ver Estadísticas Generadas

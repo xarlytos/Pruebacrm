@@ -1,10 +1,12 @@
-// src/components/Dietas/Semanacomponente.js
-
 import React from 'react';
 import Componentedia from './Componentedia';
 import styles from './Semanacomponente.module.css'; // Importa los estilos
 
 const Semanacomponente = ({ selectedWeek, weeksData, setWeeksData }) => {
+  // Validación para asegurarse de que weeksData y el selectedWeek existen
+  if (!Array.isArray(weeksData) || weeksData.length === 0 || !weeksData[selectedWeek]) {
+    return <div>No hay datos disponibles para las semanas seleccionadas.</div>;
+  }
 
   const handleEditMacros = (diaIndex, macros) => {
     const updatedWeeks = weeksData.map((week, index) => {
@@ -19,23 +21,24 @@ const Semanacomponente = ({ selectedWeek, weeksData, setWeeksData }) => {
 
   const handleSaveComida = (diaIndex, newComida) => {
     if (!newComida.nombreComida || !newComida.calorias || !newComida.macronutrientes) {
-        console.error("Missing data in newComida:", newComida);
-        return;
+      console.error("Faltan datos en newComida:", newComida);
+      return;
     }
 
     const updatedWeeks = weeksData.map((week, index) => {
-        if (index === selectedWeek) {
-            const updatedDias = week.dias.map((dia, i) =>
-                i === diaIndex
-                    ? { ...dia, comidas: [...dia.comidas, newComida] }
-                    : dia
-            );
-            return { ...week, dias: updatedDias };
-        }
-        return week;
+      if (index === selectedWeek) {
+        const updatedDias = week.dias.map((dia, i) =>
+          i === diaIndex
+            ? { ...dia, comidas: [...dia.comidas, newComida] }
+            : dia
+        );
+        return { ...week, dias: updatedDias };
+      }
+      return week;
     });
     setWeeksData(updatedWeeks);
-};
+  };
+
   const handleUpdateComida = (diaIndex, comidaIndex, updatedComida) => {
     const updatedWeeks = weeksData.map((week, index) => {
       if (index === selectedWeek) {

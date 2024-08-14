@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Listadedietas.module.css';
 import axios from 'axios';
-import Tablacomidas from './Tablacomidas'; // Importamos el componente Tablacomidas
-import PopupDeComidas from './PopupDeComidas'; // Importamos el componente PopupDeComidas
+import Tablacomidas from './Tablacomidas';
+import PopupDeComidas from './PopupDeComidas';
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const Listadedietas = ({ theme, setTheme }) => {
@@ -21,8 +22,8 @@ const Listadedietas = ({ theme, setTheme }) => {
     restricciones: '',
   });
   const [customObjetivo, setCustomObjetivo] = useState('');
-  const [showDietas, setShowDietas] = useState(true); // Nuevo estado para alternar entre tablas
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // Estado para controlar el popup
+  const [showDietas, setShowDietas] = useState(true);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [comidaToEdit, setComidaToEdit] = useState(null);
 
   const objetivosPredefinidos = [
@@ -46,32 +47,32 @@ const Listadedietas = ({ theme, setTheme }) => {
     const fetchDietas = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/dietas`);
-        console.log('Respuesta de dietas:', response.data); // Log para ver la respuesta
+        console.log('Respuesta de dietas:', response.data);
         if (Array.isArray(response.data)) {
           setDietas(response.data);
         } else {
           console.error('La respuesta de dietas no es un array:', response.data);
-          setDietas([]); // Asegura que dietas siempre sea un array
+          setDietas([]);
         }
       } catch (error) {
         console.error('Error fetching dietas:', error);
-        setDietas([]); // En caso de error, dietas será un array vacío
+        setDietas([]);
       }
     };
 
     const fetchClientes = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/clientes`);
-        console.log('Respuesta de clientes:', response.data); // <-- Agrega este log
+        console.log('Respuesta de clientes:', response.data);
         if (Array.isArray(response.data)) {
           setClientes(response.data);
         } else {
           console.error('La respuesta de clientes no es un array:', response.data);
-          setClientes([]); // Establecer un array vacío si la respuesta no es un array
+          setClientes([]);
         }
       } catch (error) {
         console.error('Error fetching clientes:', error);
-        setClientes([]); // Establecer un array vacío en caso de error
+        setClientes([]);
       }
     };
 
@@ -81,7 +82,6 @@ const Listadedietas = ({ theme, setTheme }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Cambiando el campo ${name} a:`, value);
     setDieta({
       ...dieta,
       [name]: value,
@@ -136,11 +136,11 @@ const Listadedietas = ({ theme, setTheme }) => {
 
   const openPopup = (comida = null) => {
     setComidaToEdit(comida);
-    setIsPopupOpen(true); // Abre el popup
+    setIsPopupOpen(true);
   };
 
   const closePopup = () => {
-    setIsPopupOpen(false); // Cierra el popup
+    setIsPopupOpen(false);
     setComidaToEdit(null);
   };
 
@@ -159,7 +159,7 @@ const Listadedietas = ({ theme, setTheme }) => {
               if (showDietas) {
                 setShowForm(!showForm);
               } else {
-                openPopup(); // Abrir el popup para crear una comida
+                openPopup();
               }
             }}
           >
@@ -167,7 +167,7 @@ const Listadedietas = ({ theme, setTheme }) => {
           </button>
           <button
             className={`${styles.btnPrimary} ${theme === 'dark' ? styles.dark : ''}`}
-            onClick={() => setShowDietas(!showDietas)} // Alternar entre tablas
+            onClick={() => setShowDietas(!showDietas)}
           >
             {showDietas ? 'Mostrar Comidas' : 'Mostrar Dietas'}
           </button>

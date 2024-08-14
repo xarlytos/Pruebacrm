@@ -1,0 +1,28 @@
+/* src/components/AgregarNotaModal.css */
+
+.agregar-nota-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 50px auto;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.agregar-nota-modal-title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.agregar-nota-modal-textfield {
+    margin-bottom: 20px;
+}
+
+.agregar-nota-modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}

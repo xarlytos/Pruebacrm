@@ -1,192 +1,129 @@
-/* Contenedor principal de la página */
-.page {
-  padding: 20px;
-  color: var(--text-color);
-  font-family: 'Arial', sans-serif;  /* Fuente más moderna */
+/* Estilos generales */
+.pageEdicionDieta {
+  padding: 20px 40px;
+}
+
+/* Tema Claro */
+.pageEdicionDieta.light {
+  background-color: var(--bg-color-light);
+  color: var(--text-color-light);
+}
+
+.pageEdicionDieta.light input,
+.pageEdicionDieta.light select,
+.pageEdicionDieta.light textarea {
+  background-color: var(--input-bg-light);
+  color: var(--text-color-light);
+  border: 1px solid var(--border-color-light);
+}
+
+.pageEdicionDieta.light .weekContainer button,
+.pageEdicionDieta.light .saveButton {
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+  border: 1px solid var(--button-border-light);
+}
+
+.pageEdicionDieta.light .weekContainer button:hover,
+.pageEdicionDieta.light .saveButton:hover {
+  background-color: var(--button-hover-bg-light);
+  color: var(--button-hover-text-light);
+  border-color: var(--button-hover-border-light);
+}
+
+/* Tema Oscuro */
+.pageEdicionDieta.dark {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}
+
+.pageEdicionDieta.dark input,
+.pageEdicionDieta.dark select,
+.pageEdicionDieta.dark textarea {
+  background-color: var(--input-bg-dark);
+  color: var(--text-color-dark);
+  border: 1px solid var(--border-color-dark);
+}
+
+.pageEdicionDieta.dark .weekContainer button,
+.pageEdicionDieta.dark .saveButton {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border: 1px solid var(--button-border-dark);
+}
+
+.pageEdicionDieta.dark .weekContainer button:hover,
+.pageEdicionDieta.dark .saveButton:hover {
+  background-color: var(--button-hover-bg-dark);
+  color: var(--button-hover-text-dark);
+  border-color: var(--button-hover-border-dark);
 }
 
 /* Título principal */
-.page h1 {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  color: var(--text-color);
+.pageEdicionDieta h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--highlight-color);
   border-bottom: 2px solid var(--highlight-color);
   padding-bottom: 10px;
 }
 
-/* Contenedor de la sección de selección de semana */
-.week-selection-container {
-  background-color: var(--bg-color);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+/* Contenedor de formularios */
+.formGroup {
+  margin-bottom: 20px;
 }
 
-.week-selection-container h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: var(--text-color);
-  border-bottom: 2px solid var(--highlight-color);
-  padding-bottom: 10px;
+.formGroup label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: inherit; /* Usa el color del tema actual */
 }
 
-/* Contenedor de botones de semanas */
-.tabs-container {
-  display: flex;
-  gap: 16px;
-  justify-content: space-evenly;  /* Distribución uniforme */
-  border-bottom: 2px solid var(--highlight-color);
+/* Ajuste de inputs y selects */
+.formGroup input[type="text"],
+.formGroup input[type="date"],
+.formGroup input[type="number"],
+.formGroup select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.tab-button {
+/* Botón de semana y botón de guardar */
+.weekContainer button,
+.saveButton {
   padding: 12px 20px;
-  border: none;
-  border-radius: 8px 8px 0 0;  /* Bordes superiores redondeados */
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  font-size: 1rem;
-  color: var(--text-color);
-  background-color: var(--tab-bg-color);  /* Fondo del botón de pestaña */
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Sombra inferior */
+  margin-top: 20px;
 }
 
-.tab-button:hover {
-  background-color: var(--highlight-color);
-  color: white;
+.weekContainer button:hover,
+.saveButton:hover {
+  opacity: 0.9;
 }
 
-.tab-button.active {
-  background-color: var(--highlight-color);
-  color: white;
-  box-shadow: none;
+/* Ajuste específico para el botón de guardar */
+.saveButton {
+  display: block;
+  width: 100%;
 }
 
-/* Contenedor de los días */
-.day-container {
-  background-color: var(--bg-color);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra externa */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Borde sutil */
+/* Contenedor de semanas */
+.weekContainer {
+  margin-top: 30px;
 }
 
-.day-title {
+.weekContainer h3 {
   font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: var(--text-color);
+  margin-bottom: 15px;
+  color: inherit;
   border-bottom: 2px solid var(--highlight-color);
   padding-bottom: 10px;
-}
-
-/* Estilos de la barra de macronutrientes */
-.macronutrient-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;  /* Espaciado mejorado */
-}
-
-.macronutrient-label {
-  font-size: 1.1rem;
-  flex: 0 0 120px;
-  margin-right: 15px;
-  color: var(--text-color);
-  font-weight: 600;
-}
-
-.macronutrient-progress {
-  position: relative;
-  flex: 1;
-  height: 24px;
-  background-color: var(--progress-bg);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.macronutrient-progress::after {
-  content: attr(data-grams) 'g';
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--grams-color);
-  font-size: 0.9rem;
-}
-
-.macronutrient-bar .progress-fill {
-  height: 100%;
-  border-radius: 12px;
-}
-
-/* Colores específicos para cada macronutriente */
-.carbs-bar .progress-fill {
-  background-color: #3498db; /* Azul más claro y moderno */
-}
-
-.protein-bar .progress-fill {
-  background-color: #e74c3c; /* Rojo más vibrante */
-}
-
-.fat-bar .progress-fill {
-  background-color: #2ecc71; /* Verde más brillante */
-}
-
-/* Estilo del botón de editar macros */
-.editButton {
-  background: #4CAF50;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.editButton:hover {
-  background: #45a049;
-}
-
-/* Estilo del botón de agregar comida */
-.addButton {
-  font-size: 30px;
-  padding: 10px 15px;
-  border-radius: 50%;
-  margin-top: 10px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.addButton:hover {
-  background: #45a049;
-  transform: translateY(-3px);
-}
-
-/* Variables para tema claro y oscuro */
-:root {
-  --bg-color: #f9f9f9;
-  --text-color: #333;
-  --highlight-color: #007bff;
-  --hover-border-color: #0056b3;
-  --progress-bg: #e0e0e0;
-  --grams-color: #333;
-  --tab-bg-color: #e0e0e0; /* Fondo de los botones de pestañas */
-}
-
-.dark {
-  --bg-color: #1c1c1c;
-  --text-color: #c7c7c7;
-  --highlight-color: #62a0ea;
-  --hover-border-color: #437bbf;
-  --progress-bg: #333;
-  --grams-color: #ddd;
-  --tab-bg-color: #333;
 }
