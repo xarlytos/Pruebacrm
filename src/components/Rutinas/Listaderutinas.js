@@ -5,6 +5,8 @@ import './Listaderutinas.css';
 import FileTable from './FileTable';
 import PopupDeCreacionDePlanificacion from './PopupDeCreacionDePlanificacion';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Listaderutinas = ({ theme, setTheme }) => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
@@ -23,7 +25,7 @@ const Listaderutinas = ({ theme, setTheme }) => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get('/api/routines');
+        const response = await axios.get(`${API_BASE_URL}/api/routines`);
         if (Array.isArray(response.data)) {
           setPlans(response.data);
           console.log('Fetched plans:', response.data);
@@ -37,7 +39,7 @@ const Listaderutinas = ({ theme, setTheme }) => {
 
     const fetchClients = async () => {
       try {
-        const response = await axios.get('/api/clientes');
+        const response = await axios.get(`${API_BASE_URL}/api/clientes`);
         if (Array.isArray(response.data)) {
           setClients(response.data);
           console.log('Fetched clients:', response.data);
@@ -59,7 +61,7 @@ const Listaderutinas = ({ theme, setTheme }) => {
 
   const handleDeletePlan = async (planId) => {
     try {
-      await axios.delete(`/api/routines/${planId}`);
+      await axios.delete(`${API_BASE_URL}/api/routines/${planId}`);
       setPlans(plans.filter((plan) => plan._id !== planId));
     } catch (error) {
       console.error('Error deleting plan:', error);
@@ -68,12 +70,12 @@ const Listaderutinas = ({ theme, setTheme }) => {
 
   const handleAssociateClient = async (planId, clientId) => {
     try {
-      await axios.put(`/api/clientes/${clientId}/rutinas/${planId}`);
+      await axios.put(`${API_BASE_URL}/api/clientes/${clientId}/rutinas/${planId}`);
       
       setPlanToAssociate(null);
       setSelectedClientId(null);
 
-      const updatedPlans = await axios.get('/api/routines');
+      const updatedPlans = await axios.get(`${API_BASE_URL}/api/routines`);
       setPlans(updatedPlans.data);
     } catch (error) {
       console.error('Error associating client to plan:', error);
@@ -98,6 +100,7 @@ const Listaderutinas = ({ theme, setTheme }) => {
   };
 
   return (
+
     <div className={`listaderutinas-contenedor ${theme}`}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Planificaciones</h2>
