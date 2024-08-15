@@ -478,7 +478,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                             <WidgetFacturas isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} onTitleClick={handleOpenScanModal} theme={theme} setTheme={setTheme} />
                           )}
                           {item.i === 'cuentaBancaria' && (
-                            <WidgetCuentaBancaria onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} />
+                            <WidgetCuentaBancaria onTitleClick={handleOpenDetailedModal} theme={theme} beneficio={beneficio} setTheme={setTheme} />
                           )}
                           {item.i === 'gasto' && (
                             <WidgetGasto isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} gastos={gastos} />

@@ -1,0 +1,85 @@
+/* Estilos generales */
+.Alertas-eco-widget {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f5e6dc; /* Fondo con tono suave */
+    color: #333;
+  }
+  
+  .Alertas-eco-title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .Alertas-eco-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .Alertas-eco-item {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  .Alertas-eco-item.economica {
+    background-color: #ffebd6; /* Fondo especial para alertas económicas */
+    color: #d9534f; /* Color del texto */
+  }
+  
+  .Alertas-eco-item-title {
+    font-weight: bold;
+  }
+  
+  .Alertas-eco-item-message {
+    color: #555;
+  }
+  
+  .Alertas-eco-widget-empty {
+    text-align: center;
+    padding: 1rem;
+    color: #888;
+    font-style: italic;
+  }
+  
+  /* Tema oscuro */
+  .dark .Alertas-eco-widget {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .dark .Alertas-eco-item.economica {
+    background-color: #5a5a5a; /* Fondo oscuro */
+    color: #ffa07a; /* Color del texto claro */
+  }
+  
+  .dark .Alertas-eco-item-title {
+    color: #fff;
+  }
+  
+  .dark .Alertas-eco-item-message {
+    color: #ddd;
+  }
+  
+  /* Tema claro */
+  .light .Alertas-eco-widget {
+    background-color: #f5e6dc;
+    color: #333;
+  }
+  
+  .light .Alertas-eco-item.economica {
+    background-color: #ffebd6;
+    color: #d9534f;
+  }
+  
+  .light .Alertas-eco-item-title {
+    color: #000;
+  }
+  
+  .light .Alertas-eco-item-message {
+    color: #555;
+  }
+  

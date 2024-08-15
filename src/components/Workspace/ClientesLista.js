@@ -418,8 +418,12 @@ const ClientesLista = ({ theme, setTheme }) => {
                         <MdOpenInBrowser size={20} />
                         Crear Cliente
                     </button>
+                    <button className={`cliente-action-btn ${theme}`} onClick={() => setVistaCalendario(!vistaCalendario)}>
+                        {vistaCalendario ? <MdViewList size={20} /> : <MdViewModule size={20} />}
+                        {vistaCalendario ? 'Ver Tabla' : 'Ver Calendario'}
+                    </button>
                     <div>
-                        <button className={`cliente-action-btn ${theme}`} onClick={handleMenuClick}>
+                            <button className={`cliente-action-btn ${theme}`} onClick={handleMenuClick}>
                             <MdExpandMore size={20} />
                             Más Acciones
                         </button>
@@ -435,10 +439,6 @@ const ClientesLista = ({ theme, setTheme }) => {
                             <MenuItem onClick={() => setMostrarModalCategorias(true)}>
                                 <MdViewModule size={20} />
                                 Seleccionar Categorías
-                            </MenuItem>
-                            <MenuItem onClick={() => setVistaCalendario(!vistaCalendario)}>
-                                {vistaCalendario ? <MdViewList size={20} /> : <MdViewModule size={20} />}
-                                {vistaCalendario ? 'Ver Tabla' : 'Ver Calendario'}
                             </MenuItem>
                             <MenuItem onClick={handleOpenCommandPopup}>
                                 <MdOpenInBrowser size={20} />

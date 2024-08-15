@@ -1,0 +1,62 @@
+.widget-cuentabancaria {
+    padding: 20px;
+    background-color: #fddece; /* Fondo suave para el widget */
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out; /* Suave transición para cambios */
+    }
+  
+  .widget-cuentabancaria h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333333; /* Texto oscuro */
+    }
+  
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    }
+  
+  .buttons-container .btn-view-crm,
+  .buttons-container .btn-view-stripe,
+  .buttons-container .btn-view-bank {
+    background-color: #3498db; /* Color azul para los botones */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem; /* Tamaño de fuente mayor */
+
+  }
+  
+  .buttons-container .btn-view-crm:hover,
+  .buttons-container .btn-view-stripe:hover,
+  .buttons-container .btn-view-bank:hover {
+    background-color: #2980b9; /* Color azul más oscuro en hover */
+  }
+  
+  .beneficio-info {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #eafaf1;
+    border-left: 6px solid #27ae60;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .beneficio-info.positivo {
+    color: #27ae60; /* Verde para beneficio positivo */
+  }
+  
+  .beneficio-info.negativo {
+    color: #e74c3c; /* Rojo para beneficio negativo */
+    background-color: #fdecea; /* Fondo rosado suave para negativo */
+    border-left-color: #e74c3c; /* Borde rojo para negativo */
+  }
+    

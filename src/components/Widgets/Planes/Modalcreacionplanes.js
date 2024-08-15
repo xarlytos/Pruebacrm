@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Modalcreacionplanes.css';
+import { Checkbox } from '@mui/material';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
@@ -73,7 +74,7 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
 
     <div className="Modalcreacionplanes-popup">
       <div className={`Modalcreacionplanes-popup-content ${theme}`}>
-        <h3>Crear Nuevo Plan</h3>
+        <h3>Creaaar Nuevo Plan</h3>
         <form onSubmit={handleSubmit}>
           <label>
             Nombre:
@@ -146,6 +147,12 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
                   onChange={handleChange}
                   required
                 />
+              </label>
+              <label>
+                plan indefinido
+                <Checkbox>
+                  
+                </Checkbox>
               </label>
               <label>
                 Tarifa:
