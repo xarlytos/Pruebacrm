@@ -1,117 +1,325 @@
-/* Variables de tema */
-:root {
-  --background-light: #eee3dd;
-  --background-dark: #333333;
-  --text-light: #000000;
-  --text-dark: #f7fafc;
-  --input-bg-light: #ffffff;
-  --input-bg-dark: #2a2a2a;
-  --input-border-light: #000000;
-  --input-border-dark: #333333;
-  --button-bg-light: #ffffff;
-  --button-bg-dark: #444444;
-  --button-text-light: #000000;
-  --button-text-dark: #f7fafc;
-  --button-hover-bg-light: #ddd;
-  --button-hover-bg-dark: #333;
-}
+/* widgetbonos.css */
 
-/* Popup */
-.Modalcreacionplanes-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Estilos para el contenido del popup en modo claro y oscuro */
-.Modalcreacionplanes-popup-content {
+/* Estilos generales */
+.Widget-bono-widget-bonos {
   padding: 20px;
   border-radius: 8px;
-  text-align: center;
+  margin: 10px 0;
 }
 
-.Modalcreacionplanes-popup-content.light {
-  background: var(--background-light);
-  color: var(--text-light);
-}
-
-.Modalcreacionplanes-popup-content.dark {
-  background: var(--background-dark);
-  color: var(--text-dark);
-}
-
-.Modalcreacionplanes-popup-content h3 {
-  margin-bottom: 20px;
-}
-
-.Modalcreacionplanes-popup-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.Modalcreacionplanes-popup-content label {
+.Widget-bono-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 15px;
 }
 
-/* Estilos para los inputs y selects */
-.Modalcreacionplanes-popup-content.light input,
-.Modalcreacionplanes-popup-content.light select {
-  background: var(--input-bg-light);
-  border: 1px solid var(--input-border-light);
-  color: var(--text-light);
+.Widget-bono-search-input {
+  padding: 10px;
+  font-size: 16px;
+  width: 250px;
+  margin-right: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
 }
 
-.Modalcreacionplanes-popup-content.dark input,
-.Modalcreacionplanes-popup-content.dark select {
-  background: var(--input-bg-dark);
-  border: 1px solid var(--input-border-dark);
-  color: var(--text-dark);
+.Widget-bono-filter-btn,
+.Widget-bono-bono-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
 }
 
-.Modalcreacionplanes-popup-content input,
-.Modalcreacionplanes-popup-content select {
-  padding: 5px;
+.Widget-bono-bono-button-container {
+  position: relative;
+}
+
+.Widget-bono-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.Widget-bono-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-color);
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.Widget-bono-dropdown-content form {
+  padding: 10px;
+}
+
+.Widget-bono-dropdown-content input,
+.Widget-bono-dropdown-content textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
 }
 
-/* Botones */
-.Modalcreacionplanes-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.Modalcreacionplanes-buttons button {
-  padding: 10px 20px;
+.Widget-bono-dropdown-content button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.Modalcreacionplanes-buttons.light button {
-  background: var(--button-bg-light);
-  color: var(--button-text-light);
+.Widget-bono-dropdown:hover .Widget-bono-dropdown-content {
+  display: block;
 }
 
-.Modalcreacionplanes-buttons.dark button {
-  background: var(--button-bg-dark);
-  color: var(--button-text-dark);
+.Widget-bono-options-dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.Modalcreacionplanes-buttons.light button:hover {
-  background: var(--button-hover-bg-light);
+.Widget-bono-options-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 18px;
 }
 
-.Modalcreacionplanes-buttons.dark button:hover {
-  background: var(--button-hover-bg-dark);
+.Widget-bono-options-menu {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-color);
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.Widget-bono-options-dropdown:hover .Widget-bono-options-menu {
+  display: block;
+}
+
+.Widget-bono-dropdown-item {
+  padding: 12px;
+  cursor: pointer;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.Widget-bono-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.Widget-bono-dropdown-item:hover {
+  background-color: var(--hover-bg-color);
+}
+
+/* Estilos generales de la tabla */
+.Widget-bono-widget-bonos table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background-color: var(--bg-color);
+  overflow-x: auto;
+  display: block;
+}
+
+.Widget-bono-widget-bonos th,
+.Widget-bono-widget-bonos td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.Widget-bono-widget-bonos th {
+  background-color: var(--hover-bg-color);
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.Widget-bono-widget-bonos td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.Widget-bono-widget-bonos tbody tr:hover {
+  background-color: var(--hover-bg-color);
+}
+
+.Widget-bono-widget-bonos td input[type="checkbox"] {
+  margin: 0;
+  transform: scale(1.2);
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 768px) {
+  .Widget-bono-widget-bonos table,
+  .Widget-bono-widget-bonos thead,
+  .Widget-bono-widget-bonos tbody,
+  .Widget-bono-widget-bonos th,
+  .Widget-bono-widget-bonos td,
+  .Widget-bono-widget-bonos tr {
+    display: block;
+  }
+
+  .Widget-bono-widget-bonos thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .Widget-bono-widget-bonos tr {
+    margin: 0 0 1rem 0;
+  }
+
+  .Widget-bono-widget-bonos td {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .Widget-bono-widget-bonos td:before {
+    position: absolute;
+    top: 12px;
+    left: 6px;
+    width: calc(50% - 12px);
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .Widget-bono-widget-bonos td:nth-of-type(1):before { content: "Número de Bono"; }
+  .Widget-bono-widget-bonos td:nth-of-type(2):before { content: "Fecha"; }
+  .Widget-bono-widget-bonos td:nth-of-type(3):before { content: "Estado"; }
+  .Widget-bono-widget-bonos td:nth-of-type(4):before { content: "Beneficiario"; }
+  .Widget-bono-widget-bonos td:nth-of-type(5):before { content: "Monto"; }
+  .Widget-bono-widget-bonos td:nth-of-type(6):before { content: "Tipo de Bono"; }
+}
+
+/* Tema claro */
+.light {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dddddd;
+  --hover-bg-color: #f0f0f0;
+  --btn-bg-color: #007bff;
+  --btn-text-color: #ffffff;
+}
+
+.light.Widget-bono-widget-bonos {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.light .Widget-bono-search-input,
+.light .Widget-bono-dropdown-content input,
+.light .Widget-bono-dropdown-content textarea {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.light .Widget-bono-filter-btn,
+.light .Widget-bono-bono-button,
+.light .Widget-bono-dropdown-content button {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-text-color);
+}
+
+.light .Widget-bono-options-menu {
+  background-color: var(--bg-color);
+}
+
+.light .Widget-bono-dropdown-item {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.light .Widget-bono-dropdown-item:hover {
+  background-color: var(--hover-bg-color);
+}
+
+/* Tema oscuro */
+.dark {
+  --bg-color: #333333;
+  --text-color: #f0f0f0;
+  --border-color: #444444;
+  --hover-bg-color: #555555;
+  --btn-bg-color: #28a745;
+  --btn-text-color: #ffffff;
+}
+
+.dark.Widget-bono-widget-bonos {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.dark .Widget-bono-search-input,
+.dark .Widget-bono-dropdown-content input,
+.dark .Widget-bono-dropdown-content textarea {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.dark .Widget-bono-filter-btn,
+.dark .Widget-bono-bono-button,
+.dark .Widget-bono-dropdown-content button {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-text-color);
+}
+
+.dark .Widget-bono-options-menu {
+  background-color: var(--bg-color);
+}
+
+.dark .Widget-bono-dropdown-item {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.dark .Widget-bono-dropdown-item:hover {
+  background-color: var(--hover-bg-color);
+}
+/* Personalización de la barra de desplazamiento horizontal */
+.Widget-bono-widget-bonos::-webkit-scrollbar {
+  height: 12px;
+  background-color: var(--bg-color); /* Fondo de la barra de desplazamiento */
+}
+
+.Widget-bono-widget-bonos::-webkit-scrollbar-thumb {
+  background-color: var(--border-color); /* Color de la barra de desplazamiento */
+  border-radius: 10px;
+  border: 3px solid var(--bg-color); /* Espacio entre la barra y el track */
+}
+
+.Widget-bono-widget-bonos::-webkit-scrollbar-thumb:hover {
+  background-color: var(--hover-bg-color); /* Color cuando se pasa el cursor */
+}
+
+.Widget-bono-widget-bonos::-webkit-scrollbar-track {
+  background-color: var(--bg-color); /* Color del track (fondo) */
+  border-radius: 10px;
+}
+
+.Widget-bono-widget-bonos::-webkit-scrollbar-track-piece {
+  background-color: var(--bg-color); /* Color de la pieza del track visible */
+}
+
+/* Estilos adicionales para compatibilidad con otros navegadores */
+.Widget-bono-widget-bonos {
+  scrollbar-color: var(--border-color) var(--bg-color);
+  scrollbar-width: thin;
 }

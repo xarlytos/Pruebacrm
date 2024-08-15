@@ -113,23 +113,23 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
 
   return (
 
-    <div className={`widget-bonos ${theme}`}>
+    <div className={`Widget-bono-widget-bonos ${theme}`}>
       <h2 onClick={onTitleClick}>Bonos</h2>
-      <div className="controls">
+      <div className="Widget-bono-controls">
         <input 
           type="text" 
           placeholder="Buscar bono..." 
           value={filterText} 
           onChange={handleFilterChange} 
-          className={`search-input ${theme}`}
+          className={`Widget-bono-search-input ${theme}`}
         />
-        <button className={`filter-btn ${theme}`} onClick={handleFilterBonos}>Filtrar Activos</button>
+        <button className={`Widget-bono-filter-btn ${theme}`} onClick={handleFilterBonos}>Filtrar Activos</button>
         
-        <div className="bono-button-container">
-          <div className="dropdown">
-            <button className={`bono-button ${theme}`} onClick={toggleBonoDropdown}>Crear Bono</button>
+        <div className="Widget-bono-bono-button-container">
+          <div className="Widget-bono-dropdown">
+            <button className={`Widget-bono-bono-button ${theme}`} onClick={toggleBonoDropdown}>Crear Bono</button>
             {isBonoDropdownOpen && (
-              <div className={`dropdown-content ${theme}`}>
+              <div className={`Widget-bono-dropdown-content ${theme}`}>
                 <h3>Añadir Bono</h3>
                 <form onSubmit={handleCreateBono}>
                   <input 
@@ -201,7 +201,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
                     onChange={handleInputChange} 
                     required
                   />
-                  <button type="submit" className={`bono-button ${theme}`}>Añadir</button>
+                  <button type="submit" className={`Widget-bono-bono-button ${theme}`}>Añadir</button>
                 </form>
               </div>
             )}
@@ -240,14 +240,14 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
               {visibleColumns.monto && <td>{item.monto}</td>}
               {visibleColumns.tipo && <td>{item.tipo}</td>}
               <td>
-                <div className="dropdown options-dropdown">
-                  <button className={`dropdown-toggle options-btn ${theme}`}>...</button>
-                  <div className={`dropdown-menu options-menu ${theme}`}>
-                    <button className={`dropdown-item ${theme}`} onClick={() => handleChangeStatus(index)}>
+                <div className="Widget-bono-dropdown Widget-bono-options-dropdown">
+                  <button className={`Widget-bono-dropdown-toggle Widget-bono-options-btn ${theme}`}>...</button>
+                  <div className={`Widget-bono-dropdown-menu Widget-bono-options-menu ${theme}`}>
+                    <button className={`Widget-bono-dropdown-item ${theme}`} onClick={() => handleChangeStatus(index)}>
                       Cambiar Estado
                     </button>
-                    <button className={`dropdown-item ${theme}`}>Opción 2</button>
-                    <button className={`dropdown-item ${theme}`}>Opción 3</button>
+                    <button className={`Widget-bono-dropdown-item ${theme}`}>Opción 2</button>
+                    <button className={`Widget-bono-dropdown-item ${theme}`}>Opción 3</button>
                   </div>
                 </div>
               </td>
