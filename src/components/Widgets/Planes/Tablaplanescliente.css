@@ -1,4 +1,4 @@
-.Tablaplanescliente-container {
+.Widgetplanes-container {
   padding: 20px;
   background: var(--background);
   border-radius: 8px;
@@ -9,23 +9,27 @@
   overflow: visible; /* Permite que el contenido sobresalga */
 }
 
-.Tablaplanescliente-table-wrapper {
+.Widgetplanes-table-wrapper {
   max-height: 500px; /* Define la altura máxima de la tabla */
-  overflow-x: visible; /* Mantiene el desplazamiento horizontal si es necesario */
+  overflow-x: auto; /* Mantiene el desplazamiento horizontal si es necesario */
   margin-top: 10px;
+  overflow-y: unset;
+  height: 200px;
   border-radius: 8px;
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); /* Añade una ligera sombra interior */
 }
-.dropdown {
+
+.Widgetplanes-dropdown {
   position: relative;
   display: inline-block;
-}.Tablaplanescliente-button-group.right-aligned {
+}
+
+.Widgetplanes-button-group.Widgetplanes-right-aligned {
   display: flex;
   justify-content: flex-end;
 }
 
-
-.dropdown-toggle {
+.Widgetplanes-dropbtn {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -33,7 +37,7 @@
   padding: 5px;
 }
 
-.dropdown-menu {
+.Widgetplanes-dropdown-menu {
   display: none;
   position: absolute;
   background-color: white;
@@ -41,11 +45,11 @@
   z-index: 10000;
 }
 
-.dropdown:hover .dropdown-menu {
+.Widgetplanes-dropdown:hover .Widgetplanes-dropdown-menu {
   display: block;
 }
 
-.dropdown-menu button {
+.Widgetplanes-dropdown-menu button {
   background: none;
   border: none;
   padding: 8px 16px;
@@ -54,11 +58,11 @@
   width: 100%;
 }
 
-.dropdown-menu button:hover {
+.Widgetplanes-dropdown-menu button:hover {
   background-color: #ddd;
 }
 
-.Tablaplanescliente-popup {
+.Widgetplanes-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -71,14 +75,14 @@
   z-index: 1000;
 }
 
-.Tablaplanescliente-popup-content {
+.Widgetplanes-popup-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
 }
 
-.Tablaplanescliente-container h2 {
+.Widgetplanes-container h2 {
   color: var(--widget-title-color);
   cursor: pointer;
   font-size: 1.5rem;
@@ -87,14 +91,14 @@
   letter-spacing: 1px;
 }
 
-.Tablaplanescliente-controls {
+.Widgetplanes-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.Tablaplanescliente-controls input[type="text"] {
+.Widgetplanes-controls input[type="text"] {
   padding: 8px 12px;
   border: 1px solid var(--input-border);
   border-radius: 4px;
@@ -104,17 +108,17 @@
   transition: border-color 0.3s ease;
 }
 
-.Tablaplanescliente-controls input[type="text"]:focus {
+.Widgetplanes-controls input[type="text"]:focus {
   border-color: var(--button-bg);
   outline: none;
 }
 
-.Tablaplanescliente-button-group {
+.Widgetplanes-button-group {
   display: flex;
   gap: 15px;
 }
 
-.Tablaplanescliente-button-group button {
+.Widgetplanes-button-group button {
   padding: 8px 15px;
   border: none;
   border-radius: 4px;
@@ -126,15 +130,11 @@
   transition: background 0.3s ease;
 }
 
-.Tablaplanescliente-button-group button:hover {
+.Widgetplanes-button-group button:hover {
   background: var(--button-hover-bg);
 }
 
-.Tablaplanescliente-dropdown {
-  position: relative;
-}
-
-.Tablaplanescliente-dropdown-toggle {
+.Widgetplanes-dropdown-toggle {
   background: var(--button-bg);
   border: 1px solid var(--button-border);
   border-radius: 4px;
@@ -143,7 +143,7 @@
   cursor: pointer;
 }
 
-.Tablaplanescliente-dropdown-menu {
+.Widgetplanes-dropdown-menu {
   display: none;
   position: absolute;
   background: var(--dropdown-bg);
@@ -155,19 +155,19 @@
   z-index: 1000;
 }
 
-.Tablaplanescliente-dropdown:hover .Tablaplanescliente-dropdown-menu {
+.Widgetplanes-dropdown:hover .Widgetplanes-dropdown-menu {
   display: block;
 }
 
-.Tablaplanescliente-container table {
+.Widgetplanes-container table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
   background: var(--table-bg);
 }
 
-.Tablaplanescliente-container th,
-.Tablaplanescliente-container td {
+.Widgetplanes-container th,
+.Widgetplanes-container td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid var(--table-border);
@@ -175,21 +175,21 @@
   transition: background 0.3s ease;
 }
 
-.Tablaplanescliente-container th {
+.Widgetplanes-container th {
   background: var(--table-header-bg);
   font-weight: bold;
   text-transform: uppercase;
 }
 
-.Tablaplanescliente-container tr:nth-child(even) {
+.Widgetplanes-container tr:nth-child(even) {
   background: var(--table-row-even-bg);
 }
 
-.Tablaplanescliente-container tr:hover {
+.Widgetplanes-container tr:hover {
   background: var(--table-row-hover-bg);
 }
 
-.Tablaplanescliente-options-btn {
+.Widgetplanes-options-btn {
   background: none;
   border: none;
   color: var(--button-text);
@@ -197,7 +197,7 @@
   position: relative;
 }
 
-.Tablaplanescliente-options-menu {
+.Widgetplanes-options-menu {
   display: none;
   position: absolute;
   background: var(--dropdown-bg);
@@ -209,12 +209,12 @@
   z-index: 1000;
 }
 
-.Tablaplanescliente-options-btn:hover .Tablaplanescliente-options-menu,
-.Tablaplanescliente-options-menu:hover {
+.Widgetplanes-options-btn:hover .Widgetplanes-options-menu,
+.Widgetplanes-options-menu:hover {
   display: block;
 }
 
-.Tablaplanescliente-dropdown-item {
+.Widgetplanes-dropdown-item {
   display: block;
   padding: 8px 12px;
   color: var(--dropdown-item-text);
@@ -223,11 +223,11 @@
   transition: background 0.3s ease;
 }
 
-.Tablaplanescliente-dropdown-item:hover {
+.Widgetplanes-dropdown-item:hover {
   background: var(--dropdown-item-hover-bg);
 }
 
-.Tablaplanescliente-popup {
+.Widgetplanes-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -240,7 +240,7 @@
   z-index: 1000;
 }
 
-.Tablaplanescliente-popup-content {
+.Widgetplanes-popup-content {
   background: var(--widget-bg);
   padding: 30px;
   border-radius: 8px;
@@ -249,12 +249,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.Tablaplanescliente-popup-content h3 {
+.Widgetplanes-popup-content h3 {
   margin-bottom: 20px;
   font-size: 1.25rem;
 }
 
-.Tablaplanescliente-popup-content button {
+.Widgetplanes-popup-content button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -266,6 +266,6 @@
   transition: background 0.3s ease;
 }
 
-.Tablaplanescliente-popup-content button:hover {
+.Widgetplanes-popup-content button:hover {
   background: var(--button-hover-bg);
 }

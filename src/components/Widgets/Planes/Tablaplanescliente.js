@@ -28,6 +28,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   const [showCreatePlanModal, setShowCreatePlanModal] = useState(false);
   const [planToAssociate, setPlanToAssociate] = useState(null);
   const [selectedClient, setSelectedClient] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -209,17 +210,21 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     return associatedPlan ? associatedPlan.name : 'Sin plan asociado';
   };
 
+  const toggleDropdown = (itemId) => {
+    setDropdownOpen(dropdownOpen === itemId ? null : itemId);
+  };
+
   return (
-    <div className="Tablaplanescliente-container">
+    <div className="Widgetplanes-container">
       <h2 onClick={onTitleClick}>{currentTable === 'planes' ? 'Planes de Clientes' : 'Clientes'}</h2>
-      <div className="Tablaplanescliente-controls">
+      <div className="Widgetplanes-controls">
         <input
           type="text"
           placeholder={`Buscar ${currentTable === 'planes' ? 'plan' : 'cliente'}...`}
           value={filterText}
           onChange={handleFilterChange}
         />
-        <div className="Tablaplanescliente-button-group">
+        <div className="Widgetplanes-button-group">
           <button onClick={() => handleChangeTable('planes')}>Tabla de Planes</button>
           <button onClick={() => handleChangeTable('clientes')}>Tabla de Clientes</button>
         </div>
@@ -230,13 +235,13 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
           />
         )}
       </div>
-      <div className="Tablaplanescliente-button-group right-aligned">
-  <button onClick={handleOpenCreatePlanModal}>Crear Plan</button>
-  <button onClick={handleDeleteSelectedPlans} disabled={selectedPlans.length === 0}>
-    Borrar Planes Seleccionados
-  </button>
-</div>
-      <div className="Tablaplanescliente-table-wrapper">
+      <div className="Widgetplanes-button-group Widgetplanes-right-aligned">
+        <button onClick={handleOpenCreatePlanModal}>Crear Plan</button>
+        <button onClick={handleDeleteSelectedPlans} disabled={selectedPlans.length === 0}>
+          Borrar Planes Seleccionados
+        </button>
+      </div>
+      <div className="Widgetplanes-table-wrapper">
         <table>
           <thead>
             <tr>
@@ -271,12 +276,14 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
                     {visibleColumns.precio && <td>{item.rate || item.hourlyRate}</td>}
                     {visibleColumns.duracion && <td>{item.contractDuration || 'N/A'}</td>}
                     <td>
-                      <div className="dropdown">
-                        <button className="dropbtn">...</button>
-                        <div className="dropdown-menu">
-                          <button onClick={() => handleDeletePlan(item)}>Eliminar Plan</button>
-                          <button onClick={() => handleAssociatePlanToClient(item)}>Asociar a Cliente</button>
-                        </div>
+                      <div className="Widgetplanes-dropdown">
+                        <button className="Widgetplanes-dropbtn" onClick={() => toggleDropdown(item._id)}>...</button>
+                        {dropdownOpen === item._id && (
+                          <div className="Widgetplanes-dropdown-menu">
+                            <button onClick={() => handleDeletePlan(item)}>Eliminar Plan</button>
+                            <button onClick={() => handleAssociatePlanToClient(item)}>Asociar a Cliente</button>
+                          </div>
+                        )}
                       </div>
                     </td>
                   </>
@@ -299,8 +306,8 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
         </table>
       </div>
       {showDeletePopup && (
-        <div className="Tablaplanescliente-popup">
-          <div className="Tablaplanescliente-popup-content">
+        <div className="Widgetplanes-popup">
+          <div className="Widgetplanes-popup-content">
             <h3>¿Estás seguro de que quieres borrar este plan?</h3>
             <button onClick={confirmDeletePlan}>Sí</button>
             <button onClick={cancelDeletePlan}>No</button>
@@ -308,8 +315,8 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
         </div>
       )}
       {planToAssociate && (
-        <div className="Tablaplanescliente-popup">
-          <div className="Tablaplanescliente-popup-content">
+        <div className="Widgetplanes-popup">
+          <div className="Widgetplanes-popup-content">
             <h3>Selecciona un cliente para asociar el plan: {planToAssociate.name}</h3>
             <select value={selectedClient} onChange={handleClientSelection}>
               <option value="">Seleccionar Cliente</option>
