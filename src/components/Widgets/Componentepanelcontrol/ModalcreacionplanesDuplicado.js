@@ -112,7 +112,7 @@ const ModalcreacionplanesDuplicado = ({ onClose }) => {
                 </select>
               </label>
               <label>
-                Duración del Contrato:
+                Duración :
                 <input type="number" name="contractDuration" value={form.contractDuration} onChange={handleChange} required />
               </label>
               <label>

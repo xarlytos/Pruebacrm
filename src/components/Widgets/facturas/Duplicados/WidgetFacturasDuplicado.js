@@ -126,16 +126,17 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
 
   return (
     <div className={`WidgetFacturasDuplicado-widget ${theme}`}>
-            <button
+      <button
         onClick={handleEconomiaTabClick}
         style={{
           margin: '10px 0',
           padding: '8px 16px',
-          backgroundColor: theme === 'light' ? '#4CAF50' : '#2E8B57',
+          backgroundColor: 'red',
           color: '#fff',
           border: 'none',
           borderRadius: '4px',
           cursor: 'pointer',
+          float: 'right',
         }}
       >
         Ir a la página de Economía
@@ -151,8 +152,6 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
           className={`WidgetFacturasDuplicado-filter-input ${theme}`}
         />
       </div>
-      
-
 
       <table className={`WidgetFacturasDuplicado-table ${theme}`}>
         <thead>

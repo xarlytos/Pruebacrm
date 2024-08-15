@@ -36,7 +36,7 @@ const AsociarClientesDropdown = ({ plan, clientes, clientesNoAsociados, onTrade 
   return (
     <div className="asociar-clientes-dropdown">
       <div className="asociar-clientes-left">
-        <h3>Nombraae del plan: {plan.nombre}</h3>
+        <h3>Nombre del plan: {plan.nombre}</h3>
         <ul>
           {clientes.map(cliente => (
             <li

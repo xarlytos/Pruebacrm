@@ -61,7 +61,6 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
   };
 
   return (
-
     <div className={`detailed-planes-overlay ${theme}`}>
       <div className={`detailed-planes ${theme}`}>
         <button className="close-modal-btn" onClick={() => onTabChange('Panel de Control')}>Cerrar</button>
@@ -72,7 +71,12 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
         <button 
           className="redirect-btn" 
           onClick={handleEconomiaTabClick}
-          style={{ margin: '10px 0' }} 
+          style={{ 
+            backgroundColor: 'red', 
+            color: 'white', 
+            float: 'right', 
+            margin: '10px 0'
+          }} 
         >
           Ir a la página de Economía
         </button>

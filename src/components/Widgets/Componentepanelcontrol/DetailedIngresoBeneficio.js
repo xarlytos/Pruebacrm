@@ -1,5 +1,3 @@
-// C:\Users\usuario\Downloads\crmworkspaceEspacial\crm-frontend\src\components\Widgets\Componentepanelcontrol\DetailedIngresoBeneficio.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import OverviewChartPopup from './DuplicadosPopup/OverviewChartPopup';
@@ -53,6 +51,13 @@ const DetailedIngresoBeneficio = ({
     onTabChange('Panel de Control');
   };
 
+  const getValueClass = (value, isExpense = false) => {
+    if (isExpense) {
+      return 'panelcontrol-metric-value-red'; // Always red for expenses
+    }
+    return value < 0 ? 'panelcontrol-metric-value-red' : 'panelcontrol-metric-value-green';
+  };
+
   return (
     <div className={`detailed-ingreso-beneficio-modal ${theme}`}>
       <div className={`detailed-ingreso-beneficio-content ${theme}`}>
@@ -62,13 +67,12 @@ const DetailedIngresoBeneficio = ({
           Cambiar Tema
         </button>
 
-        {/* Nuevo botón que cambia la pestaña a 'Economia' */}
         <button 
           className={`redirect-btn ${theme}`} 
           onClick={handleEconomiaTabClick}
           style={{ margin: '10px 0' }} 
         >
-          Ir a la página de Economía
+          Ir a la páginda de Economía
         </button>
         
         <div className={`detailed-metrics-grid ${theme}`}>
@@ -77,7 +81,7 @@ const DetailedIngresoBeneficio = ({
               value={`$${proyeccionMes.toFixed(2)}`}
               description="Proyección del mes"
               icon="📈"
-              valueClass="panelcontrol-metric-value-green"
+              valueClass={getValueClass(proyeccionMes)}
               difference={{ value: 15 }}
               theme={theme}
               setTheme={setTheme}
@@ -86,7 +90,7 @@ const DetailedIngresoBeneficio = ({
               value={`$${totalIngresos.toFixed(2)}`}
               description="Ingresos"
               icon="💰"
-              valueClass="panelcontrol-metric-value-green"
+              valueClass={getValueClass(totalIngresos)}
               difference={{ value: 20 }}
               theme={theme}
               setTheme={setTheme}
@@ -97,7 +101,7 @@ const DetailedIngresoBeneficio = ({
               value={`$${totalGastos.toFixed(2)}`}
               description="Gasto Mensual"
               icon="💸"
-              valueClass="panelcontrol-metric-value-red"
+              valueClass="panelcontrol-metric-value-red" // Always red for expenses
               difference={{ value: 10 }}
               isExpense={true}
               theme={theme}
@@ -107,7 +111,7 @@ const DetailedIngresoBeneficio = ({
               value={`${margenGanancia.toFixed(2)}%`}
               description="Margen de ganancia"
               icon="📊"
-              valueClass="panelcontrol-metric-value-green"
+              valueClass={getValueClass(margenGanancia)}
               difference={{ value: 0 }}
               theme={theme}
               setTheme={setTheme}
@@ -118,7 +122,7 @@ const DetailedIngresoBeneficio = ({
               value={`$${beneficioNeto.toFixed(2)}`}
               description="Beneficio neto"
               icon="💹"
-              valueClass="panelcontrol-metric-value-green"
+              valueClass={getValueClass(beneficioNeto)}
               difference={{ value: 8 }}
               theme={theme}
               setTheme={setTheme}
@@ -127,7 +131,7 @@ const DetailedIngresoBeneficio = ({
               value={clientesActuales} 
               description="Clientes Nuevos"
               icon="👥"
-              valueClass="panelcontrol-metric-value-green"
+              valueClass={getValueClass(clientesActuales)}
               difference={{ value: 5 }}
               theme={theme}
               setTheme={setTheme}

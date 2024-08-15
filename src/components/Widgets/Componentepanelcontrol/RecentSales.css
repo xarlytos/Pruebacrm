@@ -54,7 +54,6 @@
 .panelcontrol-dropdown {
   position: relative;
   display: inline-block;
-  margin-left: 175px;
 }
 
 .panelcontrol-dropdown-btn {
@@ -147,12 +146,15 @@
   border-bottom: 1px solid var(--button-border);
 }
 
+/* Alinea la barra de búsqueda a la izquierda y la paginación a la derecha */
 .panelcontrol-pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Esto separa los elementos en extremos opuestos */
+  align-items: center; /* Asegura que los elementos estén alineados verticalmente */
   padding: 10px 0;
 }
 
+/* Botones de paginación */
 .panelcontrol-pagination button {
   background: var(--button-bg);
   color: var(--button-text);
@@ -165,10 +167,8 @@
   margin-top: 10px;
 }
 
-
-
 .panelcontrol-pagination-info {
-  text-align: center;
+  text-align: right; /* Texto alineado a la derecha */
   color: var(--text);
   padding: 10px 0;
 }

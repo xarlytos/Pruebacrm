@@ -139,7 +139,7 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
                 </select>
               </label>
               <label>
-                Duración del Contrato:
+                Duración :
                 <input
                   type="number"
                   name="contractDuration"

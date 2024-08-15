@@ -234,7 +234,6 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
               <button className="widget-button" onClick={handleNextWeek}>Siguiente</button>
             </div>
           )}
-          <button onClick={toggleTheme} className={`theme-toggle-btn ${theme}`}>Cambiar Tema</button>
         </div>
       </div>
       <div className="panelcontrol-beneficio-popup-chart-wrapper">

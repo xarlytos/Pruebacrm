@@ -138,7 +138,7 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
           <tr>
             <th></th>
             {visibleColumns.id && <th>ID</th>}
-            {visibleColumns.nombre && <th>Nombraae del Plan</th>}
+            {visibleColumns.nombre && <th>Nombre del Plan</th>}
             {visibleColumns.clientes && <th>Clientes</th>}
             {visibleColumns.precio && <th>Precio</th>}
             {visibleColumns.duracion && <th>Duración</th>}

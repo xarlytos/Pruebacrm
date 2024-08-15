@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './widgetgasto.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
@@ -127,7 +127,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   const filteredData = applyFilters(
     gastos.filter((item) =>
       Object.values(item).some((val) =>
-        val.toString().toLowerCase().includes(filterText.toLowerCase())
+        String(val).toLowerCase().includes(filterText.toLowerCase())
       )
     )
   );
@@ -137,7 +137,6 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   };
 
   return (
-
     <div className={`widget-gasto ${theme}`}>
       <h2 onClick={onTitleClick}>Gastos</h2>
       <div className="controls">

@@ -244,7 +244,7 @@ const WidgetPrevisiones = ({
 
   return (
     <div className={`widget-previsiones ${theme}`}>
-      <h2 onClick={onTitleClick}>Ingresos Esperados</h2>
+      <h2 onClick={onTitleClick}>Ingresos</h2>
       <WidgetRemoveButton isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} itemId="widgetPrevisiones" />
       <div className="controls">
         <input 

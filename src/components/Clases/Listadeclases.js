@@ -14,7 +14,14 @@ const Listadeclases = ({ theme }) => {
   const [mostrarFormularioCrearClase, setMostrarFormularioCrearClase] = useState(false);
   const [mostrarFormularioEditarClase, setMostrarFormularioEditarClase] = useState(false);
   const [mostrarFormularioCrearSesion, setMostrarFormularioCrearSesion] = useState(false);
-  const [nuevaClase, setNuevaClase] = useState({ nombre: '', tipo: 'Única', descripcion: '' });
+  const [nuevaClase, setNuevaClase] = useState({
+    nombre: '',
+    tipo: 'Única',
+    descripcion: '',
+    formato: 'fijo',
+    formatoFijo: { frequency: 'weekly', contractDuration: '', rate: '', sessionsPerWeek: '' },
+    formatoVariable: { hourlyRate: '' }
+  });
   const [claseEditando, setClaseEditando] = useState(null);
   const [nuevaSesion, setNuevaSesion] = useState({ fecha: '', duracion: '', precio: '' });
   const [busqueda, setBusqueda] = useState('');
@@ -84,12 +91,19 @@ const Listadeclases = ({ theme }) => {
 
   const handleCerrarFormularioCrearClase = () => {
     setMostrarFormularioCrearClase(false);
-    setNuevaClase({ nombre: '', tipo: 'Única', descripcion: '' });
+    setNuevaClase({
+      nombre: '',
+      tipo: 'Única',
+      descripcion: '',
+      formato: 'fijo',
+      formatoFijo: { frequency: 'weekly', contractDuration: '', rate: '', sessionsPerWeek: '' },
+      formatoVariable: { hourlyRate: '' }
+    });
   };
 
   const handleCrearClase = async () => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/clases`, { ...nuevaClase, clientes: [], sesiones: [] });
+      const response = await axios.post(`${API_BASE_URL}/api/clases`, nuevaClase);
       setClases([...clases, response.data]);
       handleCerrarFormularioCrearClase();
     } catch (error) {
@@ -144,9 +158,31 @@ const Listadeclases = ({ theme }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (mostrarFormularioCrearClase) {
-      setNuevaClase({ ...nuevaClase, [name]: value });
+      if (name.startsWith('formatoFijo.') || name.startsWith('formatoVariable.')) {
+        const [mainKey, subKey] = name.split('.');
+        setNuevaClase({
+          ...nuevaClase,
+          [mainKey]: {
+            ...nuevaClase[mainKey],
+            [subKey]: value
+          }
+        });
+      } else {
+        setNuevaClase({ ...nuevaClase, [name]: value });
+      }
     } else if (mostrarFormularioEditarClase) {
-      setClaseEditando({ ...claseEditando, [name]: value });
+      if (name.startsWith('formatoFijo.') || name.startsWith('formatoVariable.')) {
+        const [mainKey, subKey] = name.split('.');
+        setClaseEditando({
+          ...claseEditando,
+          [mainKey]: {
+            ...claseEditando[mainKey],
+            [subKey]: value
+          }
+        });
+      } else {
+        setClaseEditando({ ...claseEditando, [name]: value });
+      }
     } else if (mostrarFormularioCrearSesion) {
       setNuevaSesion({ ...nuevaSesion, [name]: value });
     }
@@ -177,76 +213,208 @@ const Listadeclases = ({ theme }) => {
         onChange={handleBusquedaChange}
       />
       {mostrarFormularioCrearClase && (
-        <div className={styles.formularioCrearClase}>
-          <h2 className={`${styles.header} ${theme}`}>Crear Nueva Clase</h2>
-          <label>
-            Nombre:
-            <input type="text" name="nombre" value={nuevaClase.nombre} onChange={handleChange} />
-          </label>
-          <label>
-            Tipo:
-            <select name="tipo" value={nuevaClase.tipo} onChange={handleChange}>
-              <option value="Única">Única</option>
-              <option value="Repetible">Repetible</option>
-            </select>
-          </label>
-          <label>
-            Descripción:
-            <textarea name="descripcion" value={nuevaClase.descripcion} onChange={handleChange} />
-          </label>
-          <button onClick={handleCrearClase}>Aceptar</button>
-          <button onClick={handleCerrarFormularioCrearClase}>Cerrar</button>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2 className={`${styles.header} ${theme}`}>Crear Nueva Clase</h2>
+            <label>
+              Nombre:
+              <input type="text" name="nombre" value={nuevaClase.nombre} onChange={handleChange} />
+            </label>
+            <label>
+              Tipo:
+              <select name="tipo" value={nuevaClase.tipo} onChange={handleChange}>
+                <option value="Única">Única</option>
+                <option value="Repetible">Repetible</option>
+              </select>
+            </label>
+            <label>
+              Descripción:
+              <textarea name="descripcion" value={nuevaClase.descripcion} onChange={handleChange} />
+            </label>
+            <label>
+              Formato:
+              <select name="formato" value={nuevaClase.formato} onChange={handleChange}>
+                <option value="fijo">Fijo</option>
+                <option value="variable">Variable</option>
+              </select>
+            </label>
+            {nuevaClase.formato === 'fijo' && (
+              <>
+                <label>
+                  Frecuencia:
+                  <select
+                    name="formatoFijo.frequency"
+                    value={nuevaClase.formatoFijo.frequency}
+                    onChange={handleChange}
+                  >
+                    <option value="weekly">Semanal</option>
+                    <option value="biweekly">Quincenal</option>
+                    <option value="monthly">Mensual</option>
+                  </select>
+                </label>
+                <label>
+                  Duración :
+                  <input
+                    type="number"
+                    name="formatoFijo.contractDuration"
+                    value={nuevaClase.formatoFijo.contractDuration}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Tarifa:
+                  <input
+                    type="number"
+                    name="formatoFijo.rate"
+                    value={nuevaClase.formatoFijo.rate}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Sesiones por semana:
+                  <input
+                    type="number"
+                    name="formatoFijo.sessionsPerWeek"
+                    value={nuevaClase.formatoFijo.sessionsPerWeek}
+                    onChange={handleChange}
+                  />
+                </label>
+              </>
+            )}
+            {nuevaClase.formato === 'variable' && (
+              <>
+                <label>
+                  Tarifa por hora:
+                  <input
+                    type="number"
+                    name="formatoVariable.hourlyRate"
+                    value={nuevaClase.formatoVariable.hourlyRate}
+                    onChange={handleChange}
+                  />
+                </label>
+              </>
+            )}
+            <button onClick={handleCrearClase}>Aceptar</button>
+            <button onClick={handleCerrarFormularioCrearClase}>Cerrar</button>
+          </div>
         </div>
       )}
       {mostrarFormularioEditarClase && (
-        <div className={styles.formularioCrearClase}>
-          <h2 className={`${styles.header} ${theme}`}>Editar Clase</h2>
-          <label>
-            Nombre:
-            <input type="text" name="nombre" value={claseEditando.nombre} onChange={handleChange} />
-          </label>
-          <label>
-            Tipo:
-            <select name="tipo" value={claseEditando.tipo} onChange={handleChange}>
-              <option value="Única">Única</option>
-              <option value="Repetible">Repetible</option>
-            </select>
-          </label>
-          <label>
-            Descripción:
-            <textarea name="descripcion" value={claseEditando.descripcion} onChange={handleChange} />
-          </label>
-          <button
-            className={`${styles.editarBtn} ${theme}`}
-            onClick={handleEditarClase}
-          >
-            Guardar
-          </button>
-          <button onClick={handleCerrarFormularioEditarClase}>Cerrar</button>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2 className={`${styles.header} ${theme}`}>Editar Clase</h2>
+            <label>
+              Nombre:
+              <input type="text" name="nombre" value={claseEditando.nombre} onChange={handleChange} />
+            </label>
+            <label>
+              Tipo:
+              <select name="tipo" value={claseEditando.tipo} onChange={handleChange}>
+                <option value="Única">Única</option>
+                <option value="Repetible">Repetible</option>
+              </select>
+            </label>
+            <label>
+              Descripción:
+              <textarea name="descripcion" value={claseEditando.descripcion} onChange={handleChange} />
+            </label>
+            <label>
+              Formato:
+              <select name="formato" value={claseEditando.formato} onChange={handleChange}>
+                <option value="fijo">Fijo</option>
+                <option value="variable">Variable</option>
+              </select>
+            </label>
+            {claseEditando.formato === 'fijo' && (
+              <>
+                <label>
+                  Frecuencia:
+                  <select
+                    name="formatoFijo.frequency"
+                    value={claseEditando.formatoFijo.frequency}
+                    onChange={handleChange}
+                  >
+                    <option value="weekly">Semanal</option>
+                    <option value="biweekly">Quincenal</option>
+                    <option value="monthly">Mensual</option>
+                  </select>
+                </label>
+                <label>
+                  Duración :
+                  <input
+                    type="number"
+                    name="formatoFijo.contractDuration"
+                    value={claseEditando.formatoFijo.contractDuration}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Tarifa:
+                  <input
+                    type="number"
+                    name="formatoFijo.rate"
+                    value={claseEditando.formatoFijo.rate}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Sesiones por semana:
+                  <input
+                    type="number"
+                    name="formatoFijo.sessionsPerWeek"
+                    value={claseEditando.formatoFijo.sessionsPerWeek}
+                    onChange={handleChange}
+                  />
+                </label>
+              </>
+            )}
+            {claseEditando.formato === 'variable' && (
+              <>
+                <label>
+                  Tarifa por hora:
+                  <input
+                    type="number"
+                    name="formatoVariable.hourlyRate"
+                    value={claseEditando.formatoVariable.hourlyRate}
+                    onChange={handleChange}
+                  />
+                </label>
+              </>
+            )}
+            <button
+              className={`${styles.editarBtn} ${theme}`}
+              onClick={handleEditarClase}
+            >
+              Guardar
+            </button>
+            <button onClick={handleCerrarFormularioEditarClase}>Cerrar</button>
+          </div>
         </div>
       )}
       {mostrarFormularioCrearSesion && (
-        <div className={styles.formularioCrearClase}>
-          <h2 className={`${styles.header} ${theme}`}>Crear Nueva Sesión</h2>
-          <label>
-            Fecha:
-            <input type="datetime-local" name="fecha" value={nuevaSesion.fecha} onChange={handleChange} />
-          </label>
-          <label>
-            Duración (minutos):
-            <input type="number" name="duracion" value={nuevaSesion.duracion} onChange={handleChange} />
-          </label>
-          <label>
-            Precio:
-            <input type="number" name="precio" value={nuevaSesion.precio} onChange={handleChange} />
-          </label>
-          <button
-            className={`${styles.crearSesionBtn} ${theme}`}
-            onClick={handleCrearSesion}
-          >
-            Aceptar
-          </button>
-          <button onClick={handleCerrarFormularioCrearSesion}>Cerrar</button>
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2 className={`${styles.header} ${theme}`}>Crear Nueva Sesión</h2>
+            <label>
+              Fecha:
+              <input type="datetime-local" name="fecha" value={nuevaSesion.fecha} onChange={handleChange} />
+            </label>
+            <label>
+              Duración (minutos):
+              <input type="number" name="duracion" value={nuevaSesion.duracion} onChange={handleChange} />
+            </label>
+            <label>
+              Precio:
+              <input type="number" name="precio" value={nuevaSesion.precio} onChange={handleChange} />
+            </label>
+            <button
+              className={`${styles.crearSesionBtn} ${theme}`}
+              onClick={handleCrearSesion}
+            >
+              Aceptar
+            </button>
+            <button onClick={handleCerrarFormularioCrearSesion}>Cerrar</button>
+          </div>
         </div>
       )}
       <table className={styles.clasesTable}>

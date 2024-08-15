@@ -3,7 +3,7 @@ import {
   useTable,
   useSortBy,
   useFilters,
-  useGlobalFilter,  // Importa useGlobalFilter para el filtro global
+  useGlobalFilter,
   usePagination,
   useRowSelect,
   useRowState,
@@ -30,10 +30,10 @@ const columns = [
       const status = {
         pendiente: 'Pendiente',
         completado: 'Completado',
-        fallido: 'Fallido'
+        fallido: 'Fallido',
       };
       return status[value] || 'Desconocido';
-    }
+    },
   },
   {
     Header: 'Correo Electrónico',
@@ -46,7 +46,7 @@ const columns = [
       if (typeof value === 'number') {
         const formatted = new Intl.NumberFormat('es-ES', {
           style: 'currency',
-          currency: 'EUR',  // Cambiado a EUR para mostrar en euros
+          currency: 'EUR',
         }).format(value);
         return <div className="text-right font-medium">{formatted}</div>;
       }
@@ -71,7 +71,8 @@ const columns = [
 
 function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
   const [data, setData] = useState([]);
-  const [globalFilter, setGlobalFilterState] = useState('');  // Estado para el filtro global
+  const [globalFilter, setGlobalFilterState] = useState('');  // Este se usa para manejar el valor del input
+
   const [emailFilter, setEmailFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [dineroFilter, setDineroFilter] = useState('');
@@ -90,7 +91,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
         const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
 
-        const filteredData = result.filter(item => {
+        const filteredData = result.filter((item) => {
           const itemDate = new Date(item.fecha);
           const itemMonth = itemDate.getMonth();
           const itemYear = itemDate.getFullYear();
@@ -110,9 +111,12 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     fetchData();
   }, []);
 
-  const defaultColumn = React.useMemo(() => ({
-    Filter: DefaultColumnFilter,
-  }), []);
+  const defaultColumn = React.useMemo(
+    () => ({
+      Filter: DefaultColumnFilter,
+    }),
+    []
+  );
 
   const tableInstance = useTable(
     {
@@ -122,11 +126,11 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
-    useGlobalFilter,  // Usa useGlobalFilter en la configuración de la tabla
+    useGlobalFilter,
     useSortBy,
     usePagination,
     useRowSelect,
-    useRowState,
+    useRowState
   );
 
   const {
@@ -135,7 +139,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     headerGroups,
     prepareRow,
     page,
-    setGlobalFilter,  // Usa setGlobalFilter del hook useGlobalFilter
+    setGlobalFilter,  // Usa setGlobalFilter del hook useGlobalFilter aquí
     setFilter,
     allColumns,
     state: { pageIndex, selectedRowIds, pageSize },
@@ -149,6 +153,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
 
   const handleGlobalFilterChange = (e) => {
     setGlobalFilter(e.target.value);  // Aplica el valor al filtro global
+    setGlobalFilterState(e.target.value);  // Actualiza el estado del input
   };
 
   const handleEmailFilterChange = (e) => {
@@ -198,7 +203,9 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
 
   return (
     <div className={`panelcontrol-recent-sales ${detailed ? 'detailed' : ''} ${theme}`}>
-      <h3 className="panelcontrol-letras" onClick={onTitleClick}>Ventas Recientes</h3>
+      <h3 className="panelcontrol-letras" onClick={onTitleClick}>
+        Ventas Recientes
+      </h3>
       <div className="panelcontrol-pagination">
         <div className="panelcontrol-dropdown">
           <input
@@ -243,7 +250,9 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
                 className={`panelcontrol-filter-input ${theme}`}
               />
             </div>
-            <button onClick={applyFilters} className="panelcontrol-filter-btn">Guardar filtro</button>
+            <button onClick={applyFilters} className="panelcontrol-filter-btn">
+              Guardar filtro
+            </button>
           </div>
         </div>
         {isFilterApplied && (
@@ -251,14 +260,26 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
             Filtros activos: {getActiveFiltersCount()}
           </div>
         )}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage} className={`panelcontrol-nav-button ${theme}`}>&lt;--</button>
+        <button
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          className={`panelcontrol-nav-button ${theme}`}
+        >
+          &lt;--
+        </button>
         <div className="panelcontrol-pagination-info">
           Página{' '}
           <strong>
             {pageIndex + 1} de {pageOptions.length}
           </strong>
         </div>
-        <button onClick={() => nextPage()} disabled={!canNextPage} className={`panelcontrol-nav-button ${theme}`}>--&gt;</button>
+        <button
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          className={`panelcontrol-nav-button ${theme}`}
+        >
+          --&gt;
+        </button>
       </div>
       {isEditMode && (
         <ColumnDropdown
@@ -267,7 +288,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
             return acc;
           }, {})}
           handleColumnToggle={(column) => {
-            const columnInstance = allColumns.find(col => col.id === column);
+            const columnInstance = allColumns.find((col) => col.id === column);
             if (columnInstance) {
               columnInstance.toggleHidden();
             }
@@ -276,9 +297,9 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
       )}
       <table {...getTableProps()} className="panelcontrol-sales-table">
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
                   <span>
@@ -290,27 +311,32 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map(row => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
+                {row.cells.map((cell) => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
               </tr>
             );
           })}
-          {emptyRows > 0 && Array(emptyRows).fill().map((_, idx) => (
-            <tr key={`empty-row-${idx}`} style={{ height: '52px' }}>
-              <td colSpan={columns.length} />
-            </tr>
-          ))}
+          {emptyRows > 0 &&
+            Array(emptyRows)
+              .fill()
+              .map((_, idx) => (
+                <tr key={`empty-row-${idx}`} style={{ height: '52px' }}>
+                  <td colSpan={columns.length} />
+                </tr>
+              ))}
         </tbody>
       </table>
-      <div className='panelcontrol-filasseleccionadas'>
+      <div className="panelcontrol-filasseleccionadas">
         Filas seleccionadas: {Object.keys(selectedRowIds).length}
       </div>
-      {isDetailedModalOpen && <DetailedIngresoBeneficio onClose={handleCloseDetailedModal} />}
+      {isDetailedModalOpen && (
+        <DetailedIngresoBeneficio onClose={handleCloseDetailedModal} />
+      )}
     </div>
   );
 }
@@ -323,7 +349,7 @@ function DefaultColumnFilter({
   return (
     <input
       value={filterValue || ''}
-      onChange={e => {
+      onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}
       placeholder={`Buscar en ${count} registros...`}

@@ -71,7 +71,6 @@
 
 /* Estilos para tema claro */
 .popup-metric-card.light {
-  background: #999;
   color: var(--text-light);
 }
 

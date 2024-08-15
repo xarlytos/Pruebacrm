@@ -1,4 +1,3 @@
-/* Listadeclases.module.css */
 :root {
   --background-light: #f8f1ec; /* Fondo claro */
   --background-dark: #333333; /* Fondo oscuro */
@@ -35,7 +34,7 @@
 
   --form-bg-light: #f8f9fa; /* Fondo del formulario en modo claro */
   --form-bg-dark: #444444; /* Fondo del formulario en modo oscuro */
-
+--form-bg: #f8f1ec;
   --input-bg-light: #ffffff; /* Fondo de los inputs en modo claro */
   --input-bg-dark: #666666; /* Fondo de los inputs en modo oscuro */
   --input-border-light: #000000; /* Borde de los inputs en modo claro */
@@ -218,5 +217,68 @@ body.dark .formularioCrearClase textarea {
 }
 
 .formularioCrearClase button:last-child {
+  background-color: #dc3545;
+}
+
+/* Estilos para el modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegúrate de que el modal esté por encima de otros elementos */
+}
+
+.modalContent {
+  background-color: var(--background); /* Fondo del formulario adaptado al tema */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para dar efecto de ventana flotante */
+  max-width: 500px; /* Ancho máximo del modal */
+  width: 100%; /* Ancho del modal */
+  z-index: 1001;
+}
+
+.modalContent h2 {
+  margin-top: 0;
+  color: var(--header-text);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.modalContent label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modalContent input,
+.modalContent select,
+.modalContent textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.modalContent button {
+  background-color: var(--create-button-bg);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.modalContent button:last-child {
   background-color: #dc3545;
 }

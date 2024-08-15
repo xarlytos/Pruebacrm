@@ -74,7 +74,7 @@ const Planes = ({ cliente }) => {
                         <p>Fecha Inicio: {new Date(selectedPlan.startDate).toLocaleDateString()}</p> {/* Se usa `startDate` */}
                         {selectedPlan.endDate && <p>Fecha Fin: {new Date(selectedPlan.endDate).toLocaleDateString()}</p>} {/* Se usa `endDate` */}
                         <p>Frecuencia: {selectedPlan.frequency}</p>
-                        <p>Duración del Contrato: {selectedPlan.contractDuration} mes(es)</p>
+                        <p>Duración : {selectedPlan.contractDuration} mes(es)</p>
                         <p>Tarifa: {selectedPlan.rate} €/mes</p>
                         <p>Día de Pago: {selectedPlan.paymentDay}</p>
                         <p>Estado: {selectedPlan.status}</p>

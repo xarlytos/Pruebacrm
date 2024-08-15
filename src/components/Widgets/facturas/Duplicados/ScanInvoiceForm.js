@@ -118,7 +118,7 @@ const ScanInvoiceForm = ({ closeModal }) => {
     return (
 
         <div className="scan-invoice-form">
-            <h1>Escanear Factura</h1>
+            <h1>Escaaanear Factura</h1>
             <input type="file" multiple onChange={handleFileChange} />
             <h2>Archivos Subidos</h2>
             {uploadedFiles.length > 0 ? (
@@ -145,7 +145,7 @@ const ScanInvoiceForm = ({ closeModal }) => {
             ) : (
                 <p>No se han subido archivos.</p>
             )}
-            <div className="progress-bar">
+            <div className="progress-barrr">
                 <div className="progress" style={{ width: `${progressBarWidth}%` }}></div>
             </div>
             <p>Total Subido: {totalFileSize.toFixed(2)} / 15 MB</p>

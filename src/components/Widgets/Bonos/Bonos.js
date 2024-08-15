@@ -105,23 +105,24 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
     setData(filteredData);
   };
 
-  const filteredData = data.filter(item => 
-    Object.values(item).some(val => 
-      val.toLowerCase().includes(filterText.toLowerCase())
+  // Filtramos los datos basados en el texto de búsqueda
+  const filteredData = data.filter(item =>
+    Object.values(item).some(val =>
+      val.toString().toLowerCase().includes(filterText.toLowerCase())
     )
   );
 
   return (
-
     <div className={`Widget-bono-widget-bonos ${theme}`}>
       <h2 onClick={onTitleClick}>Bonos</h2>
       <div className="Widget-bono-controls">
-        <input 
-          type="text" 
-          placeholder="Buscar bono..." 
-          value={filterText} 
-          onChange={handleFilterChange} 
-          className={`Widget-bono-search-input ${theme}`}
+        {/* Barra de búsqueda funcional */}
+        <input
+          type="text"
+          placeholder="Buscar por cualquier campo..."
+          value={filterText}
+          onChange={handleFilterChange}
+          className={`panelcontrol-filter-input ${theme}`}
         />
         <button className={`Widget-bono-filter-btn ${theme}`} onClick={handleFilterBonos}>Filtrar Activos</button>
         
