@@ -9,9 +9,17 @@ const metodoOptions = ['stripe', 'banco', 'efectivo', 'mixto'];
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
-const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, isDropdownOpen, toggleDropdown, dropdownPosition, setDropdownContent }) => {
+const WidgetPrevisiones = ({ 
+  onTitleClick, 
+  isEditMode, 
+  handleRemoveItem, 
+  theme, 
+  isDropdownOpen, 
+  toggleDropdown, 
+  dropdownPosition, 
+  setDropdownContent 
+}) => {
   const [data, setData] = useState([]);
-  const [clients, setClients] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
     numero: true,
@@ -29,18 +37,18 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
     maxMonto: '',
     estatus: ''
   });
-  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isMetodoDropdownOpen, setIsMetodoDropdownOpen] = useState(false);
-  const [newIngreso, setNewIngreso] = useState({
+  const [isCreateIncomeOpen, setIsCreateIncomeOpen] = useState(false); // Estado para manejar la visibilidad del formulario de creación de ingresos
+  const [newIncome, setNewIncome] = useState({
     cantidad: '',
+    descripcion: '',
     fecha: '',
     metodoPago: '',
-    descripcion: '',
-    cliente: ''  // Campo para almacenar el ID del cliente seleccionado
+    estadoPago: 'pendiente'
   });
 
   useEffect(() => {
-    // Fetch data for upcoming incomes and clients
+    // Fetch data for upcoming incomes
     const today = new Date();
     const next30Days = new Date(today);
     next30Days.setDate(today.getDate() + 30);
@@ -55,14 +63,6 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
       })
       .catch(error => {
         console.error('Error fetching total ingresos:', error);
-      });
-
-    axios.get(`${API_BASE_URL}/api/clientes/`)
-      .then(response => {
-        setClients(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching clients:', error);
       });
 
   }, []);
@@ -81,36 +81,32 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
     setData(newData);
   };
 
-  const toggleFilterDropdown = () => {
-    setIsFilterDropdownOpen(!isFilterDropdownOpen);
+  const toggleFilterDropdown = (e) => {
+    const content = renderFilterDropdownContent();
+    toggleDropdown(e, content);
   };
 
   const toggleMetodoDropdown = () => {
     setIsMetodoDropdownOpen(!isMetodoDropdownOpen);
   };
 
-  const handleIngresoChange = (e) => {
-    const { name, value } = e.target;
-    setNewIngreso({ ...newIngreso, [name]: value });
+  const toggleCreateIncomeDropdown = () => {
+    setIsCreateIncomeOpen(!isCreateIncomeOpen);
   };
 
-  const handleAddIngreso = (e) => {
-    e.preventDefault();
-    
-    axios.post(`${API_BASE_URL}/api/incomes/`, newIngreso)
+  const handleCreateIncomeChange = (e) => {
+    const { name, value } = e.target;
+    setNewIncome({ ...newIncome, [name]: value });
+  };
+
+  const handleCreateIncomeSubmit = () => {
+    axios.post(`${API_BASE_URL}/api/incomes`, newIncome)
       .then(response => {
         setData([...data, response.data]);
-        setNewIngreso({
-          cantidad: '',
-          fecha: '',
-          metodoPago: '',
-          descripcion: '',
-          cliente: ''  // Reiniciar el campo cliente
-        });
-        toggleDropdown();  // Cerrar el dropdown después de añadir el ingreso
+        setIsCreateIncomeOpen(false);
       })
       .catch(error => {
-        console.error('Error creating new ingreso:', error);
+        console.error('Error creating income:', error);
       });
   };
 
@@ -130,7 +126,7 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
     return items.filter((item) => {
       const startDateCondition = filters.startDate ? new Date(item.fecha) >= new Date(filters.startDate) : true;
       const endDateCondition = filters.endDate ? new Date(item.fecha) <= new Date(filters.endDate) : true;
-      const metodoCondition = filters.metodo.length > 0 ? filters.metodo.includes(item.metodo) : true;
+      const metodoCondition = filters.metodo.length > 0 ? filters.metodo.includes(item.metodoPago) : true;
       const minMontoCondition = filters.minMonto ? item.cantidad >= parseFloat(filters.minMonto) : true;
       const maxMontoCondition = filters.maxMonto ? item.cantidad <= parseFloat(filters.maxMonto) : true;
       const estatusCondition = filters.estatus ? item.estatus === filters.estatus : true;
@@ -162,82 +158,87 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
     setFilters({ ...filters, [field]: filters[field] === value ? '' : value });
   };
 
-  const renderDropdownContent = () => (
-    <div>
-      <h3>Añadir Ingreso</h3>
-      <form onSubmit={handleAddIngreso}>
+  const renderFilterDropdownContent = () => (
+    <div className={`Prevdropdown-content ${theme}`}>
+      <div className="Prevprevisiones-filtros">
         <div className="Prevfilter-field">
-          <label htmlFor="cantidad">Cantidad:</label>
-          <input 
-            type="number" 
-            name="cantidad" 
-            id="cantidad"
-            placeholder="Cantidad" 
-            value={newIngreso.cantidad} 
-            onChange={handleIngresoChange} 
-            className={`widget-filter-input ${theme}`}
-            required
-          />
-        </div>
-        <div className="Prevfilter-field">
-          <label htmlFor="fecha">Fecha:</label>
+          <label>Fecha Inicio:</label>
           <input 
             type="date" 
-            name="fecha" 
-            id="fecha"
-            placeholder="Fecha" 
-            value={newIngreso.fecha} 
-            onChange={handleIngresoChange} 
+            name="startDate" 
+            value={filters.startDate} 
+            onChange={handleFilterFieldChange} 
             className={`widget-filter-input ${theme}`}
-            required
           />
         </div>
         <div className="Prevfilter-field">
-          <label htmlFor="metodoPago">Método de Pago:</label>
-          <select 
-            name="metodoPago" 
-            id="metodoPago"
-            value={newIngreso.metodoPago} 
-            onChange={handleIngresoChange} 
-            className={`widget-filter-input ${theme}`}
-            required
-          >
-            <option value="">Seleccione Método</option>
-            {metodoOptions.map((method, index) => (
-              <option key={index} value={method}>{method}</option>
-            ))}
-          </select>
-        </div>
-        <div className="Prevfilter-field">
-          <label htmlFor="descripcion">Descripción:</label>
+          <label>Fecha Fin:</label>
           <input 
-            type="text" 
-            name="descripcion" 
-            id="descripcion"
-            placeholder="Descripción" 
-            value={newIngreso.descripcion} 
-            onChange={handleIngresoChange} 
+            type="date" 
+            name="endDate" 
+            value={filters.endDate} 
+            onChange={handleFilterFieldChange} 
             className={`widget-filter-input ${theme}`}
           />
         </div>
         <div className="Prevfilter-field">
-          <label htmlFor="cliente">Cliente:</label>
-          <select 
-            name="cliente" 
-            id="cliente"
-            value={newIngreso.cliente} 
-            onChange={handleIngresoChange} 
+          <label>Monto Mín:</label>
+          <input 
+            type="number" 
+            name="minMonto" 
+            value={filters.minMonto} 
+            onChange={handleFilterFieldChange} 
             className={`widget-filter-input ${theme}`}
-            required
-          >
-            <option value="">Seleccione Cliente</option>
-            {clients.map((client) => (
-              <option key={client._id} value={client._id}>{client.nombre}</option>
-            ))}
-          </select>
+          />
         </div>
-        <button type="submit" className={`ingreso-button ${theme}`}>Añadir</button>
-      </form>
+        <div className="Prevfilter-field">
+          <label>Monto Máx:</label>
+          <input 
+            type="number" 
+            name="maxMonto" 
+            value={filters.maxMonto} 
+            onChange={handleFilterFieldChange} 
+            className={`widget-filter-input ${theme}`}
+          />
+        </div>
+        <div className="Prevfilter-field">
+          <label>Estatus:</label>
+          <button 
+            type="button" 
+            onClick={() => handleFilterToggleChange('estatus', 'Completado')}
+            className={`ingreso-button ${filters.estatus === 'Completado' ? 'active' : ''} ${theme}`}
+          >
+            Completado
+          </button>
+          <button 
+            type="button" 
+            onClick={() => handleFilterToggleChange('estatus', 'Pendiente')}
+            className={`ingreso-button ${filters.estatus === 'Pendiente' ? 'active' : ''} ${theme}`}
+          >
+            Pendiente
+          </button>
+        </div>
+        <div className="Prevfilter-field">
+          <label>Método:</label>
+          <div className="Prevdropdown">
+            <button className={`dropdown-toggle ${theme}`} onClick={toggleMetodoDropdown}>Seleccionar Método</button>
+            {isMetodoDropdownOpen && (
+              <div className={`Prevdropdown-menu ${theme}`}>
+                {metodoOptions.map((method) => (
+                  <label key={method} className={`Prevdropdown-item ${theme}`}>
+                    <input
+                      type="checkbox"
+                      checked={filters.metodo.includes(method)}
+                      onChange={() => handleMethodChange(method)}
+                    />
+                    {method}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 
@@ -257,96 +258,58 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
           <div className="dropdown">
             <button 
               className={`ingreso-button ${theme}`} 
-              onClick={(e) => toggleDropdown(e, renderDropdownContent())}
+              onClick={toggleCreateIncomeDropdown} // Lógica para abrir/cerrar el formulario de crear ingreso
             >
               Añadir Ingreso Especial
             </button>
-          </div>
-          <div className="dropdownFilters">
-            <button className={`ingreso-button ${theme}`} onClick={toggleFilterDropdown}>Filtros</button>
-            {isFilterDropdownOpen && (
+            {isCreateIncomeOpen && (
               <div className={`Prevdropdown-content ${theme}`}>
-                <div className="Prevprevisiones-filtros">
-                  <div className="Prevfilter-field">
-                    <label>Fecha Inicio:</label>
-                    <input 
-                      type="date" 
-                      name="startDate" 
-                      value={filters.startDate} 
-                      onChange={handleFilterFieldChange} 
-                      className={`widget-filter-input ${theme}`}
-                    />
-                  </div>
-                  <div className="Prevfilter-field">
-                    <label>Fecha Fin:</label>
-                    <input 
-                      type="date" 
-                      name="endDate" 
-                      value={filters.endDate} 
-                      onChange={handleFilterFieldChange} 
-                      className={`widget-filter-input ${theme}`}
-                    />
-                  </div>
-                  <div className="Prevfilter-field">
-                    <label>Monto Mín:</label>
-                    <input 
-                      type="number" 
-                      name="minMonto" 
-                      value={filters.minMonto} 
-                      onChange={handleFilterFieldChange} 
-                      className={`widget-filter-input ${theme}`}
-                    />
-                  </div>
-                  <div className="Prevfilter-field">
-                    <label>Monto Máx:</label>
-                    <input 
-                      type="number" 
-                      name="maxMonto" 
-                      value={filters.maxMonto} 
-                      onChange={handleFilterFieldChange} 
-                      className={`widget-filter-input ${theme}`}
-                    />
-                  </div>
-                  <div className="Prevfilter-field">
-                    <label>Estatus:</label>
-                    <button 
-                      type="button" 
-                      onClick={() => handleFilterToggleChange('estatus', 'Completado')}
-                      className={`ingreso-button ${filters.estatus === 'Completado' ? 'active' : ''} ${theme}`}
-                    >
-                      Completado
-                    </button>
-                    <button 
-                      type="button" 
-                      onClick={() => handleFilterToggleChange('estatus', 'Pendiente')}
-                      className={`ingreso-button ${filters.estatus === 'Pendiente' ? 'active' : ''} ${theme}`}
-                    >
-                      Pendiente
-                    </button>
-                  </div>
-                  <div className="Prevfilter-field">
-                    <label>Método:</label>
-                    <div className="Prevdropdown">
-                      <button className={`dropdown-toggle ${theme}`} onClick={toggleMetodoDropdown}>Seleccionar Método</button>
-                      {isMetodoDropdownOpen && (
-                        <div className={`Prevdropdown-menu ${theme}`}>
-                          {metodoOptions.map((method) => (
-                            <label key={method} className={`Prevdropdown-item ${theme}`}>
-                              <input
-                                type="checkbox"
-                                checked={filters.metodo.includes(method)}
-                                onChange={() => handleMethodChange(method)}
-                              />
-                              {method}
-                            </label>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                <div className="create-income-form">
+                  <input
+                    type="number"
+                    name="cantidad"
+                    placeholder="Cantidad"
+                    value={newIncome.cantidad}
+                    onChange={handleCreateIncomeChange}
+                    className={`widget-filter-input ${theme}`}
+                  />
+                  <input
+                    type="text"
+                    name="descripcion"
+                    placeholder="Descripción"
+                    value={newIncome.descripcion}
+                    onChange={handleCreateIncomeChange}
+                    className={`widget-filter-input ${theme}`}
+                  />
+                  <input
+                    type="date"
+                    name="fecha"
+                    value={newIncome.fecha}
+                    onChange={handleCreateIncomeChange}
+                    className={`widget-filter-input ${theme}`}
+                  />
+                  <select
+                    name="metodoPago"
+                    value={newIncome.metodoPago}
+                    onChange={handleCreateIncomeChange}
+                    className={`widget-filter-input ${theme}`}
+                  >
+                    <option value="">Método de Pago</option>
+                    {metodoOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={handleCreateIncomeSubmit} className={`ingreso-button ${theme}`}>
+                    Guardar
+                  </button>
                 </div>
               </div>
             )}
+          </div>
+          <div className="dropdownFilters">
+            <button className={`ingreso-button ${theme}`} onClick={toggleFilterDropdown}>Filtros</button>
           </div>
         </div>
         {isEditMode && (
