@@ -14,6 +14,17 @@ const getCurrentWeekNumber = () => {
   return Math.ceil(days / 7);
 };
 
+const getWeekRange = (week, year) => {
+  const firstDayOfYear = new Date(year, 0, 1);
+  const days = (week - 1) * 7;
+  const startDate = new Date(firstDayOfYear.setDate(firstDayOfYear.getDate() + days));
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 6);
+
+  const options = { day: '2-digit', month: 'short' };
+  return `${startDate.toLocaleDateString('es-ES', options)} - ${endDate.toLocaleDateString('es-ES', options)}`;
+};
+
 function useIncomeData() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +46,6 @@ function useIncomeData() {
 
   return { data, loading, error };
 }
-
 
 function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
   const [view, setView] = useState('anual');
@@ -231,7 +241,7 @@ function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
           {view === 'semanal' && (
             <div className="week-navigation">
               <button onClick={handlePreviousWeek} className={`widget-button ${theme}`}>Anterior</button>
-              <span className={theme}>{`Semana ${week}`}</span>
+              <span className={theme}>{getWeekRange(week, year)}</span>
               <button onClick={handleNextWeek} className={`widget-button ${theme}`}>Siguiente</button>
             </div>
           )}

@@ -9,6 +9,17 @@ const getCurrentWeekNumber = () => {
   return Math.ceil(days / 7);
 };
 
+const getWeekRange = (week, year) => {
+  const firstDayOfYear = new Date(year, 0, 1);
+  const days = (week - 1) * 7;
+  const startDate = new Date(firstDayOfYear.setDate(firstDayOfYear.getDate() + days));
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 6);
+
+  const options = { day: '2-digit', month: 'short' };
+  return `${startDate.toLocaleDateString('es-ES', options)} - ${endDate.toLocaleDateString('es-ES', options)}`;
+};
+
 function OverviewChartPopup({ detailed, theme, setTheme }) {
   const [view, setView] = useState('anual');
   const [year, setYear] = useState(new Date().getFullYear());
@@ -153,7 +164,7 @@ function OverviewChartPopup({ detailed, theme, setTheme }) {
         {view === 'semanal' && (
           <div className="week-navigation">
             <button onClick={handlePreviousWeek}>Anterior</button>
-            <span>{`Semana ${week}`}</span>
+            <span>{getWeekRange(week, year)}</span>
             <button onClick={handleNextWeek}>Siguiente</button>
           </div>
         )}
