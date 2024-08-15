@@ -509,8 +509,8 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       
       {/* Dropdown moved outside of its original encapsulation */}
       {isDropdownOpen && dropdownContent && (
-        <div className="Prevdropdown-content" style={{ 
-          position: 'absolute', 
+  <div className={`Prevdropdown-content ${theme}`} style={{ 
+    position: 'absolute', 
           top: dropdownPosition.top, 
           left: dropdownPosition.left, 
           zIndex: 10000 

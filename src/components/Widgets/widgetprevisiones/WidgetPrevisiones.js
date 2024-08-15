@@ -166,51 +166,76 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
     <div>
       <h3>Añadir Ingreso</h3>
       <form onSubmit={handleAddIngreso}>
-        <input 
-          type="number" 
-          name="cantidad" 
-          placeholder="Cantidad" 
-          value={newIngreso.cantidad} 
-          onChange={handleIngresoChange} 
-          required
-        />
-        <input 
-          type="date" 
-          name="fecha" 
-          placeholder="Fecha" 
-          value={newIngreso.fecha} 
-          onChange={handleIngresoChange} 
-          required
-        />
-        <select 
-          name="metodoPago" 
-          value={newIngreso.metodoPago} 
-          onChange={handleIngresoChange}
-          required
-        >
-          <option value="">Seleccione Método</option>
-          {metodoOptions.map((method, index) => (
-            <option key={index} value={method}>{method}</option>
-          ))}
-        </select>
-        <input 
-          type="text" 
-          name="descripcion" 
-          placeholder="Descripción" 
-          value={newIngreso.descripcion} 
-          onChange={handleIngresoChange} 
-        />
-        <select 
-          name="cliente" 
-          value={newIngreso.cliente} 
-          onChange={handleIngresoChange}
-          required
-        >
-          <option value="">Seleccione Cliente</option>
-          {clients.map((client) => (
-            <option key={client._id} value={client._id}>{client.nombre}</option>  // Asume que los clientes tienen un campo `nombre`
-          ))}
-        </select>
+        <div className="Prevfilter-field">
+          <label htmlFor="cantidad">Cantidad:</label>
+          <input 
+            type="number" 
+            name="cantidad" 
+            id="cantidad"
+            placeholder="Cantidad" 
+            value={newIngreso.cantidad} 
+            onChange={handleIngresoChange} 
+            className={`widget-filter-input ${theme}`}
+            required
+          />
+        </div>
+        <div className="Prevfilter-field">
+          <label htmlFor="fecha">Fecha:</label>
+          <input 
+            type="date" 
+            name="fecha" 
+            id="fecha"
+            placeholder="Fecha" 
+            value={newIngreso.fecha} 
+            onChange={handleIngresoChange} 
+            className={`widget-filter-input ${theme}`}
+            required
+          />
+        </div>
+        <div className="Prevfilter-field">
+          <label htmlFor="metodoPago">Método de Pago:</label>
+          <select 
+            name="metodoPago" 
+            id="metodoPago"
+            value={newIngreso.metodoPago} 
+            onChange={handleIngresoChange} 
+            className={`widget-filter-input ${theme}`}
+            required
+          >
+            <option value="">Seleccione Método</option>
+            {metodoOptions.map((method, index) => (
+              <option key={index} value={method}>{method}</option>
+            ))}
+          </select>
+        </div>
+        <div className="Prevfilter-field">
+          <label htmlFor="descripcion">Descripción:</label>
+          <input 
+            type="text" 
+            name="descripcion" 
+            id="descripcion"
+            placeholder="Descripción" 
+            value={newIngreso.descripcion} 
+            onChange={handleIngresoChange} 
+            className={`widget-filter-input ${theme}`}
+          />
+        </div>
+        <div className="Prevfilter-field">
+          <label htmlFor="cliente">Cliente:</label>
+          <select 
+            name="cliente" 
+            id="cliente"
+            value={newIngreso.cliente} 
+            onChange={handleIngresoChange} 
+            className={`widget-filter-input ${theme}`}
+            required
+          >
+            <option value="">Seleccione Cliente</option>
+            {clients.map((client) => (
+              <option key={client._id} value={client._id}>{client.nombre}</option>
+            ))}
+          </select>
+        </div>
         <button type="submit" className={`ingreso-button ${theme}`}>Añadir</button>
       </form>
     </div>
@@ -343,34 +368,34 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, 
           </tr>
         </thead>
         <tbody>
-  {filteredData.map((item, index) => (
-    <tr key={index}>
-      <td><input type="checkbox" /></td>
-      {visibleColumns.numero && <td>{item.numero || 'N/A'}</td>}
-      {visibleColumns.fecha && <td>{item.fecha}</td>}
-      {visibleColumns.monto && <td>€{item.cantidad}</td>}
-      {visibleColumns.pagadoPor && (
-        <td>
-          {item.cliente ? item.cliente.nombre : 'No asignado'}
-        </td>
-      )}
-      {visibleColumns.metodo && <td>{item.metodoPago}</td>}
-      {visibleColumns.estatus && <td>{item.estatus || 'N/A'}</td>}
-      <td>
-        <div className="dropdown options-dropdown">
-          <button className={`dropdown-toggle options-btn ${theme}`}>...</button>
-          <div className={`dropdown-menu options-menu ${theme}`}>
-            <button className={`dropdown-item ${theme}`} onClick={() => handleChangeStatus(index)}>
-              Cambiar Estatus
-            </button>
-            <button className={`dropdown-item ${theme}`}>Opción 2</button>
-            <button className={`dropdown-item ${theme}`}>Opción 3</button>
-          </div>
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
+          {filteredData.map((item, index) => (
+            <tr key={index}>
+              <td><input type="checkbox" /></td>
+              {visibleColumns.numero && <td>{item.numero || 'N/A'}</td>}
+              {visibleColumns.fecha && <td>{item.fecha}</td>}
+              {visibleColumns.monto && <td>€{item.cantidad}</td>}
+              {visibleColumns.pagadoPor && (
+                <td>
+                  {item.cliente ? item.cliente.nombre : 'No asignado'}
+                </td>
+              )}
+              {visibleColumns.metodo && <td>{item.metodoPago}</td>}
+              {visibleColumns.estatus && <td>{item.estatus || 'N/A'}</td>}
+              <td>
+                <div className="dropdown options-dropdown">
+                  <button className={`dropdown-toggle options-btn ${theme}`}>...</button>
+                  <div className={`dropdown-menu options-menu ${theme}`}>
+                    <button className={`dropdown-item ${theme}`} onClick={() => handleChangeStatus(index)}>
+                      Cambiar Estatus
+                    </button>
+                    <button className={`dropdown-item ${theme}`}>Opción 2</button>
+                    <button className={`dropdown-item ${theme}`}>Opción 3</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
