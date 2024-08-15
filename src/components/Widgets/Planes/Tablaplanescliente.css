@@ -6,13 +6,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   max-height: 600px; /* Limita la altura máxima del contenedor */
-  overflow: hidden; /* Esconde el desbordamiento del contenido */
+  overflow: visible; /* Permite que el contenido sobresalga */
 }
 
 .Tablaplanescliente-table-wrapper {
   max-height: 500px; /* Define la altura máxima de la tabla */
-  height: 200px;
-  overflow: auto; /* Habilita el desplazamiento si es necesario */
+  overflow-x: visible; /* Mantiene el desplazamiento horizontal si es necesario */
   margin-top: 10px;
   border-radius: 8px;
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); /* Añade una ligera sombra interior */
@@ -20,7 +19,11 @@
 .dropdown {
   position: relative;
   display: inline-block;
+}.Tablaplanescliente-button-group.right-aligned {
+  display: flex;
+  justify-content: flex-end;
 }
+
 
 .dropdown-toggle {
   background-color: transparent;
@@ -35,7 +38,7 @@
   position: absolute;
   background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  z-index: 10000;
 }
 
 .dropdown:hover .dropdown-menu {

@@ -31,16 +31,11 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
   const fetchData = async () => {
     try {
-      console.log('Fetching data...');
       const [clientesResponse, fixedResponse, variableResponse] = await Promise.all([
         axios.get(`${API_BASE_URL}/api/clientes`),
         axios.get(`${API_BASE_URL}/plans/fixed`),
         axios.get(`${API_BASE_URL}/plans/variable`),
       ]);
-
-      console.log('Clientes:', clientesResponse.data);
-      console.log('Fixed plans:', fixedResponse.data);
-      console.log('Variable plans:', variableResponse.data);
 
       setClientes(clientesResponse.data);
       setFixedPlans(fixedResponse.data);
@@ -51,7 +46,6 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   };
 
   useEffect(() => {
-    console.log('useEffect triggered. Current table:', currentTable);
     fetchData();
   }, [currentTable]);
 
@@ -66,17 +60,14 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);
-    console.log('Filter text changed:', e.target.value);
   };
 
   const handleColumnToggle = (column) => {
     const updatedColumns = { ...visibleColumns, [column]: !visibleColumns[column] };
     setVisibleColumns(updatedColumns);
-    console.log('Column visibility toggled:', updatedColumns);
   };
 
   const handleChangeTable = (table) => {
-    console.log('Table changed to:', table);
     setCurrentTable(table);
   };
 
@@ -86,21 +77,17 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
       direction = 'desc';
     }
     setSortConfig({ key, direction });
-    console.log('Sorting by:', key, 'Direction:', direction);
   };
 
   const combinedPlans = [...fixedPlans, ...variablePlans];
-  console.log('Combined plans:', combinedPlans);
 
   const sortedData = currentTable === 'planes' ? [...combinedPlans] : [...clientes];
-  console.log('Sorted data:', sortedData);
 
   const filteredData = sortedData.filter(item =>
     Object.values(item).some(val =>
       val.toString().toLowerCase().includes(filterText.toLowerCase())
     )
   );
-  console.log('Filtered data:', filteredData);
 
   const handleCheckboxChange = (plan) => {
     const isSelected = selectedPlans.includes(plan);
@@ -109,7 +96,6 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     } else {
       setSelectedPlans([...selectedPlans, plan]);
     }
-    console.log('Selected plans:', selectedPlans);
   };
 
   const handleDeleteSelectedPlans = async () => {
@@ -118,17 +104,14 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
       const deleteUrl = isFixedPlan
         ? `${API_BASE_URL}/plans/fixed/${plan._id}`
         : `${API_BASE_URL}/plans/variable/${plan._id}`;
-      
-      console.log('Deleting plan at:', deleteUrl);
       return axios.delete(deleteUrl);
     });
-  
+
     try {
       await Promise.all(deletePromises);
       setFixedPlans(fixedPlans.filter(plan => !selectedPlans.includes(plan)));
       setVariablePlans(variablePlans.filter(plan => !selectedPlans.includes(plan)));
       setSelectedPlans([]);
-      console.log('Selected plans deleted successfully');
     } catch (error) {
       console.error('Error al borrar los planes:', error);
     }
@@ -136,12 +119,10 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
   const renderClientColumn = (planId) => {
     const client = clientes.find(cliente => cliente.associatedPlans.includes(planId));
-    console.log('Rendering client for Plan ID:', planId, 'Found client:', client);
     return client ? client.nombre : 'N/A';
   };
 
   const handleDeletePlan = (plan) => {
-    console.log('Plan selected for deletion:', plan);
     setShowDeletePopup(true);
     setPlanToDelete(plan);
   };
@@ -151,12 +132,9 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
       const deleteUrl = planToDelete.contractDuration || planToDelete.frequency 
         ? `${API_BASE_URL}/plans/fixed/${planToDelete._id}` 
         : `${API_BASE_URL}/plans/variable/${planToDelete._id}`;
-      
-      console.log('Deleting plan at:', deleteUrl);
       await axios.delete(deleteUrl);
       setFixedPlans(fixedPlans.filter(plan => plan._id !== planToDelete._id));
       setVariablePlans(variablePlans.filter(plan => plan._id !== planToDelete._id));
-      console.log('Plan deleted successfully');
     } catch (error) {
       console.error('Error al borrar el plan:', error);
     }
@@ -165,13 +143,11 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   };
 
   const cancelDeletePlan = () => {
-    console.log('Deletion cancelled');
     setShowDeletePopup(false);
     setPlanToDelete(null);
   };
 
   const handleAssociatePlanToClient = (plan) => {
-    console.log('Plan selected for association:', plan);
     const planType = plan.hours_worked ? 'VariablePlan' : 'FixedPlan';
     setPlanToAssociate({
       ...plan,
@@ -181,12 +157,11 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
   const handleClientSelection = (e) => {
     setSelectedClient(e.target.value);
-    console.log('Client selected:', e.target.value);
   };
 
   const confirmAssociatePlan = async () => {
     if (!planToAssociate || !selectedClient) {
-        console.error('Plan or Client is not selected');
+        console.error('Plan o Cliente no seleccionado');
         return;
     }
 
@@ -194,42 +169,36 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     const planType = planToAssociate.hours_worked ? 'VariablePlan' : 'FixedPlan';
 
     if (!planId || !planType) {
-        console.error('Plan ID or Plan Type is missing');
+        console.error('ID de Plan o Tipo de Plan falta');
         return;
     }
 
-    console.log('Associating plan', planId, 'with client', selectedClient, 'and plan type', planType);
-
     try {
-        const response = await axios.post(
+        await axios.post(
             `${API_BASE_URL}/api/clientes/${selectedClient}/plan`,
             {
                 planId,
                 planType
             }
         );
-        console.log('Plan asociado exitosamente:', response.data);
     } catch (error) {
-        console.error('Error associating plan:', error);
+        console.error('Error asociando plan:', error);
     }
   };
 
   const cancelAssociatePlan = () => {
-    console.log('Association cancelled');
     setPlanToAssociate(null);
     setSelectedClient('');
   };
 
   const handleUnassociatePlan = async (clienteId, planId) => {
     try {
-      console.log('Unassociating plan with ID:', planId, 'from client with ID:', clienteId);
       await axios.put(`${API_BASE_URL}/api/clientes/${clienteId}/desasociar-plan`, { planId });
       setClientes(clientes.map(cliente => 
         cliente._id === clienteId 
           ? { ...cliente, associatedPlans: cliente.associatedPlans.filter(id => id !== planId) }
           : cliente
       ));
-      console.log('Client unassociated from plan successfully');
     } catch (error) {
       console.error('Error al desasociar el cliente del plan:', error);
     }
@@ -237,12 +206,10 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
   const renderPlanColumn = (cliente) => {
     const associatedPlan = combinedPlans.find(plan => cliente.associatedPlans.includes(plan._id));
-    console.log('Rendering plan for Client ID:', cliente._id, 'Found plan:', associatedPlan);
     return associatedPlan ? associatedPlan.name : 'Sin plan asociado';
   };
 
   return (
-
     <div className="Tablaplanescliente-container">
       <h2 onClick={onTitleClick}>{currentTable === 'planes' ? 'Planes de Clientes' : 'Clientes'}</h2>
       <div className="Tablaplanescliente-controls">
@@ -255,12 +222,6 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
         <div className="Tablaplanescliente-button-group">
           <button onClick={() => handleChangeTable('planes')}>Tabla de Planes</button>
           <button onClick={() => handleChangeTable('clientes')}>Tabla de Clientes</button>
-          {currentTable === 'planes' && (
-            <>
-              <button onClick={handleOpenCreatePlanModal}>Crear Plan</button>
-              <button onClick={handleDeleteSelectedPlans} disabled={selectedPlans.length === 0}>Borrar Planes Seleccionados</button>
-            </>
-          )}
         </div>
         {isEditMode && (
           <ColumnDropdown
@@ -269,6 +230,12 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
           />
         )}
       </div>
+      <div className="Tablaplanescliente-button-group right-aligned">
+  <button onClick={handleOpenCreatePlanModal}>Crear Plan</button>
+  <button onClick={handleDeleteSelectedPlans} disabled={selectedPlans.length === 0}>
+    Borrar Planes Seleccionados
+  </button>
+</div>
       <div className="Tablaplanescliente-table-wrapper">
         <table>
           <thead>
@@ -276,7 +243,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
               {currentTable === 'planes' ? (
                 <>
                   <th></th>
-                  {visibleColumns.nombre && <th onClick={() => handleSort('name')}>aaa</th>}
+                  {visibleColumns.nombre && <th onClick={() => handleSort('name')}>Nombre del Plan</th>}
                   {visibleColumns.clientes && <th>Clientes</th>}
                   {visibleColumns.precio && <th>Precio</th>}
                   {visibleColumns.duracion && <th>Duración</th>}
