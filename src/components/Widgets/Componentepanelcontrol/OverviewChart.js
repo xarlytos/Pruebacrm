@@ -5,7 +5,8 @@ import './OverviewChart.css';
 import classnames from 'classnames';
 import WidgetRemoveButton from './ComponentesReutilizables/WidgetRemoveButton';
 
-// Función auxiliar para obtener el número de la semana actual
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const getCurrentWeekNumber = () => {
   const currentDate = new Date();
   const startDate = new Date(currentDate.getFullYear(), 0, 1);
@@ -13,16 +14,15 @@ const getCurrentWeekNumber = () => {
   return Math.ceil(days / 7);
 };
 
-// Hook personalizado para obtener los datos de ingresos
 function useIncomeData() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5005/api/incomes/')
+    axios.get(`${API_BASE_URL}/api/incomes/`)
       .then(response => {
-        console.log('Totasasdl Ingresos Response:', response.data);
+        console.log('Total Ingresos Response:', response.data);
         setData(response.data);
         setLoading(false);
       })
@@ -35,6 +35,7 @@ function useIncomeData() {
 
   return { data, loading, error };
 }
+
 
 function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
   const [view, setView] = useState('anual');

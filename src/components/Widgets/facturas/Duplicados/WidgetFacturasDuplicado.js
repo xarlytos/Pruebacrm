@@ -8,7 +8,9 @@ import ScanInvoiceForm from './ScanInvoiceForm';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import './widget-FacturasDuplicado.css';
 
-function WidgetFacturasDuplicado({ isEditMode, theme }) {
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
+function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedColumns, setSelectedColumns] = useState({
     estado: true,
@@ -33,7 +35,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const response = await axios.get('http://localhost:5005/api/invoices');
+        const response = await axios.get(`${API_BASE_URL}/api/invoices`);
         setInvoices(response.data);
       } catch (error) {
         setError('Error al obtener las facturas.');
@@ -92,7 +94,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
 
   const openShowInvoiceModal = async (invoice) => {
     try {
-      const response = await axios.get(`http://localhost:5005/api/invoices/download/${invoice._id}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/invoices/download/${invoice._id}`, {
         responseType: 'blob'
       });
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
@@ -110,6 +112,10 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
     setPdfUrl('');
   };
 
+  const handleEconomiaTabClick = () => {
+    onTabChange('Panel de Control');
+  };
+
   if (loading) {
     return <div className={`WidgetFacturasDuplicado-widget ${theme}`}>Cargando...</div>;
   }
@@ -120,6 +126,20 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
 
   return (
     <div className={`WidgetFacturasDuplicado-widget ${theme}`}>
+            <button
+        onClick={handleEconomiaTabClick}
+        style={{
+          margin: '10px 0',
+          padding: '8px 16px',
+          backgroundColor: theme === 'light' ? '#4CAF50' : '#2E8B57',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Ir a la página de Economía
+      </button>
       <FacturasActionButtons onScanClick={handleScanClick} onOpenClick={handleOpenClick} />
       <div className="WidgetFacturasDuplicado-filter-container">
         <h2>Facturas</h2>
@@ -131,6 +151,9 @@ function WidgetFacturasDuplicado({ isEditMode, theme }) {
           className={`WidgetFacturasDuplicado-filter-input ${theme}`}
         />
       </div>
+      
+
+
       <table className={`WidgetFacturasDuplicado-table ${theme}`}>
         <thead>
           <tr>

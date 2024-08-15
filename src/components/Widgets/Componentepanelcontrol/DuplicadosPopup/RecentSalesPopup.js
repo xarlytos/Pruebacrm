@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   useTable,
   useSortBy,
@@ -8,6 +9,8 @@ import {
   useRowState,
 } from 'react-table';
 import './RecentSalesPopup.css';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 function RecentSalesPopup({ detailed, theme, setTheme }) {
   const [filterInput, setFilterInput] = useState('');
@@ -29,14 +32,14 @@ function RecentSalesPopup({ detailed, theme, setTheme }) {
     },
     {
       Header: 'Estado',
-      accessor: 'metodoPago',
+      accessor: 'estadoPago',
       Cell: ({ value }) => {
         const status = {
-          efectivo: 'Efectivo',
-          stripe: 'Stripe',
-          tarjeta: 'Tarjeta'
+          pendiente: 'pendiente',
+          completado: 'completado',
+          fallido: 'fallido'
         };
-        return status[value] || value;
+        return status[value] || 'Desconocido';
       }
     },
     {
@@ -72,18 +75,13 @@ function RecentSalesPopup({ detailed, theme, setTheme }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5005/api/incomes/');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
+        const response = await axios.get(`${API_BASE_URL}/api/incomes/`);
+        const result = response.data;
 
-        // Obtener la fecha actual
         const today = new Date();
         const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
 
-        // Filtrar los registros del mes actual y el mes anterior
         const filteredData = result.filter(item => {
           const itemDate = new Date(item.fecha);
           const itemMonth = itemDate.getMonth();
@@ -91,7 +89,7 @@ function RecentSalesPopup({ detailed, theme, setTheme }) {
 
           return (
             (itemYear === currentYear && (itemMonth === currentMonth || itemMonth === currentMonth - 1)) ||
-            (itemMonth === 11 && itemYear === currentYear - 1 && currentMonth === 0) // Manejo del caso de enero
+            (itemMonth === 11 && itemYear === currentYear - 1 && currentMonth === 0)
           );
         });
 

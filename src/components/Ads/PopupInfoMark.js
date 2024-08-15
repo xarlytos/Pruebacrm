@@ -22,8 +22,12 @@ const PopupInfoMark = ({ show, onClose }) => {
             <div className="popup-content">
                 <h2>Generar informes</h2>
                 <div className="popup-field">
-                    <label>Generar informe cada cuanto tiempo?</label>
-                    <select value={reportFrequency} onChange={handleFrequencyChange}>
+                    <label htmlFor="reportFrequency">Generar informe cada cuánto tiempo?</label>
+                    <select
+                        id="reportFrequency"
+                        value={reportFrequency}
+                        onChange={handleFrequencyChange}
+                    >
                         <option value="">Seleccione una opción</option>
                         <option value="weekly">Semanalmente</option>
                         <option value="biweekly">Cada 15 días</option>
@@ -31,8 +35,12 @@ const PopupInfoMark = ({ show, onClose }) => {
                     </select>
                 </div>
                 <div className="popup-field">
-                    <label>Método de envío</label>
-                    <select value={deliveryMethod} onChange={handleMethodChange}>
+                    <label htmlFor="deliveryMethod">Método de envío</label>
+                    <select
+                        id="deliveryMethod"
+                        value={deliveryMethod}
+                        onChange={handleMethodChange}
+                    >
                         <option value="">Seleccione una opción</option>
                         <option value="email">Correo electrónico</option>
                         <option value="whatsapp">Whatsapp</option>

@@ -177,9 +177,7 @@ button:hover {
     color: var(--text-light);
 }
 
-body.dark button, .popup-content.dark button {
-    color: #333333;
-}
+
 
 body.dark button:hover, .popup-content.dark button:hover {
     background-color: var(--primary-dark);

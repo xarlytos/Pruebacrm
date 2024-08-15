@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './widget-LicenciasDuplicado.css';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,8 +13,8 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   });
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [licencias, setLicencias] = useState([]); // Estado para las licencias
-  const [showAddLicenseModal, setShowAddLicenseModal] = useState(false); // Estado para mostrar/ocultar el modal
+  const [licencias, setLicencias] = useState([]); 
+  const [showAddLicenseModal, setShowAddLicenseModal] = useState(false); 
   const [newLicense, setNewLicense] = useState({
     name: '',
     type: '',
@@ -28,14 +31,10 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   useEffect(() => {
     const fetchLicenses = async () => {
       try {
-        const response = await fetch('http://localhost:5005/api/licenses/');
-        if (!response.ok) {
-          throw new Error('Error al obtener las licencias');
-        }
-        const licensesData = await response.json();
+        const response = await axios.get(`${API_BASE_URL}/api/licenses/`);
+        const licensesData = response.data;
 
-        // Mapeamos los datos obtenidos para que coincidan con las columnas de la tabla
-        const mappedLicencias = licensesData.map((license, index) => ({
+        const mappedLicencias = licensesData.map((license) => ({
           id: license._id,
           titulo: license.name,
           fecha: new Date(license.issueDate).toLocaleDateString(),
@@ -85,21 +84,10 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5005/api/licenses/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newLicense),
-      });
+      const response = await axios.post(`${API_BASE_URL}/api/licenses/`, newLicense);
 
-      if (!response.ok) {
-        throw new Error('Error al crear la licencia');
-      }
+      const createdLicense = response.data;
 
-      const createdLicense = await response.json();
-
-      // Actualizar la lista de licencias con la nueva licencia
       setLicencias([
         ...licencias,
         {
@@ -109,7 +97,6 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
         },
       ]);
 
-      // Cerrar el modal y resetear el formulario
       setShowAddLicenseModal(false);
       setNewLicense({
         name: '',
@@ -128,6 +115,7 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   };
 
   return (
+
     <div className={`Licencias-widget ${theme}`}>
       <h2>Licencias</h2>
       <div className="Licencias-filter-container">
@@ -208,75 +196,111 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
           <div className={`modal-content ${theme}`}>
             <h3>Añadir Nueva Licencia</h3>
             <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Nombre"
-                value={newLicense.name}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="type"
-                placeholder="Tipo"
-                value={newLicense.type}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="organization"
-                placeholder="Organización"
-                value={newLicense.organization}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="date"
-                name="issueDate"
-                placeholder="Fecha de Emisión"
-                value={newLicense.issueDate}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="date"
-                name="expirationDate"
-                placeholder="Fecha de Expiración"
-                value={newLicense.expirationDate}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="attachment"
-                placeholder="Adjunto"
-                value={newLicense.attachment}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="renewalState"
-                placeholder="Estado de Renovación"
-                value={newLicense.renewalState}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="date"
-                name="reminderDate"
-                placeholder="Fecha de Recordatorio"
-                value={newLicense.reminderDate}
-                onChange={handleInputChange}
-              />
-              <textarea
-                name="notes"
-                placeholder="Notas"
-                value={newLicense.notes}
-                onChange={handleInputChange}
-              />
+              <div className="form-group">
+                <label htmlFor="name">Nombre</label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Nombre"
+                  value={newLicense.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="type">Tipo</label>
+                <input
+                  type="text"
+                  name="type"
+                  id="type"
+                  placeholder="Tipo"
+                  value={newLicense.type}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="organization">Organización</label>
+                <input
+                  type="text"
+                  name="organization"
+                  id="organization"
+                  placeholder="Organización"
+                  value={newLicense.organization}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="issueDate">Fecha de Emisión</label>
+                <input
+                  type="date"
+                  name="issueDate"
+                  id="issueDate"
+                  placeholder="Fecha de Emisión"
+                  value={newLicense.issueDate}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="expirationDate">Fecha de Expiración</label>
+                <input
+                  type="date"
+                  name="expirationDate"
+                  id="expirationDate"
+                  placeholder="Fecha de Expiración"
+                  value={newLicense.expirationDate}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="attachment">Adjunto</label>
+                <input
+                  type="text"
+                  name="attachment"
+                  id="attachment"
+                  placeholder="Adjunto"
+                  value={newLicense.attachment}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="renewalState">Estado de Renovación</label>
+                <input
+                  type="text"
+                  name="renewalState"
+                  id="renewalState"
+                  placeholder="Estado de Renovación"
+                  value={newLicense.renewalState}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="reminderDate">Fecha de Recordatorio</label>
+                <input
+                  type="date"
+                  name="reminderDate"
+                  id="reminderDate"
+                  placeholder="Fecha de Recordatorio"
+                  value={newLicense.reminderDate}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="notes">Notas</label>
+                <textarea
+                  name="notes"
+                  id="notes"
+                  placeholder="Notas"
+                  value={newLicense.notes}
+                  onChange={handleInputChange}
+                />
+              </div>
               <button type="submit">Añadir Licencia</button>
               <button type="button" onClick={handleCloseModal}>
                 Cancelar

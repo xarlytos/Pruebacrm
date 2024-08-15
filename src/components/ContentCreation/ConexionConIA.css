@@ -119,13 +119,6 @@
     background-color: #333;
   }
   
-  button.dark {
-    background-color: #ff4c4c;
-  }
-  
-  button.dark:hover {
-    background-color: #ff1a1a;
-  }
   
   /* Mensajes de usuario y asistente en modo oscuro */
   .conexionconia-chat-message.user.dark {

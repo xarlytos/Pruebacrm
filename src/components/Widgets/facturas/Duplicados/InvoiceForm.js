@@ -4,6 +4,8 @@ import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import styles from './InvoiceForm.module.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const InvoiceForm = ({ closeModal, client, invoice }) => {
     const [formType, setFormType] = useState('simple');
     const [services, setServices] = useState(invoice ? invoice.services : [{ serviceCode: '', vat: '', quantity: '', unitPrice: '', discount: '' }]);
@@ -39,7 +41,7 @@ const InvoiceForm = ({ closeModal, client, invoice }) => {
     useEffect(() => {
         const fetchClients = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/clients');
+                const response = await axios.get(`${API_BASE_URL}/clients`);
                 setClients(response.data);
             } catch (error) {
                 console.error('Error al obtener los clientes:', error);
@@ -48,7 +50,7 @@ const InvoiceForm = ({ closeModal, client, invoice }) => {
 
         const fetchInvoices = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/invoices');
+                const response = await axios.get(`${API_BASE_URL}/api/invoices`);
                 const invoices = response.data;
 
                 if (invoices.length > 0 && !invoice) {
@@ -141,9 +143,9 @@ const InvoiceForm = ({ closeModal, client, invoice }) => {
 
         try {
             const response = invoice
-                ? await axios.put(`http://localhost:5000/api/invoices/${invoice._id}`, invoiceData)
-                : await axios.post('http://localhost:5000/api/invoices', invoiceData);
-            setPdfPath(`http://localhost:5000${response.data.pdfPath}`);
+                ? await axios.put(`${API_BASE_URL}/api/invoices/${invoice._id}`, invoiceData)
+                : await axios.post(`${API_BASE_URL}/api/invoices`, invoiceData);
+            setPdfPath(`${API_BASE_URL}${response.data.pdfPath}`);
             closeModal();
         } catch (error) {
             console.error('Error al crear la factura:', error.response?.data || error.message);
@@ -151,6 +153,7 @@ const InvoiceForm = ({ closeModal, client, invoice }) => {
     };
 
     return (
+
         <form onSubmit={handleSubmit} className={styles.form}>
             <h1>{invoice ? 'Editar Factura' : 'Crear Factura'}</h1>
             <div className={styles.gridContainer}>

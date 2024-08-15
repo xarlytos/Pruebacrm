@@ -3,6 +3,7 @@ import {
   useTable,
   useSortBy,
   useFilters,
+  useGlobalFilter,  // Importa useGlobalFilter para el filtro global
   usePagination,
   useRowSelect,
   useRowState,
@@ -10,10 +11,6 @@ import {
 import './RecentSales.css';
 import DetailedIngresoBeneficio from './DetailedIngresoBeneficio';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
-
-const data = [
-  // Your data here
-];
 
 const columns = [
   {
@@ -28,29 +25,32 @@ const columns = [
   },
   {
     Header: 'Estado',
-    accessor: 'status',
+    accessor: 'estadoPago',
     Cell: ({ value }) => {
       const status = {
-        success: 'Éxito',
-        processing: 'Procesando',
-        failed: 'Fallido'
+        pendiente: 'Pendiente',
+        completado: 'Completado',
+        fallido: 'Fallido'
       };
-      return status[value] || value;
+      return status[value] || 'Desconocido';
     }
   },
   {
     Header: 'Correo Electrónico',
-    accessor: 'email',
+    accessor: 'cliente.email',
   },
   {
     Header: 'Dinero',
-    accessor: 'dinero',  // Change the accessor to "dinero"
+    accessor: 'cantidad',
     Cell: ({ value }) => {
-      const formatted = new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(value);
-      return <div className="text-right font-medium">{formatted}</div>;
+      if (typeof value === 'number') {
+        const formatted = new Intl.NumberFormat('es-ES', {
+          style: 'currency',
+          currency: 'EUR',  // Cambiado a EUR para mostrar en euros
+        }).format(value);
+        return <div className="text-right font-medium">{formatted}</div>;
+      }
+      return <div className="text-right font-medium">N/A</div>;
     },
   },
   {
@@ -70,10 +70,46 @@ const columns = [
 ];
 
 function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
+  const [data, setData] = useState([]);
+  const [globalFilter, setGlobalFilterState] = useState('');  // Estado para el filtro global
   const [emailFilter, setEmailFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [dineroFilter, setDineroFilter] = useState('');  // Change variable to "dineroFilter"
+  const [dineroFilter, setDineroFilter] = useState('');
   const [isFilterApplied, setIsFilterApplied] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5005/api/incomes/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
+        const filteredData = result.filter(item => {
+          const itemDate = new Date(item.fecha);
+          const itemMonth = itemDate.getMonth();
+          const itemYear = itemDate.getFullYear();
+
+          return (
+            (itemYear === currentYear && (itemMonth === currentMonth || itemMonth === currentMonth - 1)) ||
+            (itemMonth === 11 && itemYear === currentYear - 1 && currentMonth === 0)
+          );
+        });
+
+        setData(filteredData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const defaultColumn = React.useMemo(() => ({
     Filter: DefaultColumnFilter,
   }), []);
@@ -86,6 +122,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
       initialState: { pageIndex: 0, pageSize: 5 },
     },
     useFilters,
+    useGlobalFilter,  // Usa useGlobalFilter en la configuración de la tabla
     useSortBy,
     usePagination,
     useRowSelect,
@@ -98,6 +135,7 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     headerGroups,
     prepareRow,
     page,
+    setGlobalFilter,  // Usa setGlobalFilter del hook useGlobalFilter
     setFilter,
     allColumns,
     state: { pageIndex, selectedRowIds, pageSize },
@@ -109,6 +147,10 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     setPageSize,
   } = tableInstance;
 
+  const handleGlobalFilterChange = (e) => {
+    setGlobalFilter(e.target.value);  // Aplica el valor al filtro global
+  };
+
   const handleEmailFilterChange = (e) => {
     setEmailFilter(e.target.value);
   };
@@ -117,14 +159,14 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     setStatusFilter(e.target.value);
   };
 
-  const handleDineroFilterChange = (e) => {  // Update to "handleDineroFilterChange"
+  const handleDineroFilterChange = (e) => {
     setDineroFilter(e.target.value);
   };
 
   const applyFilters = () => {
-    setFilter('email', emailFilter || undefined);
-    setFilter('status', statusFilter || undefined);
-    setFilter('dinero', dineroFilter || undefined);  // Apply filter to "dinero"
+    setFilter('cliente.email', emailFilter || undefined);
+    setFilter('estadoPago', statusFilter || undefined);
+    setFilter('cantidad', dineroFilter || undefined);
     setIsFilterApplied(true);
   };
 
@@ -132,13 +174,13 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
     let count = 0;
     if (emailFilter) count++;
     if (statusFilter) count++;
-    if (dineroFilter) count++;  // Count "dineroFilter"
+    if (dineroFilter) count++;
     return count;
   };
 
   useEffect(() => {
     if (isFilterApplied) {
-      setPageSize(5); // Set the page size to 5 to show exactly 5 rows per page
+      setPageSize(5);
     }
   }, [isFilterApplied, setPageSize]);
 
@@ -159,6 +201,14 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
       <h3 className="panelcontrol-letras" onClick={onTitleClick}>Ventas Recientes</h3>
       <div className="panelcontrol-pagination">
         <div className="panelcontrol-dropdown">
+          <input
+            value={globalFilter}
+            onChange={handleGlobalFilterChange}
+            placeholder="Buscar por cualquier campo..."
+            className={`panelcontrol-filter-input ${theme}`}
+          />
+        </div>
+        <div className="panelcontrol-dropdown">
           <button className="panelcontrol-dropdown-btn">Filtrar</button>
           <div className="panelcontrol-dropdown-content filter-dropdown-content">
             <div>
@@ -178,17 +228,17 @@ function RecentSales({ detailed, onTitleClick, isEditMode, theme }) {
                 className={`panelcontrol-filter-input ${theme}`}
               >
                 <option value="">Todos</option>
-                <option value="success">Éxito</option>
-                <option value="processing">Procesando</option>
-                <option value="failed">Fallido</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="completado">Completado</option>
+                <option value="fallido">Fallido</option>
               </select>
             </div>
             <div>
-              <label>Dinero</label>  {/* Update label to "Dinero" */}
+              <label>Dinero</label>
               <input
                 type="number"
                 value={dineroFilter}
-                onChange={handleDineroFilterChange}  // Update handler to "handleDineroFilterChange"
+                onChange={handleDineroFilterChange}
                 placeholder="Filtrar por dinero..."
                 className={`panelcontrol-filter-input ${theme}`}
               />

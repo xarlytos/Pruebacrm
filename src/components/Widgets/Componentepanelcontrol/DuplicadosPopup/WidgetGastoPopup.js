@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './WidgetGastoPopup.css';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const WidgetGastoPopup = ({ theme, setTheme }) => {
   const [data, setData] = useState([]); 
@@ -19,16 +22,11 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
     planType: ''
   });
 
-  // Hacer una solicitud para obtener los gastos desde la API
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5005/api/expenses/');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setData(result);
+        const response = await axios.get(`${API_BASE_URL}/api/expenses/`);
+        setData(response.data);
       } catch (error) {
         console.error('Error al cargar los gastos:', error);
       }
@@ -60,20 +58,8 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5005/api/expenses/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newGasto)
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al crear el gasto');
-      }
-
-      const createdGasto = await response.json();
-      setData([...data, createdGasto]);
+      const response = await axios.post(`${API_BASE_URL}/api/expenses/`, newGasto);
+      setData([...data, response.data]);
       setNewGasto({
         concept: '',
         description: '',

@@ -21,17 +21,17 @@ import Tablaplanescliente from './Planes/Tablaplanescliente';
 import Bonos from './Bonos/Bonos';
 import WidgetCuentaBancaria from './Gastos/widget-gastos';
 import WidgetPrevisionesPopup from './Componentepanelcontrol/DuplicadosPopup/WidgetPrevisionesPopup';
+import Alertas from './Alertas/Alertas'; // Importar el widget Alertas
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './Pestañaeconomiapage.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 function createLayout(id, x, y, w, h) {
   return [{ i: id, x: x, y: y, w: w, h: h }];
 }
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5005';
 
 function Pestañaeconomiapage({ theme, setTheme }) {
   const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
@@ -42,6 +42,9 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [activeTab, setActiveTab] = useState('Panel de Control');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownContent, setDropdownContent] = useState(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const [showControlPanel, setShowControlPanel] = useState(true);
   const [layout, setLayout] = useState([
     { i: 'totalIngresos', x: 0, y: 0, w: 3, h: 2 },        // Primer fila, primera tarjeta
@@ -64,8 +67,8 @@ function Pestañaeconomiapage({ theme, setTheme }) {
     { i: 'beneficioGrafico', x: 6, y: 18, w: 6, h: 4 },    // Sexta fila, segunda columna
     { i: 'tablaPlanes', x: 0, y: 22, w: 6, h: 4 },         // Séptima fila, primera columna
     { i: 'bonos', x: 6, y: 22, w: 6, h: 4 },               // Séptima fila, segunda columna
+    { i: 'alertas', x: 0, y: 26, w: 12, h: 4 },            // Octava fila, widget de alertas
   ]);
-  
 
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [suscripciones, setSuscripciones] = useState(0);
@@ -76,6 +79,16 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const [beneficio, setBeneficio] = useState(0);
   const [gastos, setGastos] = useState([]);  // Ahora es un array
   const [ingresosEsperados, setIngresosEsperados] = useState([]);
+
+  const handleToggleDropdown = (event, content) => {
+    const buttonRect = event.currentTarget.getBoundingClientRect();
+    setDropdownContent(content);
+    setIsDropdownOpen(!isDropdownOpen);
+    setDropdownPosition({
+      top: buttonRect.bottom + window.scrollY + 5, // Ajuste para que no esté pegado al botón
+      left: buttonRect.left + window.scrollX + 5,  // Ajuste para que no esté pegado al botón
+    });
+  };
 
   useEffect(() => {
     // Fetch data for totalIngresos
@@ -447,8 +460,17 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                             </div>
                           )}
                           {item.i === 'previsiones' && (
-                            <WidgetPrevisiones isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} handleRemoveItem={handleRemoveItem} theme={theme} setTheme={setTheme} />
-                          )}
+                            <WidgetPrevisiones 
+                            onTitleClick={handleOpenDetailedModal} 
+                            isEditMode={isEditMode} 
+                            handleRemoveItem={handleRemoveItem} 
+                            theme={theme} 
+                            isDropdownOpen={isDropdownOpen} 
+                            toggleDropdown={handleToggleDropdown}
+                            dropdownPosition={dropdownPosition}
+                            setDropdownContent={setDropdownContent} // Pass the setDropdownContent function
+                            />
+                        )}
                           {item.i === 'documentos' && (
                             <WidgetDocumentos isEditMode={isEditMode} onTitleClick={handleOpenDetailedDocumento} theme={theme} setTheme={setTheme} />
                           )}
@@ -470,6 +492,9 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'bonos' && (
                             <Bonos onTitleClick={handleOpenDetailedPlanes} theme={theme} isEditMode={isEditMode} setTheme={setTheme} />
                           )}
+                          {item.i === 'alertas' && (
+                            <Alertas theme={theme} setTheme={setTheme} />
+                          )}
                         </div>
                       ))}
                     </ResponsiveGridLayout>
@@ -482,6 +507,17 @@ function Pestañaeconomiapage({ theme, setTheme }) {
         </div>
       )}
       
+      {/* Dropdown moved outside of its original encapsulation */}
+      {isDropdownOpen && dropdownContent && (
+        <div className="Prevdropdown-content" style={{ 
+          position: 'absolute', 
+          top: dropdownPosition.top, 
+          left: dropdownPosition.left, 
+          zIndex: 10000 
+        }}>
+          {dropdownContent}
+        </div>
+      )}
     </div>
   );
 }

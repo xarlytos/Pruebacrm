@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import './modal-de-escaneo-de-facturas.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 const MAX_FILE_SIZE_MB = 15;
 
 function ModalDeEscaneoDeFacturas({ isOpen, onClose, theme }) {
@@ -13,7 +14,6 @@ function ModalDeEscaneoDeFacturas({ isOpen, onClose, theme }) {
     const [total, setTotal] = useState('');
     const [invoiceDate, setInvoiceDate] = useState('');
 
-    // Si no está abierto, retorna null, no renderiza nada
     if (!isOpen) return null;
 
     const handleFileChange = (e) => {
@@ -54,7 +54,7 @@ function ModalDeEscaneoDeFacturas({ isOpen, onClose, theme }) {
                 console.log('Base64 Image:', base64Image.substring(0, 100));
 
                 try {
-                    const response = await fetch('http://localhost:5000/api/invoices/process', {
+                    const response = await fetch(`${API_BASE_URL}/api/invoices/process`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ function ModalDeEscaneoDeFacturas({ isOpen, onClose, theme }) {
         });
 
         try {
-            const response = await fetch('http://localhost:5000/api/invoices', {
+            const response = await fetch(`${API_BASE_URL}/api/invoices`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

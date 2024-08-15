@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import './ScanInvoiceForm.css'; // Add styles for the form
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 const MAX_FILE_SIZE_MB = 15;
 
 const ScanInvoiceForm = ({ closeModal }) => {
@@ -51,7 +52,7 @@ const ScanInvoiceForm = ({ closeModal }) => {
                 console.log('Base64 Image:', base64Image.substring(0, 100));
 
                 try {
-                    const response = await fetch('http://localhost:5000/api/invoices/process', {
+                    const response = await fetch(`${API_BASE_URL}/api/invoices/process`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ const ScanInvoiceForm = ({ closeModal }) => {
         });
 
         try {
-            const response = await fetch('http://localhost:5000/api/invoices', {
+            const response = await fetch(`${API_BASE_URL}/api/invoices`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -115,6 +116,7 @@ const ScanInvoiceForm = ({ closeModal }) => {
     const progressBarWidth = (totalFileSize / MAX_FILE_SIZE_MB) * 100;
 
     return (
+
         <div className="scan-invoice-form">
             <h1>Escanear Factura</h1>
             <input type="file" multiple onChange={handleFileChange} />

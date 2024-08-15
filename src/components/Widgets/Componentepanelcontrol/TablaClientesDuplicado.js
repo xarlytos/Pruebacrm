@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './TablaplanesclienteDuplicado.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const TablaClientesDuplicado = ({ isEditMode, theme }) => {
   const [data, setData] = useState([]);
@@ -16,13 +19,9 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
   useEffect(() => {
     const fetchClientes = async () => {
       try {
-        const response = await fetch('http://localhost:5005/api/clientes/');
-        if (!response.ok) {
-          throw new Error('Error al obtener los clientes');
-        }
-        const clientes = await response.json();
+        const response = await axios.get(`${API_BASE_URL}/api/clientes/`);
+        const clientes = response.data;
 
-        // Mapear los datos para que coincidan con los campos usados en la tabla
         const mappedClientes = clientes.map(cliente => ({
           id: cliente._id,
           nombre: cliente.nombre,
@@ -55,6 +54,7 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
   );
 
   return (
+
     <div className={`TablaplanesclienteDup-container ${theme}`}>
       <h2 className={theme}>Clientes</h2>
       <div className="Tablaplanescliente-controls">

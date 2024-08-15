@@ -4,6 +4,8 @@ import './Tablaplanescliente.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 import Modalcreacionplanes from './Modalcreacionplanes';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   const [fixedPlans, setFixedPlans] = useState([]);
   const [variablePlans, setVariablePlans] = useState([]);
@@ -23,18 +25,17 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [planToDelete, setPlanToDelete] = useState(null);
-  const [showCreatePlanModal, setShowCreatePlanModal] = useState(false);  // Utilizamos este estado
+  const [showCreatePlanModal, setShowCreatePlanModal] = useState(false);
   const [planToAssociate, setPlanToAssociate] = useState(null);
   const [selectedClient, setSelectedClient] = useState('');
 
-  // Cargar datos de planes y clientes desde la API
   const fetchData = async () => {
     try {
       console.log('Fetching data...');
       const [clientesResponse, fixedResponse, variableResponse] = await Promise.all([
-        axios.get('http://localhost:5005/api/clientes'),
-        axios.get('http://localhost:5005/plans/fixed'),
-        axios.get('http://localhost:5005/plans/variable'),
+        axios.get(`${API_BASE_URL}/api/clientes`),
+        axios.get(`${API_BASE_URL}/plans/fixed`),
+        axios.get(`${API_BASE_URL}/plans/variable`),
       ]);
 
       console.log('Clientes:', clientesResponse.data);
@@ -60,7 +61,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
   const handleCloseCreatePlanModal = () => {
     setShowCreatePlanModal(false);
-    fetchData();  // Recargar los datos después de cerrar el modal
+    fetchData();
   };
 
   const handleFilterChange = (e) => {
@@ -115,8 +116,8 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     const deletePromises = selectedPlans.map(plan => {
       const isFixedPlan = plan.contractDuration || plan.frequency;
       const deleteUrl = isFixedPlan
-        ? `http://localhost:5005/plans/fixed/${plan._id}`
-        : `http://localhost:5005/plans/variable/${plan._id}`;
+        ? `${API_BASE_URL}/plans/fixed/${plan._id}`
+        : `${API_BASE_URL}/plans/variable/${plan._id}`;
       
       console.log('Deleting plan at:', deleteUrl);
       return axios.delete(deleteUrl);
@@ -148,8 +149,8 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   const confirmDeletePlan = async () => {
     try {
       const deleteUrl = planToDelete.contractDuration || planToDelete.frequency 
-        ? `http://localhost:5005/plans/fixed/${planToDelete._id}` 
-        : `http://localhost:5005/plans/variable/${planToDelete._id}`;
+        ? `${API_BASE_URL}/plans/fixed/${planToDelete._id}` 
+        : `${API_BASE_URL}/plans/variable/${planToDelete._id}`;
       
       console.log('Deleting plan at:', deleteUrl);
       await axios.delete(deleteUrl);
@@ -201,7 +202,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
 
     try {
         const response = await axios.post(
-            `http://localhost:5005/api/clientes/${selectedClient}/plan`,
+            `${API_BASE_URL}/api/clientes/${selectedClient}/plan`,
             {
                 planId,
                 planType
@@ -213,7 +214,6 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     }
   };
 
-
   const cancelAssociatePlan = () => {
     console.log('Association cancelled');
     setPlanToAssociate(null);
@@ -223,7 +223,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   const handleUnassociatePlan = async (clienteId, planId) => {
     try {
       console.log('Unassociating plan with ID:', planId, 'from client with ID:', clienteId);
-      await axios.put(`http://localhost:5005/api/clientes/${clienteId}/desasociar-plan`, { planId });
+      await axios.put(`${API_BASE_URL}/api/clientes/${clienteId}/desasociar-plan`, { planId });
       setClientes(clientes.map(cliente => 
         cliente._id === clienteId 
           ? { ...cliente, associatedPlans: cliente.associatedPlans.filter(id => id !== planId) }
@@ -242,6 +242,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   };
 
   return (
+
     <div className="Tablaplanescliente-container">
       <h2 onClick={onTitleClick}>{currentTable === 'planes' ? 'Planes de Clientes' : 'Clientes'}</h2>
       <div className="Tablaplanescliente-controls">
@@ -275,7 +276,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
               {currentTable === 'planes' ? (
                 <>
                   <th></th>
-                  {visibleColumns.nombre && <th onClick={() => handleSort('name')}>Nombre del Plan</th>}
+                  {visibleColumns.nombre && <th onClick={() => handleSort('name')}>aaa</th>}
                   {visibleColumns.clientes && <th>Clientes</th>}
                   {visibleColumns.precio && <th>Precio</th>}
                   {visibleColumns.duracion && <th>Duración</th>}

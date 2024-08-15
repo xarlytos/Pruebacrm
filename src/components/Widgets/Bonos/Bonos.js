@@ -3,6 +3,8 @@ import axios from 'axios';
 import './widgetbonos.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const Bonos = ({ isEditMode, onTitleClick, theme }) => {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
@@ -30,8 +32,8 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
   useEffect(() => {
     const fetchBonos = async () => {
       try {
-        const response = await axios.get('http://localhost:5005/api/bonos');
-        console.log('Bonos fetched from server:', response.data);  // Log para la respuesta del GET
+        const response = await axios.get(`${API_BASE_URL}/api/bonos`);
+        console.log('Bonos fetched from server:', response.data);
         setData(response.data);
       } catch (error) {
         console.error('Error fetching bonos:', error);
@@ -48,12 +50,12 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log('Form data updated:', { ...formData, [name]: value });  // Log para los cambios en el formulario
+    console.log('Form data updated:', { ...formData, [name]: value });
   };
 
   const handleCreateBono = async (e) => {
-    e.preventDefault();  // Prevenir el comportamiento por defecto del formulario
-    console.log('handleCreateBono triggered');  // Este log debe aparecer cuando se envía el formulario
+    e.preventDefault();
+    console.log('handleCreateBono triggered');
 
     const newBono = {
       ...formData,
@@ -61,11 +63,11 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
       fechaCreacion: new Date().toISOString()
     };
 
-    console.log('Creando bono con los siguientes datos:', newBono);  // Log para los datos del bono
+    console.log('Creando bono con los siguientes datos:', newBono);
 
     try {
-      const response = await axios.post('http://localhost:5005/api/bonos', newBono);
-      console.log('Bono creado en el servidor:', response.data);  // Log para la respuesta del POST
+      const response = await axios.post(`${API_BASE_URL}/api/bonos`, newBono);
+      console.log('Bono creado en el servidor:', response.data);
       setData([...data, response.data]);
       setFormData({
         nombre: '',
@@ -78,7 +80,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
         fechaVenta: '',
         precio: '',
       });
-      setIsBonoDropdownOpen(false); // Cerrar el dropdown después de crear el bono
+      setIsBonoDropdownOpen(false);
     } catch (error) {
       console.error('Error al crear el bono:', error);
     }
@@ -110,6 +112,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
   );
 
   return (
+
     <div className={`widget-bonos ${theme}`}>
       <h2 onClick={onTitleClick}>Bonos</h2>
       <div className="controls">

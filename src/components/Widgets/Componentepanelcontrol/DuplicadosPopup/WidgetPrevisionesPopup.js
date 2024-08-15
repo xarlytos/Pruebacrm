@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './WidgetPrevisionesPopup.css';
+import axios from 'axios';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const WidgetPrevisionesPopup = ({ theme, setTheme, setIngresosEsperados }) => {
   const [data, setData] = useState([]); 
@@ -20,17 +22,14 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, setIngresosEsperados }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5005/api/incomes/');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setData(result);
-        setIngresosEsperados(result); // Actualiza el estado en el componente padre si es necesario
+        const response = await axios.get(`${API_BASE_URL}/api/incomes/`);
+        setData(response.data);
+        setIngresosEsperados(response.data); // Actualiza el estado en el componente padre si es necesario
       } catch (error) {
         console.error('Error al cargar los ingresos:', error);
       }
     };
+
 
     fetchData();
   }, [setIngresosEsperados]);

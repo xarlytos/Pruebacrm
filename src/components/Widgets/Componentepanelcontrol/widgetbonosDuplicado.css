@@ -1,225 +1,269 @@
+/* Contenedor principal de la sección de Bonos */
 .widget-bonosDup {
-    padding: 20px;
-    border-radius: 8px;
-    width: 85%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 30px;
-  }
-  
-  .widget-bonosDup.light {
-    background: var(--background-light);
-    color: var(--text-light);
-  }
-  
-  .widget-bonosDup.dark {
-    background: var(--background-dark);
-    color: var(--text-dark);
-  }
-  
-  .widget-bonosDup h2 {
-    cursor: pointer;
-  }
-  
-  .widget-bonosDup h2.light {
-    color: var(--text-light);
-  }
-  
-  .widget-bonosDup h2.dark {
-    color: var(--text-dark);
-  }
-  
-  .widget-bonosDup .controls {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .widget-bonosDup .input-light,
-  .widget-bonosDup .input-dark {
-    padding: 5px;
-    border: 1px solid #333;
-    border-radius: 4px;
-    width: 300px;
-  }
-  
-  .input-light {
-    background: var(--background-light);
-    color: var(--text-light);
-  }
-  
-  .input-dark {
-    background: var(--background-dark);
-    color: var(--text-dark);
-  }
-  
-  .widget-bonosDup .filter-btn,
-  .widget-bonosDup .create-btn {
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
-    border: none;
-  }
-  
-  .filter-btn.light,
-  .create-btn.light {
-    background: var(--button-bg-light);
-    color: var(--button-text-light);
-    border: 1px solid #333;
-  }
-  
-  .filter-btn.dark,
-  .create-btn.dark {
-    background: var(--button-bg-dark);
-    color: var(--button-text-dark);
-  }
-  
-  .filter-btn:hover,
-  .create-btn:hover {
-    background: #333;
-  }
-  
-  .widget-bonosDup .dropdown {
-    position: relative;
-  }
-  
-  .widget-bonosDup .dropdown-toggle {
-    padding: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .dropdown-toggle.light {
-    background: var(--button-bg-light);
-    color: var(--button-text-light);
-  }
-  
-  .dropdown-toggle.dark {
-    background: var(--button-bg-dark);
-    color: var(--button-text-dark);
-  }
-  
-  .widget-bonosDup .dropdown-menu {
-    display: none;
-    position: absolute;
-    padding: 10px;
-    border-radius: 4px;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-  }
-  
-  .dropdown-menu.light {
-    background: var(--background-light);
-    color: var(--text-light);
-    border: 1px solid #333;
-  }
-  
-  .dropdown-menu.dark {
-    background: var(--background-dark);
-    color: var(--text-dark);
-    border: 1px solid #333;
-  }
-  
-  .widget-bonosDup .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-  
-  .widget-bonosDup table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .widget-bonosDup th,
-  .widget-bonosDup td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #333;
-  }
-  
-  .widget-bonosDup th.light {
-    background: var(--background-light);
-  }
-  
-  .widget-bonosDup th.dark {
-    background: var(--background-dark);
-  }
-  
-  .widget-bonosDup tr:nth-child(even).light {
-    background: var(--background-light);
-  }
-  
-  .widget-bonosDup tr:nth-child(even).dark {
-    background: var(--background-dark);
-  }
-  
-  .widget-bonosDup tr:hover.light {
-    background: #f0f0f0;
-  }
-  
-  .widget-bonosDup tr:hover.dark {
-    background: #333;
-  }
-  
-  .widget-bonosDup .options-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .widget-bonosDup .options-menu {
-    display: none;
-    position: absolute;
-    border-radius: 4px;
-    top: 20px;
-    right: 0;
-    padding: 10px;
-    z-index: 1000;
-  }
-  
-  .options-menu.light {
-    background: var(--background-light);
-    color: var(--text-light);
-    border: 1px solid #333;
-  }
-  
-  .options-menu.dark {
-    background: var(--background-dark);
-    color: var(--text-dark);
-    border: 1px solid #333;
-  }
-  
-  .widget-bonosDup .options-btn:hover .options-menu,
-  .widget-bonosDup .options-menu:hover {
-    display: block;
-  }
-  
-  .widget-bonosDup .dropdown-item {
-    display: block;
-    padding: 5px 10px;
-    text-align: left;
-    cursor: pointer;
-  }
-  
-  .dropdown-item.light {
-    color: var(--text-light);
-  }
-  
-  .dropdown-item.dark {
-    color: var(--text-dark);
-  }
-  
-  .widget-bonosDup .dropdown-item:hover.light {
-    background: #f0f0f0;
-  }
-  
-  .widget-bonosDup .dropdown-item:hover.dark {
-    background: #444;
-  }
-  
-  .widget-bonosDup .dropdown-item input {
-    margin-right: 5px;
-  }
-  
+  padding: 20px;
+  background: var(--background);
+  border-radius: 8px;
+  color: var(--text);
+  width: 85%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+}
+
+.widget-bonosDup.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.widget-bonosDup.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.widget-bonosDup h2.dark {
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.widget-bonosDup h2.light {
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+/* Contenedor para búsqueda y botón de crear */
+.search-and-create {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Input de búsqueda */
+.search-input {
+  padding: 5px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  width: 70%;  /* Ajuste del ancho para que el botón también se alinee */
+  background: #f9f9f9;
+  color: #333;
+}
+
+.search-input.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.search-input.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Botón de crear bono */
+.create-plan-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+  width: 25%; /* Ajuste del ancho para que se alinee con el input */
+  text-align: center;
+}
+
+.create-plan-btn.dark {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.create-plan-btn:hover {
+  background: #ddd;
+}
+
+.create-plan-btn.dark:hover {
+  background: #333;
+}
+
+/* Dropdown para columnas y filtros */
+.widget-bonosDup .dropdown {
+  position: relative;
+}
+
+.dropdown-toggle.light {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-toggle.dark {
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.widget-bonosDup .dropdown-menu {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  border-radius: 4px;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.dropdown-menu.light {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.dropdown-menu.dark {
+  background: #2a2a2a;
+  border: 1px solid #333;
+}
+
+.widget-bonosDup .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Tabla de bonos */
+.widget-bonosDup table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.widget-bonosDup th,
+.widget-bonosDup td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--secondary);
+}
+
+.widget-bonosDup th {
+  background: var(--background);
+}
+
+.widget-bonosDup tr:nth-child(even) {
+  background: var(--secondary);
+}
+
+.widget-bonosDup tr:hover {
+  background: var(--primary);
+}
+
+/* Botón de opciones en la tabla */
+.widget-bonosDup .options-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  position: relative;
+}
+
+.widget-bonosDup .options-menu {
+  display: none;
+  position: absolute;
+  background: var(--background);
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  top: 20px;
+  right: 0;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.widget-bonosDup .options-btn:hover .options-menu,
+.widget-bonosDup .options-menu:hover {
+  display: block;
+}
+
+.widget-bonosDup .dropdown-item {
+  display: block;
+  padding: 5px 10px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-item.light {
+  color: var(--text-light);
+}
+
+.dropdown-item.dark {
+  color: var(--text-dark);
+}
+
+.widget-bonosDup .dropdown-item:hover.light {
+  background: #f0f0f0;
+}
+
+.widget-bonosDup .dropdown-item:hover.dark {
+  background: #444;
+}
+
+.widget-bonosDup .dropdown-item input {
+  margin-right: 5px;
+}
+
+/* Popup de creación de bonos */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content.light {
+  background: var(--background-light);
+  color: var(--text-light);
+}
+
+.popup-content.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.close-popup-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.create-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  background: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.create-btn:hover {
+  background: #333;
+  color: #fff;
+}

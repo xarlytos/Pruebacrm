@@ -1,4 +1,7 @@
+// C:\Users\usuario\Downloads\crmworkspaceEspacial\crm-frontend\src\components\Widgets\Componentepanelcontrol\DetailedIngresoBeneficio.js
+
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import OverviewChartPopup from './DuplicadosPopup/OverviewChartPopup';
 import MetricCardPopup from './DuplicadosPopup/MetricCardPopup';
 import RecentSalesPopup from './DuplicadosPopup/RecentSalesPopup';
@@ -7,6 +10,8 @@ import WidgetGastoPopup from './DuplicadosPopup/WidgetGastoPopup';
 import BeneficioChartPopup from './DuplicadosPopup/BeneficioChartPopup';
 import NavegadorDeGraficos from './NavegadorDeGraficos';
 import './DetailedIngresoBeneficio.css';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 const DetailedIngresoBeneficio = ({ 
   onTabChange, 
@@ -20,13 +25,9 @@ const DetailedIngresoBeneficio = ({
   useEffect(() => {
     const fetchGastos = async () => {
       try {
-        const response = await fetch('http://localhost:5005/api/expenses/');
-        if (!response.ok) {
-          throw new Error('Error al obtener los gastos');
-        }
-        const result = await response.json();
-        console.log('Datos de gastos obtenidos:', result); // Verificar los datos obtenidos
-        setGastos(result);
+        const response = await axios.get(`${API_BASE_URL}/api/expenses/`);
+        console.log('Datos de gastos obtenidos:', response.data);
+        setGastos(response.data);
       } catch (error) {
         console.error('Error al cargar los gastos:', error);
       }
@@ -36,7 +37,7 @@ const DetailedIngresoBeneficio = ({
   }, []);
 
   const totalGastos = gastos.reduce((acc, gasto) => {
-    console.log('Sumando gasto:', gasto.amount); // Verificar cada valor de gasto que se suma
+    console.log('Sumando gasto:', gasto.amount);
     return acc + gasto.amount;
   }, 0);
 
@@ -44,9 +45,12 @@ const DetailedIngresoBeneficio = ({
   const margenGanancia = totalIngresos > 0 ? (beneficioNeto / totalIngresos) * 100 : 0;
   const proyeccionMes = beneficioNeto;
 
-  // Definir toggleTheme
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const handleEconomiaTabClick = () => {
+    onTabChange('Panel de Control');
   };
 
   return (
@@ -56,6 +60,15 @@ const DetailedIngresoBeneficio = ({
         
         <button className={`theme-toggle-btn ${theme}`} onClick={toggleTheme}>
           Cambiar Tema
+        </button>
+
+        {/* Nuevo botón que cambia la pestaña a 'Economia' */}
+        <button 
+          className={`redirect-btn ${theme}`} 
+          onClick={handleEconomiaTabClick}
+          style={{ margin: '10px 0' }} 
+        >
+          Ir a la página de Economía
         </button>
         
         <div className={`detailed-metrics-grid ${theme}`}>
@@ -111,8 +124,8 @@ const DetailedIngresoBeneficio = ({
               setTheme={setTheme}
             />
             <MetricCardPopup
-              value={clientesActuales} // Aquí mostramos el número total de clientes
-              description="Clientes Nuevos" // Mantenemos el título como "Clientes Nuevos"
+              value={clientesActuales} 
+              description="Clientes Nuevos"
               icon="👥"
               valueClass="panelcontrol-metric-value-green"
               difference={{ value: 5 }}

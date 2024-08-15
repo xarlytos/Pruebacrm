@@ -1,3 +1,5 @@
+// src/components/DetailedDocumento.js
+
 import React, { useState } from 'react';
 import './DetailedDocumento.css';
 import WidgetLicenciasDuplicado from './Duplicados/WidgetLicenciasDuplicado';
@@ -15,6 +17,12 @@ const DetailedDocumento = ({ onTabChange, theme, setTheme }) => {
     setIsAlarmPopupOpen(false);
   };
 
+  const handleTabChange = (tab) => {
+    if (onTabChange) {
+      onTabChange(tab);
+    }
+  };
+
   const licencias = [
     { id: 1, titulo: 'Licencia 1', fecha: '2023-01-01' },
     { id: 3, titulo: 'Licencia 2', fecha: '2023-01-03' },
@@ -27,7 +35,27 @@ const DetailedDocumento = ({ onTabChange, theme, setTheme }) => {
     <div className={`detailed-documento-modal ${theme}`}>
       <div className={`detailed-documento-content ${theme}`}>
         <NavegadorDeGraficos onTabChange={onTabChange} theme={theme} setTheme={setTheme} />
-        <button className={`program-alarm-btn ${theme}`} onClick={handleOpenAlarmPopup}>Programar Alarma</button>
+
+        {/* Contenedor para alinear los botones con posiciones invertidas */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 0' }}>
+          <button className={`program-alarm-btn ${theme}`} onClick={handleOpenAlarmPopup}>
+            Programar Alarma
+          </button>
+          <button
+            onClick={() => handleTabChange('Panel de Control')}
+            style={{
+              backgroundColor: '#FF0000',
+              color: '#FFFFFF',
+              padding: '8px 16px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Ir a la página de Economía
+          </button>
+        </div>
+
         <div className="licencias-section">
           <WidgetLicenciasDuplicado isEditMode={true} theme={theme} />
         </div>

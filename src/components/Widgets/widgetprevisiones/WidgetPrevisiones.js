@@ -9,7 +9,7 @@ const metodoOptions = ['stripe', 'banco', 'efectivo', 'mixto'];
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
-const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }) => {
+const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme, isDropdownOpen, toggleDropdown, dropdownPosition, setDropdownContent }) => {
   const [data, setData] = useState([]);
   const [clients, setClients] = useState([]);
   const [filterText, setFilterText] = useState('');
@@ -29,7 +29,6 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
     maxMonto: '',
     estatus: ''
   });
-  const [isIngresoDropdownOpen, setIsIngresoDropdownOpen] = useState(false);
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isMetodoDropdownOpen, setIsMetodoDropdownOpen] = useState(false);
   const [newIngreso, setNewIngreso] = useState({
@@ -41,6 +40,7 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
   });
 
   useEffect(() => {
+    // Fetch data for upcoming incomes and clients
     const today = new Date();
     const next30Days = new Date(today);
     next30Days.setDate(today.getDate() + 30);
@@ -57,7 +57,6 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
         console.error('Error fetching total ingresos:', error);
       });
 
-    // Obtener la lista de clientes
     axios.get(`${API_BASE_URL}/api/clientes/`)
       .then(response => {
         setClients(response.data);
@@ -80,10 +79,6 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
     const newData = [...data];
     newData[index].estatus = newData[index].estatus === 'Completado' ? 'Pendiente' : 'Completado';
     setData(newData);
-  };
-
-  const toggleIngresoDropdown = () => {
-    setIsIngresoDropdownOpen(!isIngresoDropdownOpen);
   };
 
   const toggleFilterDropdown = () => {
@@ -112,7 +107,7 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
           descripcion: '',
           cliente: ''  // Reiniciar el campo cliente
         });
-        setIsIngresoDropdownOpen(false);
+        toggleDropdown();  // Cerrar el dropdown después de añadir el ingreso
       })
       .catch(error => {
         console.error('Error creating new ingreso:', error);
@@ -167,6 +162,60 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
     setFilters({ ...filters, [field]: filters[field] === value ? '' : value });
   };
 
+  const renderDropdownContent = () => (
+    <div>
+      <h3>Añadir Ingreso</h3>
+      <form onSubmit={handleAddIngreso}>
+        <input 
+          type="number" 
+          name="cantidad" 
+          placeholder="Cantidad" 
+          value={newIngreso.cantidad} 
+          onChange={handleIngresoChange} 
+          required
+        />
+        <input 
+          type="date" 
+          name="fecha" 
+          placeholder="Fecha" 
+          value={newIngreso.fecha} 
+          onChange={handleIngresoChange} 
+          required
+        />
+        <select 
+          name="metodoPago" 
+          value={newIngreso.metodoPago} 
+          onChange={handleIngresoChange}
+          required
+        >
+          <option value="">Seleccione Método</option>
+          {metodoOptions.map((method, index) => (
+            <option key={index} value={method}>{method}</option>
+          ))}
+        </select>
+        <input 
+          type="text" 
+          name="descripcion" 
+          placeholder="Descripción" 
+          value={newIngreso.descripcion} 
+          onChange={handleIngresoChange} 
+        />
+        <select 
+          name="cliente" 
+          value={newIngreso.cliente} 
+          onChange={handleIngresoChange}
+          required
+        >
+          <option value="">Seleccione Cliente</option>
+          {clients.map((client) => (
+            <option key={client._id} value={client._id}>{client.nombre}</option>  // Asume que los clientes tienen un campo `nombre`
+          ))}
+        </select>
+        <button type="submit" className={`ingreso-button ${theme}`}>Añadir</button>
+      </form>
+    </div>
+  );
+
   return (
     <div className={`widget-previsiones ${theme}`}>
       <h2 onClick={onTitleClick}>Ingresos Esperados</h2>
@@ -181,60 +230,12 @@ const WidgetPrevisiones = ({ onTitleClick, isEditMode, handleRemoveItem, theme }
         />
         <div className="ingreso-button-container">
           <div className="dropdown">
-            <button className={`ingreso-button ${theme}`} onClick={toggleIngresoDropdown}>Añadir Ingreso Especial</button>
-            {isIngresoDropdownOpen && (
-              <div className={`Prevdropdown-content ${theme}`}>
-                <h3>Añadir Ingreso</h3>
-                <form onSubmit={handleAddIngreso}>
-                  <input 
-                    type="number" 
-                    name="cantidad" 
-                    placeholder="Cantidad" 
-                    value={newIngreso.cantidad} 
-                    onChange={handleIngresoChange} 
-                    required
-                  />
-                  <input 
-                    type="date" 
-                    name="fecha" 
-                    placeholder="Fecha" 
-                    value={newIngreso.fecha} 
-                    onChange={handleIngresoChange} 
-                    required
-                  />
-                  <select 
-                    name="metodoPago" 
-                    value={newIngreso.metodoPago} 
-                    onChange={handleIngresoChange}
-                    required
-                  >
-                    <option value="">Seleccione Método</option>
-                    {metodoOptions.map((method, index) => (
-                      <option key={index} value={method}>{method}</option>
-                    ))}
-                  </select>
-                  <input 
-                    type="text" 
-                    name="descripcion" 
-                    placeholder="Descripción" 
-                    value={newIngreso.descripcion} 
-                    onChange={handleIngresoChange} 
-                  />
-                  <select 
-                    name="cliente" 
-                    value={newIngreso.cliente} 
-                    onChange={handleIngresoChange}
-                    required
-                  >
-                    <option value="">Seleccione Cliente</option>
-                    {clients.map((client) => (
-                      <option key={client._id} value={client._id}>{client.nombre}</option>  // Asume que los clientes tienen un campo `nombre`
-                    ))}
-                  </select>
-                  <button type="submit" className={`ingreso-button ${theme}`}>Añadir</button>
-                </form>
-              </div>
-            )}
+            <button 
+              className={`ingreso-button ${theme}`} 
+              onClick={(e) => toggleDropdown(e, renderDropdownContent())}
+            >
+              Añadir Ingreso Especial
+            </button>
           </div>
           <div className="dropdownFilters">
             <button className={`ingreso-button ${theme}`} onClick={toggleFilterDropdown}>Filtros</button>

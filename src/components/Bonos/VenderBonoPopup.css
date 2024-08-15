@@ -1,5 +1,3 @@
-/* src/components/VenderBonoPopup.css */
-
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -10,82 +8,68 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px; /* Añade padding para que no se pegue a los bordes */
+    padding: 30px;
 }
 
 .popup-content {
     background-color: white;
-    padding: 30px; /* Aumenta el padding para mayor espacio interior */
-    border-radius: 10px; /* Bordes más redondeados */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
-    width: 95%; /* Aumenta el ancho al 95% del viewport */
-    max-width: 900px; /* Establece el mismo ancho máximo */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    width: 95%;
+    max-width: 900px;
 }
 
 .popup-content h2 {
     margin-top: 0;
-    font-size: 24px; /* Aumenta el tamaño de la fuente */
-    margin-bottom: 20px; /* Añade espacio debajo del título */
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.popup-content form {
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px;
+}
+
+.form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 
-.popup-content label {
-    margin-top: 15px; /* Aumenta el margen superior */
+.form-group label {
     font-weight: bold;
-    margin-bottom: 10px; /* Añade margen inferior para separar del input */
+    margin-bottom: 5px;
+    text-align: left; /* Asegura que el label esté alineado a la izquierda */
 }
 
-.popup-content select,
-.popup-content input {
-    margin-top: 8px; /* Aumenta ligeramente el margen superior */
-    padding: 12px; /* Aumenta el padding para mayor comodidad */
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px; /* Bordes más redondeados */
     box-sizing: border-box;
+    width: 100%;
 }
 
-.popup-content .buttons {
+.buttons {
+    grid-column: span 3; 
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px; /* Aumenta el margen superior */
-    gap: 15px; /* Añade espacio entre los botones */
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.popup-content .buttons button {
-    flex: 1; /* Asegura que ambos botones tengan el mismo tamaño */
-    padding: 12px 25px; /* Aumenta el padding para botones más cómodos */
+.buttons button {
+    padding: 12px 25px;
+    border-radius: 6px;
     border: none;
-    border-radius: 6px; /* Bordes más redondeados */
     cursor: pointer;
-    font-size: 16px; /* Aumenta el tamaño de la fuente para mayor legibilidad */
-}
-
-.popup-content .buttons button[type="button"] {
+    font-size: 16px;
     background-color: #007bff;
     color: white;
 }
 
-.popup-content .buttons button[type="button"]:hover {
+.buttons button[type="button"]:hover {
     background-color: #0056b3;
-}
-
-.popup-content .buttons button[type="submit"] {
-    background-color: #007bff;
-    color: white;
-}
-
-.popup-content .buttons button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-.precio {
-    margin-top: 25px; /* Aumenta el margen superior */
-}
-
-#nombrePaciente {
-    margin-bottom: 20px; /* Mantiene un margen inferior adecuado */
 }

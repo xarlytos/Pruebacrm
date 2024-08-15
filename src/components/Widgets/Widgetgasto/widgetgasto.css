@@ -1,15 +1,24 @@
 .widget-gasto {
   padding: 20px;
-  background: var(--background);
+  background: var(--background-light);
   border-radius: 8px;
-  color: var(--text-color);
-  position: relative; /* Añadido para control de superposición */
-  z-index: 0; /* Añadido para control de superposición */
+  color: var(--text-light);
+  position: relative;
+  z-index: 0;
+}
+
+.widget-gasto.dark {
+  background: var(--background-dark);
+  color: var(--text-dark);
 }
 
 .widget-gasto h2 {
-  color: var(--widget-title-color);
+  color: var(--header-text-light);
   cursor: pointer;
+}
+
+.widget-gasto.dark h2 {
+  color: var(--header-text-dark);
 }
 
 .widget-gasto .controls {
@@ -25,19 +34,15 @@
   border-radius: 4px;
   width: 200px;
   margin: 0;
-  border: 1px solid var(--button-border);
-}
-
-.widget-gasto input.dark[type="text"] {
-  border: 1px solid var(--button-border-dark);
-  background: var(--button-bg-dark);
-  color: var(--text-dark);
-}
-
-.widget-gasto input.light[type="text"] {
   border: 1px solid var(--button-border-light);
   background: var(--button-bg-light);
   color: var(--text-light);
+}
+
+.widget-gasto.dark input[type="text"] {
+  border: 1px solid var(--button-border-dark);
+  background: var(--button-bg-dark);
+  color: var(--text-dark);
 }
 
 .gasto-button-container {
@@ -47,17 +52,27 @@
 
 .gasto-button-container button {
   padding: 8px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 12px;
-  border: 1px solid var(--button-border);
+  border: 1px solid var(--button-border-light);
 }
 
 .gasto-button-container button:hover {
-  background-color: var(--button-hover-bg);
+  background-color: var(--primary-light);
+}
+
+.gasto-button-container.dark button {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border: 1px solid var(--button-border-dark);
+}
+
+.gasto-button-container.dark button:hover {
+  background-color: var(--primary-dark);
 }
 
 .widget-gasto .dropdown {
@@ -65,24 +80,35 @@
 }
 
 .widget-gasto .dropdown-toggle {
-  background: var(--button-bg);
-  border: 1px solid var(--button-border);
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
   border-radius: 4px;
   padding: 5px;
-  color: var(--button-text);
+  color: var(--button-text-light);
   cursor: pointer;
+}
+
+.widget-gasto .dropdown-toggle.dark {
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
+  color: var(--button-text-dark);
 }
 
 .widget-gasto .dropdown-menu {
   display: none;
   position: absolute;
-  background: var(--button-bg);
-  border: 1px solid var(--button-border);
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
   padding: 10px;
   border-radius: 4px;
   top: 100%;
   left: 0;
   z-index: 1000;
+}
+
+.widget-gasto .dropdown-menu.dark {
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
 }
 
 .widget-gasto .dropdown:hover .dropdown-menu {
@@ -93,25 +119,25 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  background-color: var(--dropdown-bg);
-  color: var(--dropdown-text);
+  background-color: var(--background-light);
+  color: var(--text-light);
   width: 300px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
-  z-index: 1000; /* Modificado para asegurar superposición */
-  border: 1px solid var(--dropdown-border);
+  z-index: 1000;
+  border: 1px solid var(--secondary-light);
   border-radius: 5px;
   height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
   padding: 15px;
   padding-top: 25px;
-  background-color: var(--dropdown-bg);
-  color: var(--dropdown-text);
-  border-radius: 4px;
+}
+
+.widget-gasto .Exdropdown-content.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--secondary-dark);
 }
 
 .widget-gasto .Exdropdown-content form {
@@ -125,31 +151,37 @@
   padding: 8px;
   border-radius: 4px;
   width: 250px;
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
+  color: var(--text-light);
 }
 
 .widget-gasto .Exdropdown-content form input.dark {
-  background: var(--input-bg-dark);
-  border: 1px solid var(--input-border-dark);
-  color: var(--input-text-dark);
-}
-
-.widget-gasto .Exdropdown-content form input.light {
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  color: var(--input-text);
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
+  color: var(--text-dark);
 }
 
 .widget-gasto .Exdropdown-content form button {
   padding: 10px;
-  background-color: var(--submit-button-bg);
-  color: var(--submit-button-text);
+  background-color: var(--create-button-bg-light);
+  color: var(--text-light);
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .widget-gasto .Exdropdown-content form button:hover {
-  background-color: var(--submit-button-hover-bg);
+  background-color: var(--primary-light);
+}
+
+.widget-gasto .Exdropdown-content form button.dark {
+  background-color: var(--create-button-bg-dark);
+  color: var(--text-dark);
+}
+
+.widget-gasto .Exdropdown-content form button.dark:hover {
+  background-color: var(--primary-dark);
 }
 
 .widget-gasto table {
@@ -161,39 +193,63 @@
 .widget-gasto td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid var(--table-border);
+  border-bottom: 1px solid var(--secondary-light);
 }
 
 .widget-gasto th {
-  background: var(--table-header-bg);
+  background: #ede7d6;
+  color: var(--header-text-light);
+}
+
+.widget-gasto.dark th,
+.widget-gasto.dark td {
+  background: var(--header-bg-dark);
+  color: var(--header-text-dark);
 }
 
 .widget-gasto tr:nth-child(even) {
-  background: var(--table-row-even-bg);
+  background: var(--secondary-light);
+}
+
+.widget-gasto.dark tr:nth-child(even) {
+  background: var(--secondary-dark);
 }
 
 .widget-gasto tr:hover {
-  background: var(--table-row-hover-bg);
+  background: var(--primary-light);
+}
+
+.widget-gasto.dark tr:hover {
+  background: var(--primary-dark);
 }
 
 .widget-gasto .options-btn {
   background: none;
   border: none;
-  color: var(--button-text);
+  color: var(--button-text-light);
   cursor: pointer;
   position: relative;
+}
+
+.widget-gasto .options-btn.dark {
+  color: var(--button-text-dark);
 }
 
 .widget-gasto .options-menu {
   display: none;
   position: absolute;
-  background: var(--button-bg);
-  border: 1px solid var(--button-border);
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
   border-radius: 4px;
   top: 20px;
   right: 0;
   padding: 10px;
   z-index: 1000;
+}
+
+.widget-gasto .options-menu.dark {
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
 }
 
 .widget-gasto .options-btn:hover .options-menu,
@@ -204,28 +260,38 @@
 .widget-gasto .dropdown-item {
   display: block;
   padding: 5px 10px;
-  color: var(--dropdown-item-text);
+  color: var(--button-text-light);
   text-align: left;
   cursor: pointer;
 }
 
-.widget-gasto .dropdown-item:hover {
-  background: var(--dropdown-item-hover-bg);
+.widget-gasto .dropdown-item.dark {
+  color: var(--button-text-dark);
 }
 
-.widget-gasto .dropdown-item input {
-  margin-right: 5px;
+.widget-gasto .dropdown-item:hover {
+  background: var(--primary-light);
+}
+
+.widget-gasto .dropdown-item.dark:hover {
+  background: var(--primary-dark);
 }
 
 .filter-field input {
-  background: var(--button-bg);
-  border: 1px solid var(--button-border);
-  border: 1px solid var(--button-border);
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
   border-radius: 4px;
   width: 100px;
   font-size: 12px;
   padding: 5px;
   height: 30px;
+  color: var(--text-light);
+}
+
+.filter-field input.dark {
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
+  color: var(--text-dark);
 }
 
 .filter-field label {
@@ -234,10 +300,17 @@
 }
 
 .filter-field button {
-  background: var(--button-bg);
-  border: 1px solid var(--button-border);
+  background: var(--button-bg-light);
+  border: 1px solid var(--button-border-light);
   width: 60px;
   padding: 3px;
+  color: var(--button-text-light);
+}
+
+.filter-field button.dark {
+  background: var(--button-bg-dark);
+  border: 1px solid var(--button-border-dark);
+  color: var(--button-text-dark);
 }
 
 .filter-field {
@@ -253,13 +326,14 @@
   padding-top: 25px;
   padding-bottom: 5px;
   overflow-x: hidden;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
   border-radius: 4px;
 }
 
-.dropdownFilters .ExFilter-dropdown-content button {
-  margin-right: 5px;
+.dropdownFilters .ExFilter-dropdown-content.dark {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
 }
 
 .ExFilter-dropdown-content {
@@ -268,11 +342,16 @@
   gap: 15px;
   padding: 15px;
   padding-top: 25px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
   border-radius: 4px;
   border: none;
   height: 300px;
-  position: absolute; /* Añadido para superposición */
-  z-index: 1000; /* Modificado para asegurar superposición */
+  position: absolute;
+  z-index: 1000;
+}
+
+.ExFilter-dropdown-content.dark {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
 }

@@ -4,6 +4,8 @@ import './widgetgasto.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 import NavbarFiltros from './NavbarFiltros';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
@@ -25,8 +27,8 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [newGasto, setNewGasto] = useState({
     concepto: '',
-    description: '', // Add description field
-    category: '', // Add category field
+    description: '',
+    category: '',
     fecha: '',
     estado: '',
     monto: '',
@@ -43,7 +45,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
 
   const handleChangeStatus = (id, currentStatus) => {
     const newStatus = currentStatus === 'Pagado' ? 'Pendiente' : 'Pagado';
-    axios.put(`/api/expenses/update-status/${id}`, { status: newStatus })
+    axios.put(`${API_BASE_URL}/api/expenses/update-status/${id}`, { status: newStatus })
       .then(response => {
         const updatedData = gastos.map(item => item._id === id ? response.data : item);
         setNewGasto(updatedData);
@@ -67,13 +69,12 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   const handleAddGasto = (e) => {
     e.preventDefault();
 
-    // Check if all required fields are filled
     if (!newGasto.concepto || !newGasto.description || !newGasto.category || !newGasto.fecha || !newGasto.estado || !newGasto.monto || !newGasto.tipo) {
       console.error('All fields are required');
       return;
     }
 
-    axios.post('http://localhost:5005/api/expenses', {
+    axios.post(`${API_BASE_URL}/api/expenses`, {
       concept: newGasto.concepto,
       description: newGasto.description,
       category: newGasto.category,
@@ -136,6 +137,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   };
 
   return (
+
     <div className={`widget-gasto ${theme}`}>
       <h2 onClick={onTitleClick}>Gastos</h2>
       <div className="controls">
