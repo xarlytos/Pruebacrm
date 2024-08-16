@@ -63,9 +63,7 @@ const DetailedIngresoBeneficio = ({
       <div className={`detailed-ingreso-beneficio-content ${theme}`}>
         <NavegadorDeGraficos onTabChange={onTabChange} theme={theme} setTheme={setTheme} />
         
-        <button className={`theme-toggle-btn ${theme}`} onClick={toggleTheme}>
-          Cambiar Tema
-        </button>
+        
 
         <button 
           className={`redirect-btn ${theme}`} 

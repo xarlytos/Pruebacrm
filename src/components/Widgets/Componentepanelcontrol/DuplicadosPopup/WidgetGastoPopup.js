@@ -137,7 +137,7 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
                   <input 
                     type="number" 
                     name="amount" 
-                    placeholder="Monto" 
+                    placeholder="Importe" 
                     value={newGasto.amount} 
                     onChange={handleGastoChange} 
                     className={`${theme}`}
@@ -220,7 +220,7 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
             <th>Concepto</th>
             <th>Descripción</th>
             <th>Categoría</th>
-            <th>Monto</th>
+            <th>Importe</th>
             <th>Estado</th>
             <th>Fecha</th>
             <th>Frecuencia</th>
@@ -262,7 +262,6 @@ const WidgetGastoPopup = ({ theme, setTheme }) => {
           ))}
         </tbody>
       </table>
-      <button onClick={toggleTheme} className={`theme-toggle-btn ${theme}`}>Cambiar Tema</button>
     </div>
   );
 };

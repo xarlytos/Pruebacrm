@@ -188,7 +188,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                     </button>
                   </div>
                   <div className="Prevfilter-field">
-                    <label>Monto Mín:</label>
+                    <label>Importe Mín:</label>
                     <input
                       type="number"
                       name="minMonto"
@@ -198,7 +198,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                     />
                   </div>
                   <div className="Prevfilter-field">
-                    <label>Monto Máx:</label>
+                    <label>Importe Máx:</label>
                     <input
                       type="number"
                       name="maxMonto"
@@ -277,7 +277,6 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
           <button className={`WidgetFacturas-add-btn ${theme}`} onClick={handleOpenCreationModal}>Añadir Factura</button>
         </div>
       </div>
-      <button onClick={toggleTheme} className={`widget-theme-toggle-btn ${theme}`}>Cambiar Tema</button>
       {isEditMode && (
         <ColumnDropdown
           selectedColumns={selectedColumns}
@@ -294,7 +293,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
             </th>
             {selectedColumns.estatus && <th>Estatus</th>}
             {selectedColumns.cliente && <th>Cliente</th>}
-            {selectedColumns.monto && <th>Monto</th>}
+            {selectedColumns.monto && <th>Importe</th>}
             {selectedColumns.fecha && <th>Fecha</th>}
             {selectedColumns.tipo && <th>Tipo</th>}
             {selectedColumns.plan && <th>Plan</th>}

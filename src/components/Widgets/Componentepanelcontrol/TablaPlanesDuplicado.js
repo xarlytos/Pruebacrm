@@ -4,6 +4,8 @@ import Modalcreacionplanes from './ModalcreacionplanesDuplicado';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 import AsociarClientesDropdown from './AsociarClientesDropdown';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
+
 const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
   const [data, setData] = useState([]);
   const [clientes, setClientes] = useState([]);
@@ -23,8 +25,8 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
     const fetchPlanes = async () => {
       try {
         const [planesFijosResponse, planesVariablesResponse] = await Promise.all([
-          fetch('http://localhost:5005/plans/fixed/'),
-          fetch('http://localhost:5005/plans/variable/')
+          fetch(`${API_BASE_URL}/plans/fixed/`),
+          fetch(`${API_BASE_URL}/plans/variable/`)
         ]);
 
         if (!planesFijosResponse.ok || !planesVariablesResponse.ok) {
@@ -41,16 +43,16 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
           ...planesFijos.map(plan => ({
             id: plan._id,
             nombre: plan.name,
-            clientes: plan.clientsCount || 0, // Asumiendo que tienes un campo `clientsCount`
-            precio: `$${plan.price}/mes`, // Asumiendo que tienes un campo `price`
-            duracion: plan.duration // Asumiendo que tienes un campo `duration`
+            clientes: plan.client ? 1 : 0, // Si hay un cliente asociado, cuenta como 1
+            precio: `$${plan.rate}/mes`, // Usando el campo `rate` para planes fijos
+            duracion: `${plan.contractDuration} meses` // Usando `contractDuration` para la duración
           })),
           ...planesVariables.map(plan => ({
             id: plan._id,
             nombre: plan.name,
-            clientes: plan.clientsCount || 0,
-            precio: `$${plan.price}/mes`,
-            duracion: plan.duration
+            clientes: plan.client ? 1 : 0,
+            precio: `$${plan.hourlyRate}/hora`, // Usando el campo `hourlyRate` para planes variables
+            duracion: plan.totalSessions ? `${plan.totalSessions} sesiones` : 'Variable' // Asumiendo `totalSessions` para indicar la duración si existe
           }))
         ];
 

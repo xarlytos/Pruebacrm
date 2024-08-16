@@ -190,7 +190,7 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
 
               {visibleColumns.monto && (
                 <div className="form-group">
-                  <label htmlFor="monto">Monto</label>
+                  <label htmlFor="monto">Importe</label>
                   <input
                     type="number"
                     name="monto"
@@ -233,7 +233,7 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
             {visibleColumns.fecha && <th>Fecha</th>}
             {visibleColumns.estado && <th>Estado</th>}
             {visibleColumns.beneficiario && <th>Beneficiario</th>}
-            {visibleColumns.monto && <th>Monto</th>}
+            {visibleColumns.monto && <th>Importe</th>}
             {visibleColumns.tipo && <th>Tipo de Bono</th>}
             <th></th>
           </tr>

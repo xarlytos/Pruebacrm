@@ -1,3 +1,4 @@
+// NavegadorDeGraficos.js
 import React from 'react';
 import './navegadordegraficos.css';
 
@@ -37,6 +38,12 @@ function NavegadorDeGraficos({ onTabChange, activeTab, theme }) {
         onClick={() => handleTabClick('Facturas')}
       >
         Facturas
+      </button>
+      <button
+        className={`panelcontrol-nav-btn ${activeTab === 'Reportes' ? 'active' : ''}`}
+        onClick={() => handleTabClick('Reportes')}
+      >
+        Reportes
       </button>
     </nav>
   );

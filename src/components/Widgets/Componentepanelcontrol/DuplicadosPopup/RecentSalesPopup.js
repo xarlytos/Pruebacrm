@@ -170,7 +170,6 @@ function RecentSalesPopup({ detailed, theme, setTheme }) {
           placeholder={"Filtrar correos electrónicos..."}
           className="popup-filter-input"
         />
-        <button onClick={toggleTheme} className={`popup-theme-toggle-btn ${theme}`}>Cambiar Tema</button>
       </div>
       {!isExpanded && (
         <>

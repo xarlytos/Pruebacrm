@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './widget-Documentos.css';
 import DetailedDocumento from './DetailedDocumento';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
 function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,20 +17,42 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
   });
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [documentos, setDocumentos] = useState([]); // Now part of the state
-  const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false); // Control for add document modal
-  const [newDocumento, setNewDocumento] = useState({ id: '', titulo: '', fecha: '', tipo: '' }); // New document form state
-  
-  const [isDetailedDocumentoOpen, setIsDetailedDocumentoOpen] = useState(false); // Add this state
-  const [detailedDocumento, setDetailedDocumento] = useState(null); // State to hold the selected document for details view
+  const [documentos, setDocumentos] = useState([]);
+  const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false);
+  const [newDocumento, setNewDocumento] = useState({ id: '', titulo: '', fecha: '', tipo: '' });
+  const [isDetailedDocumentoOpen, setIsDetailedDocumentoOpen] = useState(false);
+  const [detailedDocumento, setDetailedDocumento] = useState(null);
 
   const itemsPerPage = 5;
 
+  useEffect(() => {
+    // Fetch documents from the API when the component mounts
+    const fetchDocumentos = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/licenses/`);
+        // Map the API data to the format expected by the component
+        const mappedDocumentos = response.data.map(doc => ({
+          id: doc._id,
+          titulo: doc.name,
+          fecha: new Date(doc.issueDate).toLocaleDateString(), // Convert date to a more readable format
+          tipo: doc.type
+        }));
+        setDocumentos(mappedDocumentos);
+      } catch (error) {
+        console.error('Error fetching documentos:', error);
+      }
+    };
+
+    fetchDocumentos();
+  }, []);
+
   const filteredDocumentos = documentos.filter(documento =>
-    (filterType === 'todos' || documento.tipo === filterType) &&
-    (documento.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     documento.fecha.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     documento.tipo.toLowerCase().includes(searchTerm.toLowerCase()))
+    (filterType === 'todos' || documento.tipo?.toLowerCase() === filterType) &&
+    (
+      documento.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      documento.fecha?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      documento.tipo?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -65,11 +90,10 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
 
   const handleAddDocumentoSubmit = () => {
     setDocumentos([...documentos, { ...newDocumento, id: documentos.length + 1 }]);
-    setNewDocumento({ id: '', titulo: '', fecha: '', tipo: '' }); // Reset form
+    setNewDocumento({ id: '', titulo: '', fecha: '', tipo: '' });
     handleCloseAddDocumentModal();
   };
 
-  // Add these functions
   const handleOpenDetailedDocumento = (documento) => {
     setDetailedDocumento(documento);
     setIsDetailedDocumentoOpen(true);

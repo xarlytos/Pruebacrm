@@ -49,13 +49,14 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
 
   const filteredData = invoices.filter(
     item =>
-      item.estado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.cliente.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.monto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.fecha.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.tipo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.numeroFactura.toLowerCase().includes(searchTerm.toLowerCase())
+      (item.estado && item.estado.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.cliente && item.cliente.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.monto && item.monto.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.fecha && item.fecha.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.tipo && item.tipo.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.numeroFactura && item.numeroFactura.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+  
 
   const handleColumnToggle = column => {
     setSelectedColumns({
@@ -161,7 +162,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
             </th>
             {selectedColumns.estado && <th>Estado</th>}
             {selectedColumns.cliente && <th>Cliente</th>}
-            {selectedColumns.monto && <th>Monto</th>}
+            {selectedColumns.monto && <th>Importe</th>}
             {selectedColumns.fecha && <th>Fecha</th>}
             {selectedColumns.tipo && <th>Tipo</th>}
             {selectedColumns.numeroFactura && <th>Número de Factura</th>}

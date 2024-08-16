@@ -64,7 +64,6 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
     <div className={`detailed-planes-overlay ${theme}`}>
       <div className={`detailed-planes ${theme}`}>
         <button className="close-modal-btn" onClick={() => onTabChange('Panel de Control')}>Cerrar</button>
-        <button onClick={toggleTheme} className="theme-toggle-btn">Cambiar Tema</button>
         <NavegadorDeGraficos onTabChange={onTabChange} theme={theme} />
         
         {/* Nuevo botón que cambia la pestaña a 'Economia' */}
@@ -105,7 +104,7 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
             </div>
             <div className="metrics-column">
               <MetricCardDuplicado
-                title="Suscripciones"
+                title="Planes"
                 value={`+${totalSuscripciones}`}
                 description="+180.1% respecto al mes pasado"
                 icon="👥"

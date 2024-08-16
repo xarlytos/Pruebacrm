@@ -14,6 +14,8 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [licencias, setLicencias] = useState([]); 
+  const [selectedLicenses, setSelectedLicenses] = useState([]); // Estado para las licencias seleccionadas
+  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del thead
   const [showAddLicenseModal, setShowAddLicenseModal] = useState(false); 
   const [newLicense, setNewLicense] = useState({
     name: '',
@@ -57,6 +59,10 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredLicencias.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(() => {
+    setSelectAll(selectedLicenses.length === currentItems.length);
+  }, [selectedLicenses, currentItems]);
 
   const toggleActionDropdown = (id) => {
     setActionDropdownOpen({
@@ -114,8 +120,22 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
     }
   };
 
-  return (
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedLicenses(isChecked ? currentItems.map(item => item.id) : []);
+  };
 
+  const handleCheckboxChange = (id) => {
+    const isSelected = selectedLicenses.includes(id);
+    if (isSelected) {
+      setSelectedLicenses(selectedLicenses.filter(licenseId => licenseId !== id));
+    } else {
+      setSelectedLicenses([...selectedLicenses, id]);
+    }
+  };
+
+  return (
     <div className={`Licencias-widget ${theme}`}>
       <h2>Licencias</h2>
       <div className="Licencias-filter-container">
@@ -134,7 +154,11 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input 
+                type="checkbox" 
+                checked={selectAll} 
+                onChange={handleSelectAllChange} 
+              />
             </th>
             {selectedColumns.id && <th>ID</th>}
             {selectedColumns.titulo && <th>Título</th>}
@@ -146,7 +170,11 @@ function WidgetLicenciasDuplicado({ isEditMode, theme }) {
           {currentItems.map((licencia) => (
             <tr key={licencia.id}>
               <td>
-                <input type="checkbox" />
+                <input 
+                  type="checkbox" 
+                  checked={selectedLicenses.includes(licencia.id)} 
+                  onChange={() => handleCheckboxChange(licencia.id)} 
+                />
               </td>
               {selectedColumns.id && <td>{licencia.id}</td>}
               {selectedColumns.titulo && <td>{licencia.titulo}</td>}

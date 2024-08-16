@@ -168,7 +168,6 @@ function OverviewChartPopup({ detailed, theme, setTheme }) {
             <button onClick={handleNextWeek}>Siguiente</button>
           </div>
         )}
-        <button onClick={toggleTheme} className={`panelcontrol-theme-toggle-btn ${theme}`}>Cambiar Tema</button>
       </div>
       <div className="panelcontrol-overview-popup-chart-wrapper">
         <Bar data={getData()} options={options} />

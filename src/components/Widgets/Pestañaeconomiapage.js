@@ -5,6 +5,8 @@ import DetailedIngresoBeneficio from './Componentepanelcontrol/DetailedIngresoBe
 import DetailedDocumento from './Documentos/DetailedDocumento';
 import DetailedFactura from './facturas/DetailedFactura';
 import DetailedPlanes from './Componentepanelcontrol/DetailedPlanes';
+import DetailedReportes from './DetailedReportes'; // Importar el componente de reportes
+
 import ModalDeEscaneoDeFacturas from './facturas/ModalDeEscaneoDeFacturas';
 import NavegadorDeGraficos from './Componentepanelcontrol/NavegadorDeGraficos';
 import MetricCard from './Componentepanelcontrol/MetricCard';
@@ -47,15 +49,15 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const [showControlPanel, setShowControlPanel] = useState(true);
   const [layout, setLayout] = useState([
-    { i: 'totalIngresos', x: 0, y: 0, w: 3, h: 2 },        // Primer fila, primera tarjeta
-    { i: 'suscripciones', x: 3, y: 0, w: 3, h: 2 },        // Primer fila, segunda tarjeta
+    { i: 'proyeccionMes', x: 0, y: 0, w: 3, h: 2 },        // Primer fila, primera tarjeta
+    { i: 'gastoMensual', x: 3, y: 0, w: 3, h: 2 },        // Primer fila, segunda tarjeta
     { i: 'planesVendidos', x: 6, y: 0, w: 3, h: 2 },       // Primer fila, tercera tarjeta
     { i: 'clientesActuales', x: 9, y: 0, w: 3, h: 2 },     // Primer fila, cuarta tarjeta
     
-    { i: 'ingresoAbsoluto', x: 0, y: 2, w: 3, h: 2 },      // Segunda fila, primera tarjeta
-    { i: 'ingresoMensual', x: 3, y: 2, w: 3, h: 2 },       // Segunda fila, segunda tarjeta
-    { i: 'beneficio', x: 6, y: 2, w: 3, h: 2 },            // Segunda fila, tercera tarjeta
-    { i: 'gastos', x: 9, y: 2, w: 3, h: 2 },               // Segunda fila, cuarta tarjeta
+    { i: 'beneficioNeto', x: 0, y: 2, w: 3, h: 2 },      // Segunda fila, primera tarjeta
+    { i: 'ingresos', x: 3, y: 2, w: 3, h: 2 },       // Segunda fila, segunda tarjeta
+    { i: 'margenGanancia', x: 6, y: 2, w: 3, h: 2 },            // Segunda fila, tercera tarjeta
+    { i: 'clientesNuevos', x: 9, y: 2, w: 3, h: 2 },               // Segunda fila, cuarta tarjeta
     
     { i: 'overviewChart', x: 0, y: 4, w: 6, h: 5 },        // Tercera fila, ocupa la mitad del ancho
     { i: 'recentSales', x: 6, y: 4, w: 6, h: 5 },          // Tercera fila, ocupa la otra mitad
@@ -70,7 +72,11 @@ function Pestañaeconomiapage({ theme, setTheme }) {
     { i: 'alertas', x: 0, y: 26, w: 12, h: 4 },            // Octava fila, widget de alertas
   ]);
 
+  const [proyeccionMes, setProyeccionMes] = useState(0);
+  const [totalGastos, setTotalGastos] = useState(0);
+  const [beneficioNeto, setBeneficioNeto] = useState(0);
   const [totalIngresos, setTotalIngresos] = useState(0);
+  const [margenGanancia, setMargenGanancia] = useState(0);
   const [suscripciones, setSuscripciones] = useState(0);
   const [planesVendidos, setPlanesVendidos] = useState(0);
   const [clientesActuales, setClientesActuales] = useState(0);
@@ -91,82 +97,43 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   };
 
   useEffect(() => {
-    // Fetch data for totalIngresos
-    axios.get(`${API_BASE_URL}/api/incomes/`)
-      .then(response => {
-        const incomes = response.data.map(income => parseFloat(income.cantidad) || 0);
-        const total = incomes.reduce((acc, income) => acc + income, 0);
-        setTotalIngresos(total);
+    const fetchData = async () => {
+      try {
+        const [ingresosResponse, gastosResponse, planesFijosResponse, planesVariablesResponse, clientesResponse] = await Promise.all([
+          axios.get(`${API_BASE_URL}/api/incomes/`),
+          axios.get(`${API_BASE_URL}/api/expenses/`),
+          axios.get(`${API_BASE_URL}/plans/fixed`),
+          axios.get(`${API_BASE_URL}/plans/variable`),
+          axios.get(`${API_BASE_URL}/api/clientes/`),
+        ]);
 
-        // Ingreso Absoluto es igual al total de ingresos
-        setIngresoAbsoluto(total);
+        const ingresosData = ingresosResponse.data;
+        const gastosData = gastosResponse.data;
+        const totalIngresos = ingresosData.reduce((acc, ingreso) => acc + parseFloat(ingreso.cantidad || 0), 0);
+        const totalGastos = gastosData.reduce((acc, gasto) => acc + parseFloat(gasto.amount || 0), 0);
+        const planesVendidos = planesFijosResponse.data.length + planesVariablesResponse.data.length;
+        const clientesActuales = clientesResponse.data.length;
 
-        // Calcular Ingreso Mensual
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
-        const monthlyIncomes = response.data
-          .filter(income => {
-            const incomeDate = new Date(income.fecha);
-            return incomeDate.getMonth() === currentMonth && incomeDate.getFullYear() === currentYear;
-          })
-          .map(income => parseFloat(income.cantidad) || 0);
+        setTotalIngresos(totalIngresos);
+        setGastos(gastosData);
+        setTotalGastos(totalGastos);
+        setPlanesVendidos(planesVendidos);
+        setClientesActuales(clientesActuales);
+        setIngresosEsperados(ingresosData);
 
-        const monthlyTotal = monthlyIncomes.reduce((acc, income) => acc + income, 0);
-        setIngresoMensual(monthlyTotal);
+        const beneficioNeto = totalIngresos - totalGastos;
+        const margenGanancia = totalIngresos > 0 ? (beneficioNeto / totalIngresos) * 100 : 0;
+        setBeneficioNeto(beneficioNeto);
+        setMargenGanancia(margenGanancia);
+        setProyeccionMes(beneficioNeto);
 
-        setIngresosEsperados(response.data); // Set ingresosEsperados
-      })
-      .catch(error => {
-        console.error('Error fetching total ingresos:', error);
-      });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    // Fetch data for gastos
-    axios.get(`${API_BASE_URL}/api/expenses`)
-      .then(response => {
-        if (response.status === 200) {
-          const expenses = response.data.map(expense => parseFloat(expense.amount) || 0);
-          const totalGastos = expenses.reduce((acc, expense) => acc + expense, 0);
-          setGastos(response.data);
-
-          // Calcula el beneficio restando gastos a los ingresos totales
-          setBeneficio(totalIngresos - totalGastos);
-        } else {
-          console.warn('Solicitud a /api/expenses no fue exitosa:', response);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching expenses:', error);
-      });
-
-    // Fetch data for suscripciones
-    axios.get(`${API_BASE_URL}/plans/fixed`)
-      .then(response => {
-        const fixedPlans = response.data.length;
-
-        axios.get(`${API_BASE_URL}/plans/variable`)
-          .then(response => {
-            const variablePlans = response.data.length;
-
-            const totalPlans = fixedPlans + variablePlans;
-            setPlanesVendidos(totalPlans);
-          })
-          .catch(error => {
-            console.error('Error fetching variable plans:', error);
-          });
-      })
-      .catch(error => {
-        console.error('Error fetching fixed plans:', error);
-      });
-
-    // Fetch data for clientesActuales
-    axios.get(`${API_BASE_URL}/api/clientes/`)
-      .then(response => {
-        setClientesActuales(response.data.length);
-      })
-      .catch(error => {
-        console.error('Error fetching clientes actuales:', error);
-      });
-  }, [totalIngresos]);
+    fetchData();
+  }, []);
 
   const handleOpenDetailedModal = () => {
     setIsDetailedModalOpen(true);
@@ -255,6 +222,12 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
+  const getValueClass = (value, isExpense = false) => {
+    if (isExpense) {
+      return 'panelcontrol-metric-value-red'; // Siempre rojo para los gastos
+    }
+    return value < 0 ? 'panelcontrol-metric-value-red' : 'panelcontrol-metric-value-green';
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -278,6 +251,13 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       case 'Facturas':
         handleOpenDetailedFactura();
         break;
+        case 'Reportes':
+          setIsDetailedModalOpen(false);
+          setIsDetailedDocumentoOpen(false);
+          setIsDetailedFacturaOpen(false);
+          setIsDetailedPlanesOpen(false);
+          setShowControlPanel(false);
+              break;  
       default:
         break;
     }
@@ -300,6 +280,15 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       {isDetailedDocumentoOpen && <DetailedDocumento onTabChange={handleTabChange} activeTab={activeTab} theme={theme} setTheme={setTheme} />}
       {isDetailedFacturaOpen && <DetailedFactura onTabChange={handleTabChange} activeTab={activeTab} theme={theme} setTheme={setTheme} />}
       {isDetailedPlanesOpen && <DetailedPlanes onTabChange={handleTabChange} activeTab={activeTab} theme={theme} setTheme={setTheme} />}
+      {activeTab === 'Reportes' && (
+      <DetailedReportes
+        onTabChange={handleTabChange}
+        activeTab={activeTab}
+        theme={theme}
+        setTheme={setTheme}
+      />
+    )}
+
       {isScanModalOpen && <ModalDeEscaneoDeFacturas isOpen={isScanModalOpen} onClose={handleCloseScanModal} theme={theme} setTheme={setTheme} />}
       {showControlPanel && !isDetailedModalOpen && !isDetailedDocumentoOpen && !isDetailedFacturaOpen && !isDetailedPlanesOpen && !isScanModalOpen && (
         <div className="widget-background">
@@ -343,28 +332,68 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                               <button className="widget-remove-btn" onClick={() => handleRemoveItem(item.i)}>×</button>
                             </>
                           )}
-                          {item.i === 'totalIngresos' && (
+                                 {item.i === 'proyeccionMes' && (
                             <MetricCard
-                              title="Total Ingresos"
-                              value={isNaN(totalIngresos) ? 'NaN' : totalIngresos}
-                              description="Total amount of ingresos"
-                              icon="💰"
-                              valueClass="panelcontrol-metric-value-green"
-                              titleColor="rgb(12, 211, 151)"
-                              onClick={handleOpenDetailedModal}
+                              title="Proyección del Mes"
+                              value={`$${proyeccionMes.toFixed(2)}`}
+                              description="Proyección del mes"
+                              icon="📈"
+                              valueClass={getValueClass(proyeccionMes)}
                               theme={theme}
                               setTheme={setTheme}
                             />
                           )}
-                          {item.i === 'suscripciones' && (
+                          {item.i === 'gastoMensual' && (
                             <MetricCard
-                              title="Ultimos Planes vendidos"
-                              value={planesVendidos}
-                              description="Ultimos Planes vendidos"
+                              title="Gasto Mensual"
+                              value={`$${totalGastos.toFixed(2)}`}
+                              description="Gasto mensual"
+                              icon="💸"
+                              valueClass="panelcontrol-metric-value-red"
+                              theme={theme}
+                              setTheme={setTheme}
+                            />
+                          )}
+                          {item.i === 'beneficioNeto' && (
+                            <MetricCard
+                              title="Beneficio Neto"
+                              value={`$${beneficioNeto.toFixed(2)}`}
+                              description="Beneficio neto"
+                              icon="💹"
+                              valueClass={getValueClass(beneficioNeto)}
+                              theme={theme}
+                              setTheme={setTheme}
+                            />
+                          )}
+                          {item.i === 'ingresos' && (
+                            <MetricCard
+                              title="Ingresos"
+                              value={`$${totalIngresos.toFixed(2)}`}
+                              description="Ingresos totales"
+                              icon="💰"
+                              valueClass={getValueClass(totalIngresos)}
+                              theme={theme}
+                              setTheme={setTheme}
+                            />
+                          )}
+                          {item.i === 'margenGanancia' && (
+                            <MetricCard
+                              title="Margen de Ganancia"
+                              value={`${margenGanancia.toFixed(2)}%`}
+                              description="Margen de ganancia"
+                              icon="📊"
+                              valueClass={getValueClass(margenGanancia)}
+                              theme={theme}
+                              setTheme={setTheme}
+                            />
+                          )}
+                          {item.i === 'clientesNuevos' && (
+                            <MetricCard
+                              title="Clientes Nuevos"
+                              value={clientesActuales} 
+                              description="Clientes nuevos"
                               icon="👥"
-                              valueClass="panelcontrol-metric-value-green"
-                              titleColor="#2E86C1"
-                              onClick={handleOpenDetailedPlanes}
+                              valueClass={getValueClass(clientesActuales)}
                               theme={theme}
                               setTheme={setTheme}
                             />
@@ -376,8 +405,6 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                               description="Total planes vendidos"
                               icon="📄"
                               valueClass="panelcontrol-metric-value-green"
-                              titleColor="#2E86C1"
-                              onClick={handleOpenDetailedPlanes}
                               theme={theme}
                               setTheme={setTheme}
                             />
@@ -389,56 +416,6 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                               description="Total clientes actuales"
                               icon="📈"
                               valueClass="panelcontrol-metric-value-green"
-                              titleColor="#2E86C1"
-                              onClick={handleOpenDetailedPlanes}
-                              theme={theme}
-                              setTheme={setTheme}
-                            />
-                          )}
-                          {item.i === 'ingresoAbsoluto' && (
-                            <MetricCard
-                              title="Ingreso Absoluto"
-                              value={isNaN(ingresoAbsoluto) ? 'NaN' : ingresoAbsoluto}
-                              description="Total de ingresos absolutos"
-                              icon="💸"
-                              valueClass="panelcontrol-metric-value-blue"
-                              titleColor="#3498DB"
-                              theme={theme}
-                              setTheme={setTheme}
-                            />
-                          )}
-                          {item.i === 'ingresoMensual' && (
-                            <MetricCard
-                              title="Ingreso Mensual"
-                              value={ingresoMensual.toFixed(2)}
-                              description="Ingreso promedio mensual"
-                              icon="📅"
-                              valueClass="panelcontrol-metric-value-blue"
-                              titleColor="#2ECC71"
-                              theme={theme}
-                              setTheme={setTheme}
-                            />
-                          )}
-                          {item.i === 'beneficio' && (
-                            <MetricCard
-                              title="Beneficio"
-                              value={isNaN(beneficio) ? 'NaN' : beneficio}
-                              description="Beneficio total"
-                              icon="💹"
-                              valueClass="panelcontrol-metric-value-green"
-                              titleColor="#E74C3C"
-                              theme={theme}
-                              setTheme={setTheme}
-                            />
-                          )}
-                          {item.i === 'gastos' && (
-                            <MetricCard
-                              title="Gastos"
-                              value={gastos.reduce((acc, expense) => acc + parseFloat(expense.amount) || 0, 0)}
-                              description="Total de gastos"
-                              icon="💳"
-                              valueClass="panelcontrol-metric-value-red"
-                              titleColor="#E74C3C"
                               theme={theme}
                               setTheme={setTheme}
                             />
@@ -475,7 +452,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                             <WidgetDocumentos isEditMode={isEditMode} onTitleClick={handleOpenDetailedDocumento} theme={theme} setTheme={setTheme} />
                           )}
                           {item.i === 'facturas' && (
-                            <WidgetFacturas isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} onTitleClick={handleOpenScanModal} theme={theme} setTheme={setTheme} />
+                            <WidgetFacturas isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} onTitleClick={handleOpenDetailedFactura} theme={theme} setTheme={setTheme} />
                           )}
                           {item.i === 'cuentaBancaria' && (
                             <WidgetCuentaBancaria onTitleClick={handleOpenDetailedModal} theme={theme} beneficio={beneficio} setTheme={setTheme} />
@@ -493,7 +470,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                             <Bonos onTitleClick={handleOpenDetailedPlanes} theme={theme} isEditMode={isEditMode} setTheme={setTheme} />
                           )}
                           {item.i === 'alertas' && (
-                            <Alertas theme={theme} setTheme={setTheme} />
+                            <Alertas onTabChange={handleTabChange} theme={theme} setTheme={setTheme} />
                           )}
                         </div>
                       ))}

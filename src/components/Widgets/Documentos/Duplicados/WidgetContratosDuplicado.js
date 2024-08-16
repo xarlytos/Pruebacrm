@@ -10,6 +10,8 @@ function WidgetContratosDuplicado({ isEditMode, theme }) {
   });
   const [actionDropdownOpen, setActionDropdownOpen] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedContratos, setSelectedContratos] = useState([]); // Estado para los contratos seleccionados
+  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del thead
   const itemsPerPage = 5;
 
   const contratos = [
@@ -41,7 +43,27 @@ function WidgetContratosDuplicado({ isEditMode, theme }) {
     });
   };
 
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedContratos(isChecked ? currentItems.map(item => item.id) : []);
+  };
+
+  const handleCheckboxChange = (id) => {
+    const isSelected = selectedContratos.includes(id);
+    if (isSelected) {
+      setSelectedContratos(selectedContratos.filter(contratoId => contratoId !== id));
+    } else {
+      setSelectedContratos([...selectedContratos, id]);
+    }
+  };
+
   const totalPages = Math.ceil(filteredContratos.length / itemsPerPage);
+
+  // Sincronizar el estado de "selectAll" cuando los contratos seleccionados cambian
+  useState(() => {
+    setSelectAll(selectedContratos.length === currentItems.length && currentItems.length > 0);
+  }, [selectedContratos, currentItems]);
 
   return (
     <div className={`Contratos-widget ${theme}`}>
@@ -59,7 +81,11 @@ function WidgetContratosDuplicado({ isEditMode, theme }) {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input 
+                type="checkbox" 
+                checked={selectAll} 
+                onChange={handleSelectAllChange} 
+              />
             </th>
             {selectedColumns.id && <th>ID</th>}
             {selectedColumns.titulo && <th>Título</th>}
@@ -71,7 +97,11 @@ function WidgetContratosDuplicado({ isEditMode, theme }) {
           {currentItems.map((contrato) => (
             <tr key={contrato.id}>
               <td>
-                <input type="checkbox" />
+                <input 
+                  type="checkbox" 
+                  checked={selectedContratos.includes(contrato.id)} 
+                  onChange={() => handleCheckboxChange(contrato.id)} 
+                />
               </td>
               {selectedColumns.id && <td>{contrato.id}</td>}
               {selectedColumns.titulo && <td>{contrato.titulo}</td>}

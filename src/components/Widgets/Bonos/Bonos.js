@@ -225,7 +225,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
             {visibleColumns.fecha && <th>Fecha</th>}
             {visibleColumns.estado && <th>Estado</th>}
             {visibleColumns.beneficiario && <th>Beneficiario</th>}
-            {visibleColumns.monto && <th>Monto</th>}
+            {visibleColumns.monto && <th>Importe</th>}
             {visibleColumns.tipo && <th>Tipo de Bono</th>}
             <th></th>
           </tr>

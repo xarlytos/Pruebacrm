@@ -34,6 +34,8 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
     monto: '',
     tipo: '',
   });
+  const [selectAll, setSelectAll] = useState(false); // Estado para manejar la selección global
+  const [selectedItems, setSelectedItems] = useState([]); // Estado para manejar los elementos seleccionados
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);
@@ -136,6 +138,19 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
+  const handleSelectAll = () => {
+    setSelectAll(!selectAll);
+    setSelectedItems(selectAll ? [] : filteredData.map((item) => item._id));
+  };
+
+  const handleCheckboxChange = (id) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
+
   return (
     <div className={`widget-gasto ${theme}`}>
       <h2 onClick={onTitleClick}>Gastos</h2>
@@ -190,7 +205,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
                   </button>
                 </div>
                 <div className="filter-field">
-                  <label>Monto Mín:</label>
+                  <label>Importe Mín:</label>
                   <input 
                     type="number" 
                     name="minMonto" 
@@ -200,7 +215,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
                   />
                 </div>
                 <div className="filter-field">
-                  <label>Monto Máx:</label>
+                  <label>Importe Máx:</label>
                   <input 
                     type="number" 
                     name="maxMonto" 
@@ -230,71 +245,125 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
             )}
           </div>
           <div className="dropdown">
-            <button onClick={toggleGastoDropdown} className={theme}>Añadir Gasto</button>
-            {isGastoDropdownOpen && (
-              <div className={`Exdropdown-content ${theme}`}>
-                <h3>Añadir Gasto</h3>
-                <form onSubmit={handleAddGasto}>
-                  <input 
-                    type="text" 
-                    name="concepto" 
-                    placeholder="Concepto" 
-                    value={newGasto.concepto} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <input 
-                    type="text" 
-                    name="description" // Added description input
-                    placeholder="Descripción" 
-                    value={newGasto.description} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <input 
-                    type="text" 
-                    name="category" // Added category input
-                    placeholder="Categoría" 
-                    value={newGasto.category} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <input 
-                    type="date" 
-                    name="fecha" 
-                    placeholder="Fecha" 
-                    value={newGasto.fecha} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <input 
-                    type="text" 
-                    name="estado" 
-                    placeholder="Estado" 
-                    value={newGasto.estado} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <input 
-                    type="number" 
-                    name="monto" 
-                    placeholder="Monto" 
-                    value={newGasto.monto} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <input 
-                    type="text" 
-                    name="tipo" 
-                    placeholder="Tipo (Fijo/Variable)" 
-                    value={newGasto.tipo} 
-                    onChange={handleGastoChange} 
-                    className={theme}
-                  />
-                  <button type="submit" className={theme}>Añadir</button>
-                </form>
-              </div>
-            )}
+          <button onClick={toggleGastoDropdown} className={theme}>Añadir Gasto</button>
+{isGastoDropdownOpen && (
+  <div className={`Exdropdown-content ${theme}`}>
+    <h3>Añadir Gasto</h3>
+    <form onSubmit={handleAddGasto}>
+      <label htmlFor="concept">Concepto</label>
+      <input 
+        type="text" 
+        id="concept"
+        name="concept" 
+        placeholder="Concepto" 
+        value={newGasto.concept} 
+        onChange={handleGastoChange} 
+        className={theme}
+        required
+      />
+      
+      <label htmlFor="description">Descripción</label>
+      <input 
+        type="text" 
+        id="description"
+        name="description" 
+        placeholder="Descripción" 
+        value={newGasto.description} 
+        onChange={handleGastoChange} 
+        className={theme}
+        required
+      />
+
+      <label htmlFor="category">Categoría</label>
+      <input 
+        type="text" 
+        id="category"
+        name="category" 
+        placeholder="Categoría" 
+        value={newGasto.category} 
+        onChange={handleGastoChange} 
+        className={theme}
+        required
+      />
+
+      <label htmlFor="amount">Importe</label>
+      <input 
+        type="number" 
+        id="amount"
+        name="amount" 
+        placeholder="Importe" 
+        value={newGasto.amount} 
+        onChange={handleGastoChange} 
+        className={theme}
+        required
+      />
+
+      <label htmlFor="status">Estado</label>
+      <input 
+        type="text" 
+        id="status"
+        name="status" 
+        placeholder="Estado" 
+        value={newGasto.status} 
+        onChange={handleGastoChange} 
+        className={theme}
+        required
+      />
+
+      <label htmlFor="date">Fecha</label>
+      <input 
+        type="date" 
+        id="date"
+        name="date" 
+        placeholder="Fecha" 
+        value={newGasto.date} 
+        onChange={handleGastoChange} 
+        className={theme}
+        required
+      />
+
+      <label htmlFor="frequency">Frecuencia (Opcional)</label>
+      <select 
+        id="frequency"
+        name="frequency" 
+        value={newGasto.frequency} 
+        onChange={handleGastoChange} 
+        className={theme}
+      >
+        <option value="">Selecciona una opción</option>
+        <option value="weekly">Semanal</option>
+        <option value="biweekly">Quincenal</option>
+        <option value="monthly">Mensual</option>
+      </select>
+
+      <label htmlFor="duration">Duración (en meses, Opcional)</label>
+      <input 
+        type="number" 
+        id="duration"
+        name="duration" 
+        placeholder="Duración (en meses, Opcional)" 
+        value={newGasto.duration} 
+        onChange={handleGastoChange} 
+        className={theme}
+      />
+
+      <label htmlFor="planType">Tipo de Plan</label>
+      <select 
+        id="planType"
+        name="planType" 
+        value={newGasto.planType} 
+        onChange={handleGastoChange} 
+        className={theme}
+      >
+        <option value="">Selecciona una opción</option>
+        <option value="FixedPlan">Plan Fijo</option>
+        <option value="VariablePlan">Plan Variable</option>
+      </select>
+
+      <button type="submit" className={theme}>Añadir</button>
+    </form>
+  </div>
+)}
           </div>
         </div>
         {isEditMode && (
@@ -309,7 +378,13 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
       <table className={`widget-gasto-table ${theme}`}>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <input 
+                type="checkbox" 
+                checked={selectAll} 
+                onChange={handleSelectAll} 
+              />
+            </th>
             {visibleColumns.concepto && <th>Concepto</th>}
             {visibleColumns.fecha && <th>Fecha</th>}
             {visibleColumns.estado && <th>Estado</th>}
@@ -321,7 +396,13 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
         <tbody>
           {filteredData.map((item, index) => (
             <tr key={item._id} className={theme}>
-              <td><input type="checkbox" /></td>
+              <td>
+                <input 
+                  type="checkbox" 
+                  checked={selectedItems.includes(item._id)} 
+                  onChange={() => handleCheckboxChange(item._id)} 
+                />
+              </td>
               {visibleColumns.concepto && <td>{item.concept}</td>}
               {visibleColumns.fecha && <td>{item.date}</td>}
               {visibleColumns.estado && <td>{item.status}</td>}

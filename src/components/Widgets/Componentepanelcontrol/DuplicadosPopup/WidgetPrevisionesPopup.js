@@ -134,7 +134,7 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, setIngresosEsperados }) => {
                   <input 
                     type="number" 
                     name="monto" 
-                    placeholder="Monto" 
+                    placeholder="Importe" 
                     value={newIngreso.monto} 
                     onChange={handleIngresoChange} 
                     className={`${theme}`}
@@ -176,7 +176,7 @@ const WidgetPrevisionesPopup = ({ theme, setTheme, setIngresosEsperados }) => {
             <th></th>
             <th>Número</th>
             <th>Fecha</th>
-            <th>Monto</th>
+            <th>Importe</th>
             <th>Pagado por</th>
             <th>Método</th>
             <th>Estatus</th>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
 import './OverviewChart.css';
-import classnames from 'classnames';
 import WidgetRemoveButton from './ComponentesReutilizables/WidgetRemoveButton';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
@@ -52,7 +51,6 @@ function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
   const [week, setWeek] = useState(getCurrentWeekNumber());
-  const [isChart, setIsChart] = useState(true);
   
   // Llamada al hook personalizado para obtener los datos
   const { data } = useIncomeData();
@@ -107,7 +105,7 @@ function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
       case 'semanal':
         const weeklyData = Array(7).fill(0);
         data.forEach(item => {
-          const dayOfWeek = new Date(item.fecha).getDay(); // Obtener el día de la semana (0 = Domingo, 6 = Sábado)
+          const dayOfWeek = new Date(item.fecha).getDay(); 
           weeklyData[dayOfWeek] += item.cantidad;
         });
         return {
@@ -186,31 +184,6 @@ function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
     },
   };
 
-  const renderTable = () => (
-    <table className={classnames('overview-table', theme)}>
-      <thead>
-        <tr>
-          <th className="table-header">Fecha</th>
-          <th className="table-header">Monto</th>
-          <th className="table-header">Pagado por</th>
-          <th className="table-header">Método</th>
-          <th className="table-header">Estatus</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((income, index) => (
-          <tr key={index} className={classnames('table-row', { 'table-row-dark': index % 2 === 0, 'table-row-light': index % 2 !== 0 }, theme)}>
-            <td className="table-cell">{new Date(income.fecha).toLocaleDateString()}</td>
-            <td className="table-cell">€{income.cantidad}</td>
-            <td className="table-cell">{income.pagadoPor || 'N/A'}</td>
-            <td className="table-cell">{income.metodo || 'N/A'}</td>
-            <td className="table-cell">{income.estatus || 'N/A'}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-
   return (
     <div className={`panelcontrol-overview ${theme}`}>
       <WidgetRemoveButton isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} itemId="overviewChart" />
@@ -245,16 +218,9 @@ function OverviewChart({ onTitleClick, isEditMode, handleRemoveItem, theme }) {
               <button onClick={handleNextWeek} className={`widget-button ${theme}`}>Siguiente</button>
             </div>
           )}
-          <button onClick={() => setIsChart(!isChart)} className={`widget-button ${theme}`}>
-            {isChart ? 'Ver Tabla' : 'Ver Gráfico'}
-          </button>
         </div>
       </div>
-      {isChart ? (
-        <Bar data={getChartData()} options={options} className="panelcontrol-overview-chart" />
-      ) : (
-        renderTable()
-      )}
+      <Bar data={getChartData()} options={options} className="panelcontrol-overview-chart" />
     </div>
   );
 }

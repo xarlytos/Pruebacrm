@@ -29,6 +29,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
   const [planToAssociate, setPlanToAssociate] = useState(null);
   const [selectedClient, setSelectedClient] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [selectAll, setSelectAll] = useState(false); // Estado para controlar el checkbox del encabezado
 
   const fetchData = async () => {
     try {
@@ -97,6 +98,12 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     } else {
       setSelectedPlans([...selectedPlans, plan]);
     }
+  };
+
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedPlans(isChecked ? filteredData : []);
   };
 
   const handleDeleteSelectedPlans = async () => {
@@ -247,7 +254,13 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
             <tr>
               {currentTable === 'planes' ? (
                 <>
-                  <th></th>
+                  <th>
+                    <input 
+                      type="checkbox" 
+                      checked={selectAll} 
+                      onChange={handleSelectAllChange} 
+                    />
+                  </th>
                   {visibleColumns.nombre && <th onClick={() => handleSort('name')}>Nombre del Plan</th>}
                   {visibleColumns.clientes && <th>Clientes</th>}
                   {visibleColumns.precio && <th>Precio</th>}
@@ -270,7 +283,13 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
               <tr key={index}>
                 {currentTable === 'planes' ? (
                   <>
-                    <td><input type="checkbox" checked={selectedPlans.includes(item)} onChange={() => handleCheckboxChange(item)} /></td>
+                    <td>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedPlans.includes(item)} 
+                        onChange={() => handleCheckboxChange(item)} 
+                      />
+                    </td>
                     {visibleColumns.nombre && <td>{item.name}</td>}
                     {visibleColumns.clientes && <td>{renderClientColumn(item._id)}</td>}
                     {visibleColumns.precio && <td>{item.rate || item.hourlyRate}</td>}

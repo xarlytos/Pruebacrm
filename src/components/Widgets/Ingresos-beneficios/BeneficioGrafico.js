@@ -12,15 +12,20 @@ const getCurrentWeekNumber = () => {
 
 const getWeeksInMonth = (month, year) => {
   const weeks = [];
+  let start = 1;
+  let end;
+  
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  let start = 1;
-  let end = 7 - firstDayOfMonth;
-  while (start <= daysInMonth) {
-    weeks.push({ start, end: end > daysInMonth ? daysInMonth : end });
-    start = end + 1;
-    end += 7;
+
+  for (let day = 1; day <= daysInMonth; day += 7) {
+    end = Math.min(day + 6 - (firstDayOfMonth === 0 ? 0 : firstDayOfMonth), daysInMonth);
+    weeks.push({
+      start: new Date(year, month, day).toLocaleDateString(),
+      end: new Date(year, month, end).toLocaleDateString(),
+    });
   }
+
   return weeks;
 };
 
@@ -28,7 +33,9 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
   const [view, setView] = useState('anual');
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
-  const [week, setWeek] = useState(getCurrentWeekNumber());
+  const [weekIndex, setWeekIndex] = useState(0);
+
+  const weeks = getWeeksInMonth(month, year);
 
   const handleNextYear = () => {
     setYear(year + 1);
@@ -40,18 +47,24 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
 
   const handleNextMonth = () => {
     setMonth((prevMonth) => (prevMonth + 1) % 12);
+    setWeekIndex(0);
   };
 
   const handlePreviousMonth = () => {
     setMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
+    setWeekIndex(0);
   };
 
   const handleNextWeek = () => {
-    setWeek(week + 1);
+    if (weekIndex < weeks.length - 1) {
+      setWeekIndex(weekIndex + 1);
+    }
   };
 
   const handlePreviousWeek = () => {
-    setWeek(week - 1);
+    if (weekIndex > 0) {
+      setWeekIndex(weekIndex - 1);
+    }
   };
 
   const daysInMonth = (month, year) => {
@@ -172,6 +185,14 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
     }
   };
 
+
+
+
+
+
+
+  
+
   const options = {
     scales: {
       y: {
@@ -187,6 +208,23 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
       },
     },
     plugins: {
+      tooltip: {
+        mode: 'index',  // Sigue mostrando todos los puntos en el eje x bajo el ratón
+        intersect: false,  // Permite que el tooltip se muestre cuando el ratón está cerca de los puntos, no necesariamente sobre ellos
+        callbacks: {
+          title: function(context) {
+            if (context.length > 0) {
+              return context[0].label || '';
+            }
+            return '';
+          },
+          label: function(context) {
+            const datasetLabel = context.dataset.label || '';
+            const value = context.raw !== undefined ? context.raw : '';
+            return `${datasetLabel}: $${value}`;
+          },
+        }
+      },
       legend: {
         labels: {
           color: theme === 'dark' ? '#FFFFFF' : '#000000',
@@ -195,8 +233,15 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
     },
     maintainAspectRatio: false,
   };
+    
+  
 
-  const toggleTheme = () => {
+  
+
+  
+  
+  
+    const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
@@ -230,7 +275,7 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
           {view === 'semanal' && (
             <div className="week-navigation">
               <button className="widget-button" onClick={handlePreviousWeek}>Anterior</button>
-              <span>{`Semana ${week}`}</span>
+              <span>{`${weeks[weekIndex].start} - ${weeks[weekIndex].end}`}</span>
               <button className="widget-button" onClick={handleNextWeek}>Siguiente</button>
             </div>
           )}

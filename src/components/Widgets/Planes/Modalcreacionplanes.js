@@ -17,14 +17,17 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
     type: 'fixed',
     sessionsPerWeek: 0,
     hourlyRate: '',
+    billingMethod: 'hours',
+    billingDate: '',
   });
 
   const [clients, setClients] = useState([]);
+  const [selectedClientId, setSelectedClientId] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/clientes/`);
+        const response = await axios.get(`${API_BASE_URL}/api/clientes`);
         setClients(response.data);
       } catch (error) {
         console.error('Error al obtener los clientes:', error);
@@ -37,6 +40,11 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const handleAssociateClient = () => {
+    setForm({ ...form, client: selectedClientId });
+    alert('Cliente asociado correctamente');
   };
 
   const handleSubmit = async (e) => {
@@ -57,10 +65,11 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
       } else {
         response = await axios.post(`${API_BASE_URL}/plans/variable`, {
           name: form.name,
-          client: form.client,
+          client: form.client || null,
           startDate: form.startDate,
           hourlyRate: form.hourlyRate,
-          paymentDay: form.paymentDay,
+          billingMethod: form.billingMethod,
+          billingDate: form.billingMethod === 'date' ? form.billingDate : null,
         });
       }
       console.log('Plan creado:', response.data);
@@ -71,10 +80,9 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
   };
 
   return (
-
     <div className="Modalcreacionplanes-popup">
       <div className={`Modalcreacionplanes-popup-content ${theme}`}>
-        <h3>Creaaar Nuevo Plan</h3>
+        <h3>Crear Nuevo Plan</h3>
         <form onSubmit={handleSubmit}>
           <label>
             Nombre:
@@ -89,12 +97,11 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
           <label>
             Cliente:
             <select
-              name="client"
-              value={form.client}
-              onChange={handleChange}
+              value={selectedClientId}
+              onChange={(e) => setSelectedClientId(e.target.value)}
               required
             >
-              <option value="">Selecciona un cliente</option>
+              <option value="">Seleccione un cliente</option>
               {clients.map((client) => (
                 <option key={client._id} value={client._id}>
                   {client.nombre}
@@ -102,6 +109,15 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
               ))}
             </select>
           </label>
+          {selectedClientId && (
+            <button
+              type="button"
+              onClick={handleAssociateClient}
+              className="button"
+            >
+              Asociar Cliente
+            </button>
+          )}
           <label>
             Fecha de Inicio:
             <input
@@ -139,7 +155,7 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
                 </select>
               </label>
               <label>
-                Duración :
+                Duración:
                 <input
                   type="number"
                   name="contractDuration"
@@ -149,10 +165,8 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
                 />
               </label>
               <label>
-                plan indefinido
-                <Checkbox>
-                  
-                </Checkbox>
+                Plan Indefinido
+                <Checkbox />
               </label>
               <label>
                 Tarifa:
@@ -199,15 +213,41 @@ const Modalcreacionplanes = ({ onClose, theme }) => {
                 />
               </label>
               <label>
-                Día de Pago:
-                <input
-                  type="number"
-                  name="paymentDay"
-                  value={form.paymentDay}
+                Método de Facturación:
+                <select
+                  name="billingMethod"
+                  value={form.billingMethod}
                   onChange={handleChange}
                   required
-                />
+                >
+                  <option value="hours">Por Horas</option>
+                  <option value="date">Fecha Determinada</option>
+                </select>
               </label>
+              {form.billingMethod === 'date' && (
+                <label>
+                  Fecha de Facturación:
+                  <input
+                    type="date"
+                    name="billingDate"
+                    value={form.billingDate}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+              )}
+              {form.billingMethod === 'hours' && (
+                <label>
+                  Día de Pago:
+                  <input
+                    type="number"
+                    name="paymentDay"
+                    value={form.paymentDay}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+              )}
             </>
           )}
           <div className={`Modalcreacionplanes-buttons ${theme}`}>

@@ -38,7 +38,7 @@ const WidgetPrevisiones = ({
     estatus: ''
   });
   const [isMetodoDropdownOpen, setIsMetodoDropdownOpen] = useState(false);
-  const [isCreateIncomeOpen, setIsCreateIncomeOpen] = useState(false); // Estado para manejar la visibilidad del formulario de creación de ingresos
+  const [isCreateIncomeOpen, setIsCreateIncomeOpen] = useState(false);
   const [newIncome, setNewIncome] = useState({
     cantidad: '',
     descripcion: '',
@@ -46,9 +46,10 @@ const WidgetPrevisiones = ({
     metodoPago: '',
     estadoPago: 'pendiente'
   });
+  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del encabezado
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]); // Estado para checkboxes individuales
 
   useEffect(() => {
-    // Fetch data for upcoming incomes
     const today = new Date();
     const next30Days = new Date(today);
     next30Days.setDate(today.getDate() + 30);
@@ -158,6 +159,20 @@ const WidgetPrevisiones = ({
     setFilters({ ...filters, [field]: filters[field] === value ? '' : value });
   };
 
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedCheckboxes(isChecked ? filteredData.map((_, index) => index) : []);
+  };
+
+  const handleCheckboxChange = (index) => {
+    const newSelectedCheckboxes = selectedCheckboxes.includes(index)
+      ? selectedCheckboxes.filter(i => i !== index)
+      : [...selectedCheckboxes, index];
+    setSelectedCheckboxes(newSelectedCheckboxes);
+    setSelectAll(newSelectedCheckboxes.length === filteredData.length);
+  };
+
   const renderFilterDropdownContent = () => (
     <div className={`Prevdropdown-content ${theme}`}>
       <div className="Prevprevisiones-filtros">
@@ -182,7 +197,7 @@ const WidgetPrevisiones = ({
           />
         </div>
         <div className="Prevfilter-field">
-          <label>Monto Mín:</label>
+          <label>Importe Mín:</label>
           <input 
             type="number" 
             name="minMonto" 
@@ -192,7 +207,7 @@ const WidgetPrevisiones = ({
           />
         </div>
         <div className="Prevfilter-field">
-          <label>Monto Máx:</label>
+          <label>Importe Máx:</label>
           <input 
             type="number" 
             name="maxMonto" 
@@ -258,7 +273,7 @@ const WidgetPrevisiones = ({
           <div className="dropdown">
             <button 
               className={`ingreso-button ${theme}`} 
-              onClick={toggleCreateIncomeDropdown} // Lógica para abrir/cerrar el formulario de crear ingreso
+              onClick={toggleCreateIncomeDropdown}
             >
               Añadir Ingreso Especial
             </button>
@@ -320,10 +335,16 @@ const WidgetPrevisiones = ({
       <table className={`widget-table ${theme}`}>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <input 
+                type="checkbox" 
+                checked={selectAll} 
+                onChange={handleSelectAllChange} 
+              />
+            </th>
             {visibleColumns.numero && <th>Número</th>}
             {visibleColumns.fecha && <th>Fecha</th>}
-            {visibleColumns.monto && <th>Monto</th>}
+            {visibleColumns.monto && <th>Importe</th>}
             {visibleColumns.pagadoPor && <th>Pagado por</th>}
             {visibleColumns.metodo && <th>Método</th>}
             {visibleColumns.estatus && <th>Estatus</th>}
@@ -333,7 +354,13 @@ const WidgetPrevisiones = ({
         <tbody>
           {filteredData.map((item, index) => (
             <tr key={index}>
-              <td><input type="checkbox" /></td>
+              <td>
+                <input 
+                  type="checkbox" 
+                  checked={selectedCheckboxes.includes(index)} 
+                  onChange={() => handleCheckboxChange(index)} 
+                />
+              </td>
               {visibleColumns.numero && <td>{item.numero || 'N/A'}</td>}
               {visibleColumns.fecha && <td>{item.fecha}</td>}
               {visibleColumns.monto && <td>€{item.cantidad}</td>}

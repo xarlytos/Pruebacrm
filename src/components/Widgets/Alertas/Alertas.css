@@ -82,4 +82,165 @@
   .light .Alertas-eco-item-message {
     color: #555;
   }
+  .Alertas-eco-item.licencia {
+    background-color: #ffecb3; /* Color de fondo para alertas de licencia */
+    color: #f57c00; /* Color del texto para alertas de licencia */
+}
+
+.Alertas-eco-item.beneficio {
+    background-color: #ffebee; /* Color de fondo para alertas de beneficio */
+    color: #d32f2f; /* Color del texto para alertas de beneficio */
+}
+.Alertas-eco-item-button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.Alertas-eco-item-button:hover {
+  background-color: #0056b3;
+}
+
+/* Asegúrate de que el tema oscuro también tenga un estilo para el botón */
+.dark .Alertas-eco-item-button {
+  background-color: #1f8efa;
+}
+
+.dark .Alertas-eco-item-button:hover {
+  background-color: #1267b1;
+}
+.Alertas-eco-item.pago-fallido {
+  background-color: #ffd1d1; /* Rojo claro para pagos fallidos */
+  color: #d32f2f; /* Rojo oscuro para el texto */
+}
+
+/* Estilos para pagos correctos */
+.Alertas-eco-item.pago-correcto {
+  background-color: #d1ffd1; /* Verde claro para pagos correctos */
+  color: #388e3c; /* Verde oscuro para el texto */
+}
+/* Estilos generales para el widget de alertas */
+.Alertas-eco-widget {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--background-color); /* Color de fondo según el tema */
+  color: var(--text-color); /* Color del texto según el tema */
+}
+
+.Alertas-eco-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.Alertas-eco-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.Alertas-eco-item {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: var(--alert-background-color); /* Color de fondo de la alerta según el tema */
+  color: var(--alert-text-color); /* Color del texto de la alerta según el tema */
+}
+
+.Alertas-eco-item-title {
+  font-weight: bold;
+}
+
+.Alertas-eco-item-message {
+  color: var(--alert-text-secondary-color); /* Color secundario del texto según el tema */
+}
+
+.Alertas-eco-item-button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-background-color); /* Color de fondo del botón según el tema */
+  color: var(--button-text-color); /* Color del texto del botón según el tema */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.Alertas-eco-item-button:hover {
+  background-color: var(--button-hover-background-color); /* Color de fondo del botón en hover según el tema */
+}
+
+/* Estilos para pagos fallidos */
+.Alertas-eco-item.pago-fallido {
+  background-color: var(--alert-background-color-fallido); /* Color de fondo para pagos fallidos según el tema */
+  color: var(--alert-text-color-fallido); /* Color del texto para pagos fallidos según el tema */
+}
+
+/* Estilos para pagos correctos */
+.Alertas-eco-item.pago-correcto {
+  background-color: var(--alert-background-color-correcto); /* Color de fondo para pagos correctos según el tema */
+  color: var(--alert-text-color-correcto); /* Color del texto para pagos correctos según el tema */
+}
+/* Tema claro */
+.light {
+  --background-color: #f5e6dc;
+  --text-color: #333;
+  --alert-background-color: #fff;
+  --alert-text-color: #333;
+  --alert-text-secondary-color: #555;
+  --button-background-color: #007bff;
+  --button-text-color: #fff;
+  --button-hover-background-color: #0056b3;
+
+  --alert-background-color-fallido: #ffd1d1;
+  --alert-text-color-fallido: #d32f2f;
+  --alert-background-color-correcto: #d1ffd1;
+  --alert-text-color-correcto: #388e3c;
   
+  --alert-background-color-licencia: #ffecb3; /* Color de fondo para alertas de licencia */
+  --alert-text-color-licencia: #f57c00; /* Color del texto para alertas de licencia */
+  
+  --alert-background-color-beneficio: #ffebee; /* Color de fondo para alertas de beneficio */
+  --alert-text-color-beneficio: #d32f2f; /* Color del texto para alertas de beneficio */
+}
+
+/* Tema oscuro */
+.dark {
+  --background-color: #333;
+  --text-color: #fff;
+  --alert-background-color: #444;
+  --alert-text-color: #fff;
+  --alert-text-secondary-color: #ddd;
+  --button-background-color: #1f8efa;
+  --button-text-color: #fff;
+  --button-hover-background-color: #1267b1;
+
+  --alert-background-color-fallido: #5a5a5a;
+  --alert-text-color-fallido: #ffa07a;
+  --alert-background-color-correcto: #4caf50;
+  --alert-text-color-correcto: #c8e6c9;
+  
+  --alert-background-color-licencia: #a1887f; /* Color de fondo oscuro para alertas de licencia */
+  --alert-text-color-licencia: #ffecb3; /* Color del texto en el tema oscuro para alertas de licencia */
+  
+  --alert-background-color-beneficio: #6a1b9a; /* Color de fondo oscuro para alertas de beneficio */
+  --alert-text-color-beneficio: #e1bee7; /* Color del texto en el tema oscuro para alertas de beneficio */
+}
+
+/* Estilos para alertas de licencia */
+.Alertas-eco-item.licencia {
+  background-color: var(--alert-background-color-licencia);
+  color: var(--alert-text-color-licencia);
+}
+
+/* Estilos para alertas de beneficio negativo */
+.Alertas-eco-item.beneficio {
+  background-color: var(--alert-background-color-beneficio);
+  color: var(--alert-text-color-beneficio);
+}
