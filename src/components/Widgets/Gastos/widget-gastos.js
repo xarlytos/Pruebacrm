@@ -1,26 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './WidgetCuentaBancaria.css'; // Asegúrate de importar los estilos
 
 function WidgetCuentaBancaria({ beneficio }) {
   const [showBeneficio, setShowBeneficio] = useState(true); // Mostrar CRM por defecto
   const [activeView, setActiveView] = useState('CRM'); // Estado para rastrear la vista activa
+  const [defaultView, setDefaultView] = useState(localStorage.getItem('defaultView') || 'CRM'); // Vista predefinida
+
+  useEffect(() => {
+    // Al cargar el componente, establecer la vista predefinida como la activa
+    setActiveView(defaultView);
+    if (defaultView === 'CRM') {
+      setShowBeneficio(true);
+    } else {
+      setShowBeneficio(false);
+    }
+  }, [defaultView]);
 
   const handleViewCRM = () => {
-    console.log("Toggle beneficio view");
     setShowBeneficio(true);
-    setActiveView('CRM'); // Establecer la vista CRM como activa
+    setActiveView('CRM');
   };
 
   const handleViewStripe = () => {
-    console.log("Ver cuenta en Stripe");
     setShowBeneficio(false);
-    setActiveView('Stripe'); // Establecer la vista Stripe como activa
+    setActiveView('Stripe');
   };
 
   const handleViewBankAccount = () => {
-    console.log("Ver cuenta bancaria");
     setShowBeneficio(false);
-    setActiveView('Bank'); // Establecer la vista Cuenta Bancaria como activa
+    setActiveView('Bank');
+  };
+
+  const handleSaveDefaultView = () => {
+    localStorage.setItem('defaultView', activeView);
+    alert(`Vista predefinida guardada: ${activeView}`);
   };
 
   // Determinar la clase basada en el valor del beneficio
@@ -50,8 +63,14 @@ function WidgetCuentaBancaria({ beneficio }) {
         >
           Ver Cuenta Bancaria
         </button>
+        <button 
+          onClick={handleSaveDefaultView} 
+          className="btn-save-default"
+        >
+          Guardar Vista Predefinida
+        </button>
       </div>
-      {showBeneficio && ( 
+      {showBeneficio && (
         <p className={beneficioClass}>Beneficio Actual: ${beneficio.toFixed(2)}</p>
       )}
     </div>

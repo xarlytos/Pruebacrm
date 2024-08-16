@@ -23,19 +23,20 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
   const [isDetailedDocumentoOpen, setIsDetailedDocumentoOpen] = useState(false);
   const [detailedDocumento, setDetailedDocumento] = useState(null);
 
+  const [selectedDocumentos, setSelectedDocumentos] = useState({});
+  const [isSelectAll, setIsSelectAll] = useState(false);
+
   const itemsPerPage = 5;
 
   useEffect(() => {
-    // Fetch documents from the API when the component mounts
     const fetchDocumentos = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/licenses/`);
-        // Map the API data to the format expected by the component
         const mappedDocumentos = response.data.map(doc => ({
           id: doc._id,
           titulo: doc.name,
-          fecha: new Date(doc.issueDate).toLocaleDateString(), // Convert date to a more readable format
-          tipo: doc.type
+          fecha: new Date(doc.issueDate).toLocaleDateString(),
+          tipo: doc.type // el tipo es "Software" en los ejemplos proporcionados
         }));
         setDocumentos(mappedDocumentos);
       } catch (error) {
@@ -46,14 +47,21 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
     fetchDocumentos();
   }, []);
 
-  const filteredDocumentos = documentos.filter(documento =>
-    (filterType === 'todos' || documento.tipo?.toLowerCase() === filterType) &&
-    (
-      documento.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      documento.fecha?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      documento.tipo?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+  useEffect(() => {
+    const allSelected = documentos.length > 0 && documentos.every(doc => selectedDocumentos[doc.id]);
+    setIsSelectAll(allSelected);
+  }, [selectedDocumentos, documentos]);
+
+  const filteredDocumentos = documentos.filter(documento => {
+    // Modificamos el filtro para que "Licencias" filtre documentos de tipo "Software"
+    const matchesType = filterType === 'todos' || 
+      (filterType === 'licencia' && documento.tipo.toLowerCase() === 'software') || 
+      documento.tipo?.toLowerCase() === filterType.toLowerCase();
+    const matchesSearch = documento.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          documento.fecha?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          documento.tipo?.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesType && matchesSearch;
+  });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -104,6 +112,24 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
     setDetailedDocumento(null);
   };
 
+  const handleSelectAll = () => {
+    const newSelected = {};
+    if (!isSelectAll) {
+      currentItems.forEach(doc => {
+        newSelected[doc.id] = true;
+      });
+    }
+    setSelectedDocumentos(newSelected);
+    setIsSelectAll(!isSelectAll);
+  };
+
+  const handleCheckboxChange = (id) => {
+    setSelectedDocumentos(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   return (
     <div className={`Documentos-widget Documentos-widget-documentos ${theme}`}>
       <div className="Documentos-widget-handle"></div>
@@ -138,7 +164,11 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input 
+                type="checkbox" 
+                checked={isSelectAll} 
+                onChange={handleSelectAll} 
+              />
             </th>
             {selectedColumns.id && <th>ID</th>}
             {selectedColumns.titulo && <th>Título</th>}
@@ -151,7 +181,11 @@ function WidgetDocumentos({ isEditMode, onTitleClick, theme }) {
           {currentItems.map((documento) => (
             <tr key={documento.id}>
               <td>
-                <input type="checkbox" />
+                <input 
+                  type="checkbox" 
+                  checked={!!selectedDocumentos[documento.id]} 
+                  onChange={() => handleCheckboxChange(documento.id)} 
+                />
               </td>
               {selectedColumns.id && <td>{documento.id}</td>}
               {selectedColumns.titulo && <td>{documento.titulo}</td>}

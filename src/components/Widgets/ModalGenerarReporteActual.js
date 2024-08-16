@@ -27,8 +27,8 @@ function ModalGenerarReporteActual({ isOpen, onClose, theme }) {
   return (
     isOpen && (
       <div className={`modal-reporte-overlay ${theme}`}>
-        <div className="modal-reporte-content">
-          <span className="modal-reporte-close" onClick={onClose}>
+        <div className={`modal-reporte-content ${theme}`}>
+          <span className={`modal-reporte-close ${theme}`} onClick={onClose}>
             &times;
           </span>
           <h2>Generar Reporte Actual</h2>
@@ -40,6 +40,7 @@ function ModalGenerarReporteActual({ isOpen, onClose, theme }) {
                 value={nombreReporte}
                 onChange={(e) => setNombreReporte(e.target.value)}
                 required
+                className={theme}
               />
             </div>
             <div className="modal-reporte-form-group">
@@ -83,7 +84,7 @@ function ModalGenerarReporteActual({ isOpen, onClose, theme }) {
                 </label>
               </div>
             </div>
-            <button type="submit" className="modal-reporte-btn-generar">
+            <button type="submit" className={`modal-reporte-btn-generar ${theme}`}>
               Generar Reporte
             </button>
           </form>

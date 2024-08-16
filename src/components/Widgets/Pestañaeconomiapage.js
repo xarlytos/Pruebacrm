@@ -356,7 +356,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           )}
                           {item.i === 'beneficioNeto' && (
                             <MetricCard
-                              title="Beneficio Neto"
+                              title="Beneficio "
                               value={`$${beneficioNeto.toFixed(2)}`}
                               description="Beneficio neto"
                               icon="💹"

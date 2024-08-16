@@ -7,6 +7,7 @@ import './DetailedReportes.css';
 function DetailedReportes({ theme, setTheme, onTabChange, activeTab }) {
   const [isRecurrentModalOpen, setIsRecurrentModalOpen] = useState(false);
   const [isActualModalOpen, setIsActualModalOpen] = useState(false);
+  const [selectedReports, setSelectedReports] = useState([]);
 
   const handleOpenRecurrentModal = () => {
     setIsRecurrentModalOpen(true);
@@ -26,10 +27,29 @@ function DetailedReportes({ theme, setTheme, onTabChange, activeTab }) {
 
   const reportes = [
     { fecha: '2024-08-01', nombre: 'Reporte Mensual Agosto', id: 1 },
+    { fecha: '2024-07-01', nombre: 'Reporte Mensual Julio', id: 2 },
+    { fecha: '2024-06-01', nombre: 'Reporte Mensual Junio', id: 3 },
   ];
 
   const handleDescargarReporte = (id) => {
     alert(`Descargando reporte con ID: ${id}`);
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      const allIds = reportes.map((reporte) => reporte.id);
+      setSelectedReports(allIds);
+    } else {
+      setSelectedReports([]);
+    }
+  };
+
+  const handleSelectReport = (id) => {
+    setSelectedReports((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((reportId) => reportId !== id)
+        : [...prevSelected, id]
+    );
   };
 
   return (
@@ -54,7 +74,11 @@ function DetailedReportes({ theme, setTheme, onTabChange, activeTab }) {
         <thead>
           <tr>
             <th className="reportes-checkbox-col">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                onChange={handleSelectAll}
+                checked={selectedReports.length === reportes.length}
+              />
             </th>
             <th>ID</th>
             <th>Título</th>
@@ -66,13 +90,22 @@ function DetailedReportes({ theme, setTheme, onTabChange, activeTab }) {
           {reportes.map((reporte) => (
             <tr key={reporte.id}>
               <td className="reportes-checkbox-col">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={selectedReports.includes(reporte.id)}
+                  onChange={() => handleSelectReport(reporte.id)}
+                />
               </td>
               <td>{reporte.id}</td>
               <td>{reporte.nombre}</td>
               <td>{reporte.fecha}</td>
               <td>
-                <button className="reportes-btn-acciones">...</button>
+                <button
+                  onClick={() => handleDescargarReporte(reporte.id)}
+                  className={`reportes-btn-descargar ${theme}`}
+                >
+                  Descargar
+                </button>
               </td>
             </tr>
           ))}

@@ -355,3 +355,109 @@
   background-color: var(--button-bg-dark);
   color: var(--button-text-dark);
 }
+/* Estilos generales */
+.Widgetgastoanadir-Exdropdown-content {
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el modo claro (light) */
+.Widgetgastoanadir-light {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.Widgetgastoanadir-light .Widgetgastoanadir-input,
+.Widgetgastoanadir-light .Widgetgastoanadir-select,
+.Widgetgastoanadir-light .Widgetgastoanadir-button {
+  background-color: #f9f9f9;
+  border: 1px solid #cccccc;
+  color: #333333;
+}
+
+.Widgetgastoanadir-light .Widgetgastoanadir-input:focus,
+.Widgetgastoanadir-light .Widgetgastoanadir-select:focus {
+  border-color: #666666;
+  outline: none;
+}
+
+.Widgetgastoanadir-light .Widgetgastoanadir-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.Widgetgastoanadir-light .Widgetgastoanadir-button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para el modo oscuro (dark) */
+.Widgetgastoanadir-dark {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+}
+
+.Widgetgastoanadir-dark .Widgetgastoanadir-input,
+.Widgetgastoanadir-dark .Widgetgastoanadir-select,
+.Widgetgastoanadir-dark .Widgetgastoanadir-button {
+  background-color: #3a3a3a;
+  border: 1px solid #555555;
+  color: #f1f1f1;
+}
+
+.Widgetgastoanadir-dark .Widgetgastoanadir-input:focus,
+.Widgetgastoanadir-dark .Widgetgastoanadir-select:focus {
+  border-color: #777777;
+  outline: none;
+}
+
+.Widgetgastoanadir-dark .Widgetgastoanadir-button {
+  background-color: #1a73e8;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.Widgetgastoanadir-dark .Widgetgastoanadir-button:hover {
+  background-color: #135ab2;
+}
+
+/* Estilos para etiquetas y títulos */
+.Widgetgastoanadir-label {
+  margin-top: 15px;
+  display: block;
+  font-weight: bold;
+}
+
+.Widgetgastoanadir-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Estilos para inputs y selects */
+.Widgetgastoanadir-input,
+.Widgetgastoanadir-select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Estilos para el botón */
+.Widgetgastoanadir-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+}

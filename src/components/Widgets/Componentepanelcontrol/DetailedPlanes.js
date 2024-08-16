@@ -1,5 +1,3 @@
-// C:\Users\usuario\Downloads\crmworkspaceEspacial\crm-frontend\src\components\Widgets\Componentepanelcontrol\DetailedPlanes.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './DetailedPlanes.css';
@@ -52,6 +50,14 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
   const totalPlanes = [...planesFijos, ...planesVariables];
   const totalSuscripciones = totalPlanes.length;
 
+  // Función para filtrar los planes vendidos en los últimos 30 días
+  const nuevosPlanesVendidos = totalPlanes.filter(plan => {
+    const planDate = new Date(plan.startDate);
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.setDate(now.getDate() - 30));
+    return planDate >= thirtyDaysAgo;
+  }).length;
+
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
@@ -62,25 +68,26 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
 
   return (
     <div className={`detailed-planes-overlay ${theme}`}>
-      <div className={`detailed-planes ${theme}`}>
-        <button className="close-modal-btn" onClick={() => onTabChange('Panel de Control')}>Cerrar</button>
-        <NavegadorDeGraficos onTabChange={onTabChange} theme={theme} />
-        
-        {/* Nuevo botón que cambia la pestaña a 'Economia' */}
-        <button 
-          className="redirect-btn" 
-          onClick={handleEconomiaTabClick}
-          style={{ 
-            backgroundColor: 'red', 
-            color: 'white', 
-            float: 'right', 
-            margin: '10px 0'
-          }} 
-        >
-          Ir a la página de Economía
-        </button>
+    <div className={`detailed-planes ${theme}`}>
+      <button className="close-modal-btn" onClick={() => onTabChange('Panel de Control')}>Cerrar</button>
+      <NavegadorDeGraficos onTabChange={onTabChange} theme={theme} />
+      
+      <button 
+        className="redirect-btn" 
+        onClick={handleEconomiaTabClick}
+        style={{ 
+          backgroundColor: 'red', 
+          color: 'white', 
+          float: 'right', 
+          margin: '10px 0'
+        }} 
+      >
+        Ir a la página de Economía
+      </button>
 
-        <div className="detailed-planes-content">
+      <div className="detailed-planes-content">
+        {/* Encapsular las métricas dentro del contenedor azul */}
+        <div className={`detailed-metrics-container ${theme}`}>
           <div className={`detailed-metrics-grid ${theme}`}>
             <div className="metrics-column">
               <MetricCardDuplicado
@@ -112,14 +119,26 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
                 theme={theme}
               />
             </div>
+            <div className="metrics-column">
+              <MetricCardDuplicado
+                title="Nuevos Planes en 30 días"
+                value={`+${nuevosPlanesVendidos}`}
+                description="Nuevos planes vendidos en el último mes"
+                icon="🆕"
+                valueClass="popup-metric-value-green"
+                theme={theme}
+              />
+            </div>
           </div>
-          <BonosDuplicado theme={theme} />
-          <TablaPlanesDuplicado theme={theme} />
-          <TablaClientesDuplicado theme={theme} />
         </div>
+        <BonosDuplicado theme={theme} />
+        <TablaPlanesDuplicado theme={theme} />
+        <TablaClientesDuplicado theme={theme} />
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default DetailedPlanes;

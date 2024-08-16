@@ -40,6 +40,28 @@ body {
   right: 0;
   bottom: 0;
 }
+.detailed-metrics-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 12px;
+  background: #5980b9; /* Fondo azul */
+}
+
+.detailed-metrics-container.light {
+  background: #5980b9; /* Fondo azul */
+  border-radius: 12px;  /* Bordes redondeados */
+}
+
+.detailed-metrics-container.dark {
+  background-color: var(--secondary-dark);
+  border-radius: 12px;  /* Bordes redondeados */
+}
+
 
 .detailed-planes {
   padding: 20px;
@@ -92,11 +114,9 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 50px;
-  margin-right: auto;
-  margin-left: auto;
+  padding: 0; /* Asegúrate de que no haya padding adicional */
+  margin: 0; /* Asegúrate de que no haya márgenes adicionales */
+  flex-wrap: wrap; /* Asegurar que las tarjetas se ajusten correctamente */
 }
 
 .detailed-metrics-grid.light {

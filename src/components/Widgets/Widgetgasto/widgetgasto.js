@@ -33,9 +33,11 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
     estado: '',
     monto: '',
     tipo: '',
+    frequency: '',
+    duration: ''
   });
-  const [selectAll, setSelectAll] = useState(false); // Estado para manejar la selección global
-  const [selectedItems, setSelectedItems] = useState([]); // Estado para manejar los elementos seleccionados
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleFilterChange = (e) => {
     setFilterText(e.target.value);
@@ -95,6 +97,8 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
         estado: '',
         monto: '',
         tipo: '',
+        frequency: '',
+        duration: ''
       });
       setIsGastoDropdownOpen(false);
     })
@@ -148,6 +152,32 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
       setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
     } else {
       setSelectedItems([...selectedItems, id]);
+    }
+  };
+
+  const getDurationLabel = () => {
+    switch (newGasto.frequency) {
+      case 'weekly':
+        return 'Duración (en semanas)';
+      case 'biweekly':
+        return 'Duración (cada 15 días)';
+      case 'monthly':
+        return 'Duración (en meses)';
+      default:
+        return 'Duración';
+    }
+  };
+
+  const getDurationPlaceholder = () => {
+    switch (newGasto.frequency) {
+      case 'weekly':
+        return 'Duración (en semanas)';
+      case 'biweekly':
+        return 'Duración (cada 15 días)';
+      case 'monthly':
+        return 'Duración (en meses)';
+      default:
+        return 'Duración';
     }
   };
 
@@ -245,125 +275,112 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
             )}
           </div>
           <div className="dropdown">
-          <button onClick={toggleGastoDropdown} className={theme}>Añadir Gasto</button>
-{isGastoDropdownOpen && (
-  <div className={`Exdropdown-content ${theme}`}>
-    <h3>Añadir Gasto</h3>
-    <form onSubmit={handleAddGasto}>
-      <label htmlFor="concept">Concepto</label>
-      <input 
-        type="text" 
-        id="concept"
-        name="concept" 
-        placeholder="Concepto" 
-        value={newGasto.concept} 
-        onChange={handleGastoChange} 
-        className={theme}
-        required
-      />
-      
-      <label htmlFor="description">Descripción</label>
-      <input 
-        type="text" 
-        id="description"
-        name="description" 
-        placeholder="Descripción" 
-        value={newGasto.description} 
-        onChange={handleGastoChange} 
-        className={theme}
-        required
-      />
+            <button onClick={toggleGastoDropdown} className={theme}>Añadir Gasto</button>
+            {isGastoDropdownOpen && (
+              <div className={`Exdropdown-content ${theme}`}>
+                <h3 className="Widgetgastoanadir-title">Añadir Gasto</h3>
+                <form onSubmit={handleAddGasto} className="Widgetgastoanadir-form">
+                  <label htmlFor="concept" className="Widgetgastoanadir-label">Concepto</label>
+                  <input 
+                    type="text" 
+                    id="concept"
+                    name="concept" 
+                    placeholder="Concepto" 
+                    value={newGasto.concept} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                    required
+                  />
+                  
+                  <label htmlFor="description" className="Widgetgastoanadir-label">Descripción</label>
+                  <input 
+                    type="text" 
+                    id="description"
+                    name="description" 
+                    placeholder="Descripción" 
+                    value={newGasto.description} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                    required
+                  />
 
-      <label htmlFor="category">Categoría</label>
-      <input 
-        type="text" 
-        id="category"
-        name="category" 
-        placeholder="Categoría" 
-        value={newGasto.category} 
-        onChange={handleGastoChange} 
-        className={theme}
-        required
-      />
+                  <label htmlFor="category" className="Widgetgastoanadir-label">Categoría</label>
+                  <input 
+                    type="text" 
+                    id="category"
+                    name="category" 
+                    placeholder="Categoría" 
+                    value={newGasto.category} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                    required
+                  />
 
-      <label htmlFor="amount">Importe</label>
-      <input 
-        type="number" 
-        id="amount"
-        name="amount" 
-        placeholder="Importe" 
-        value={newGasto.amount} 
-        onChange={handleGastoChange} 
-        className={theme}
-        required
-      />
+                  <label htmlFor="amount" className="Widgetgastoanadir-label">Importe</label>
+                  <input 
+                    type="number" 
+                    id="amount"
+                    name="amount" 
+                    placeholder="Importe" 
+                    value={newGasto.amount} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                    required
+                  />
 
-      <label htmlFor="status">Estado</label>
-      <input 
-        type="text" 
-        id="status"
-        name="status" 
-        placeholder="Estado" 
-        value={newGasto.status} 
-        onChange={handleGastoChange} 
-        className={theme}
-        required
-      />
+                  <label htmlFor="status" className="Widgetgastoanadir-label">Estado</label>
+                  <input 
+                    type="text" 
+                    id="status"
+                    name="status" 
+                    placeholder="Estado" 
+                    value={newGasto.status} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                    required
+                  />
 
-      <label htmlFor="date">Fecha</label>
-      <input 
-        type="date" 
-        id="date"
-        name="date" 
-        placeholder="Fecha" 
-        value={newGasto.date} 
-        onChange={handleGastoChange} 
-        className={theme}
-        required
-      />
+                  <label htmlFor="date" className="Widgetgastoanadir-label">Fecha</label>
+                  <input 
+                    type="date" 
+                    id="date"
+                    name="date" 
+                    placeholder="Fecha" 
+                    value={newGasto.date} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                    required
+                  />
 
-      <label htmlFor="frequency">Frecuencia (Opcional)</label>
-      <select 
-        id="frequency"
-        name="frequency" 
-        value={newGasto.frequency} 
-        onChange={handleGastoChange} 
-        className={theme}
-      >
-        <option value="">Selecciona una opción</option>
-        <option value="weekly">Semanal</option>
-        <option value="biweekly">Quincenal</option>
-        <option value="monthly">Mensual</option>
-      </select>
+                  <label htmlFor="frequency" className="Widgetgastoanadir-label">Frecuencia</label>
+                  <select 
+                    id="frequency"
+                    name="frequency" 
+                    value={newGasto.frequency} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-select ${theme}`}
+                  >
+                    <option value="">Selecciona una opción</option>
+                    <option value="weekly">Semanal</option>
+                    <option value="biweekly">Quincenal</option>
+                    <option value="monthly">Mensual</option>
+                  </select>
 
-      <label htmlFor="duration">Duración (en meses, Opcional)</label>
-      <input 
-        type="number" 
-        id="duration"
-        name="duration" 
-        placeholder="Duración (en meses, Opcional)" 
-        value={newGasto.duration} 
-        onChange={handleGastoChange} 
-        className={theme}
-      />
+                  <label htmlFor="duration" className="Widgetgastoanadir-label">{getDurationLabel()}</label>
+                  <input 
+                    type="number" 
+                    id="duration"
+                    name="duration" 
+                    placeholder={getDurationPlaceholder()} 
+                    value={newGasto.duration} 
+                    onChange={handleGastoChange} 
+                    className={`Widgetgastoanadir-input ${theme}`}
+                  />
 
-      <label htmlFor="planType">Tipo de Plan</label>
-      <select 
-        id="planType"
-        name="planType" 
-        value={newGasto.planType} 
-        onChange={handleGastoChange} 
-        className={theme}
-      >
-        <option value="">Selecciona una opción</option>
-        <option value="FixedPlan">Plan Fijo</option>
-        <option value="VariablePlan">Plan Variable</option>
-      </select>
-
-      <button type="submit" className={theme}>Añadir</button>
-    </form>
-  </div>
-)}
+                  <button type="submit" className={`Widgetgastoanadir-button ${theme}`}>Añadir</button>
+                </form>
+              </div>
+            )}
           </div>
         </div>
         {isEditMode && (

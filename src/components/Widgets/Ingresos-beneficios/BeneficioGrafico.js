@@ -1,29 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import './BeneficioGrafico.css';
 import WidgetRemoveButton from '../Componentepanelcontrol/ComponentesReutilizables/WidgetRemoveButton';
 
-const getCurrentWeekNumber = () => {
-  const currentDate = new Date();
-  const startDate = new Date(currentDate.getFullYear(), 0, 1);
-  const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
-  return Math.ceil(days / 7);
-};
-
 const getWeeksInMonth = (month, year) => {
   const weeks = [];
-  let start = 1;
-  let end;
-  
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDayOfMonth = new Date(year, month, 1);
+  const lastDayOfMonth = new Date(year, month + 1, 0);
 
-  for (let day = 1; day <= daysInMonth; day += 7) {
-    end = Math.min(day + 6 - (firstDayOfMonth === 0 ? 0 : firstDayOfMonth), daysInMonth);
+  let currentStartDate = new Date(firstDayOfMonth);
+  currentStartDate.setDate(currentStartDate.getDate() - (currentStartDate.getDay() === 0 ? 6 : currentStartDate.getDay() - 1)); // Ajustar al lunes más cercano
+
+  while (currentStartDate <= lastDayOfMonth) {
+    let endDate = new Date(currentStartDate);
+    endDate.setDate(endDate.getDate() + 6); // Finaliza el domingo de la semana
+
+    if (endDate > lastDayOfMonth) {
+      endDate = new Date(lastDayOfMonth);
+    }
+
     weeks.push({
-      start: new Date(year, month, day).toLocaleDateString(),
-      end: new Date(year, month, end).toLocaleDateString(),
+      start: currentStartDate.toLocaleDateString(),
+      end: endDate.toLocaleDateString(),
     });
+
+    currentStartDate.setDate(currentStartDate.getDate() + 7); // Pasar a la siguiente semana
   }
 
   return weeks;
@@ -34,8 +35,12 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
   const [weekIndex, setWeekIndex] = useState(0);
+  const [weeks, setWeeks] = useState([]);
 
-  const weeks = getWeeksInMonth(month, year);
+  useEffect(() => {
+    setWeeks(getWeeksInMonth(month, year));
+    setWeekIndex(0);
+  }, [month, year]);
 
   const handleNextYear = () => {
     setYear(year + 1);
@@ -47,11 +52,13 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
 
   const handleNextMonth = () => {
     setMonth((prevMonth) => (prevMonth + 1) % 12);
+    if (month === 11) setYear(year + 1);
     setWeekIndex(0);
   };
 
   const handlePreviousMonth = () => {
     setMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
+    if (month === 0) setYear(year - 1);
     setWeekIndex(0);
   };
 
@@ -67,13 +74,9 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
     }
   };
 
-  const daysInMonth = (month, year) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-
   const getDaysArray = (month, year) => {
     const days = [];
-    const numDays = daysInMonth(month, year);
+    const numDays = new Date(year, month + 1, 0).getDate();
     for (let i = 1; i <= numDays; i++) {
       days.push(i);
     }
@@ -185,14 +188,6 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
     }
   };
 
-
-
-
-
-
-
-  
-
   const options = {
     scales: {
       y: {
@@ -209,8 +204,8 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
     },
     plugins: {
       tooltip: {
-        mode: 'index',  // Sigue mostrando todos los puntos en el eje x bajo el ratón
-        intersect: false,  // Permite que el tooltip se muestre cuando el ratón está cerca de los puntos, no necesariamente sobre ellos
+        mode: 'index',
+        intersect: false,
         callbacks: {
           title: function(context) {
             if (context.length > 0) {
@@ -233,15 +228,8 @@ const BeneficioGrafico = ({ onTitleClick, isEditMode, handleRemoveItem, theme, s
     },
     maintainAspectRatio: false,
   };
-    
-  
 
-  
-
-  
-  
-  
-    const toggleTheme = () => {
+  const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 

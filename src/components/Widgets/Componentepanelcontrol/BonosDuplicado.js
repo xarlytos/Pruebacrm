@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './widgetbonosDuplicado.css';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
+import BonoCreationModal from './BonoCreationModal';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
@@ -9,8 +10,9 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
-    numero: true,
-    fecha: true,
+    nombre: true,
+    fechaComienzo: true,
+    fechaExpiracion: true,
     estado: true,
     beneficiario: true,
     monto: true,
@@ -18,8 +20,9 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
   });
 
   const [newBono, setNewBono] = useState({
-    numero: '',
-    fecha: '',
+    nombre: '',
+    fechaComienzo: '',
+    fechaExpiracion: '',
     estado: 'Pendiente',
     beneficiario: '',
     monto: 0,
@@ -48,8 +51,9 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
 
   const handleChangeStatus = (index) => {
     const newData = [...data];
-    newData[index].estado =
-      newData[index].estado === 'Activo' ? 'Pendiente' : 'Activo';
+    const estadosPosibles = ['Activo', 'No Activo', 'Pendiente'];
+    let estadoActualIndex = estadosPosibles.indexOf(newData[index].estado);
+    newData[index].estado = estadosPosibles[(estadoActualIndex + 1) % estadosPosibles.length];
     setData(newData);
   };
 
@@ -69,8 +73,8 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
   const handleCreateBono = async () => {
     const createdBono = {
       ...newBono,
-      numero: newBono.numero || data.length + 1,
-      fecha: newBono.fecha || new Date().toLocaleDateString(),
+      nombre: newBono.nombre || `Bono ${(data.length + 1)}`,
+      fechaComienzo: newBono.fechaComienzo || new Date().toISOString().split('T')[0],
     };
 
     try {
@@ -78,8 +82,9 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
       setData([...data, response.data]);
 
       setNewBono({
-        numero: '',
-        fecha: '',
+        nombre: '',
+        fechaComienzo: '',
+        fechaExpiracion: '',
         estado: 'Pendiente',
         beneficiario: '',
         monto: 0,
@@ -124,113 +129,23 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
       </div>
 
       {isPopupOpen && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <button className="close-popup-btn" onClick={handleClosePopup}>
-              X
-            </button>
-            <form className="create-bono-form">
-              {visibleColumns.numero && (
-                <div className="form-group">
-                  <label htmlFor="numero">Número de Bono</label>
-                  <input
-                    type="text"
-                    name="numero"
-                    id="numero"
-                    placeholder="Número de Bono"
-                    value={newBono.numero}
-                    onChange={handleInputChange}
-                    className={`input-${theme}`}
-                  />
-                </div>
-              )}
-
-              {visibleColumns.fecha && (
-                <div className="form-group">
-                  <label htmlFor="fecha">Fecha</label>
-                  <input
-                    type="date"
-                    name="fecha"
-                    id="fecha"
-                    value={newBono.fecha}
-                    onChange={handleInputChange}
-                    className={`input-${theme}`}
-                  />
-                </div>
-              )}
-
-              {visibleColumns.estado && (
-                <div className="form-group">
-                  <label htmlFor="estado">Estado</label>
-                  <input
-                    type="text"
-                    name="estado"
-                    id="estado"
-                    value={newBono.estado}
-                    onChange={handleInputChange}
-                    className={`input-${theme}`}
-                  />
-                </div>
-              )}
-
-              {visibleColumns.beneficiario && (
-                <div className="form-group">
-                  <label htmlFor="beneficiario">Beneficiario</label>
-                  <input
-                    type="text"
-                    name="beneficiario"
-                    id="beneficiario"
-                    placeholder="Beneficiario"
-                    value={newBono.beneficiario}
-                    onChange={handleInputChange}
-                    className={`input-${theme}`}
-                  />
-                </div>
-              )}
-
-              {visibleColumns.monto && (
-                <div className="form-group">
-                  <label htmlFor="monto">Importe</label>
-                  <input
-                    type="number"
-                    name="monto"
-                    id="monto"
-                    placeholder="Monto"
-                    value={newBono.monto}
-                    onChange={handleInputChange}
-                    className={`input-${theme}`}
-                  />
-                </div>
-              )}
-
-              {visibleColumns.tipo && (
-                <div className="form-group">
-                  <label htmlFor="tipo">Tipo de Bono</label>
-                  <input
-                    type="text"
-                    name="tipo"
-                    id="tipo"
-                    placeholder="Tipo de Bono"
-                    value={newBono.tipo}
-                    onChange={handleInputChange}
-                    className={`input-${theme}`}
-                  />
-                </div>
-              )}
-            </form>
-            <button className={`create-btn ${theme}`} onClick={handleCreateBono}>
-              Crear Bono
-            </button>
-          </div>
-        </div>
+        <BonoCreationModal 
+          visibleColumns={visibleColumns}
+          newBono={newBono}
+          handleInputChange={handleInputChange}
+          handleClosePopup={handleClosePopup}
+          handleCreateBono={handleCreateBono}
+          theme={theme}
+        />
       )}
 
       <table>
         <thead>
           <tr>
             <th></th>
-            {visibleColumns.numero && <th>Número de Bono</th>}
-            {visibleColumns.fecha && <th>Fecha</th>}
+            {visibleColumns.nombre && <th>Nombre de Bono</th>}
+            {visibleColumns.fechaComienzo && <th>Fecha de Comienzo</th>}
+            {visibleColumns.fechaExpiracion && <th>Fecha de Expiración</th>}
             {visibleColumns.estado && <th>Estado</th>}
             {visibleColumns.beneficiario && <th>Beneficiario</th>}
             {visibleColumns.monto && <th>Importe</th>}
@@ -244,8 +159,9 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
               <td>
                 <input type="checkbox" />
               </td>
-              {visibleColumns.numero && <td>{item.numero}</td>}
-              {visibleColumns.fecha && <td>{item.fecha}</td>}
+              {visibleColumns.nombre && <td>{item.nombre}</td>}
+              {visibleColumns.fechaComienzo && <td>{item.fechaComienzo}</td>}
+              {visibleColumns.fechaExpiracion && <td>{item.fechaExpiracion}</td>}
               {visibleColumns.estado && <td>{item.estado}</td>}
               {visibleColumns.beneficiario && <td>{item.beneficiario}</td>}
               {visibleColumns.monto && <td>{item.monto}</td>}

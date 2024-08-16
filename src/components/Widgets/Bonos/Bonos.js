@@ -9,8 +9,9 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
-    numero: true,
-    fecha: true,
+    nombre: true,
+    fechaComienzo: true,
+    fechaExpiracion: true,
     estado: true,
     beneficiario: true,
     monto: true,
@@ -22,6 +23,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
     tipo: '',
     descripcion: '',
     fechaExpiracion: '',
+    fechaComienzo: '',
     servicio: '',
     sesiones: '',
     fechaVenta: '',
@@ -59,7 +61,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
 
     const newBono = {
       ...formData,
-      numero: `B${(data.length + 1).toString().padStart(3, '0')}`,
+      nombre: `B${(data.length + 1).toString().padStart(3, '0')}`,
       fechaCreacion: new Date().toISOString()
     };
 
@@ -75,6 +77,7 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
         tipo: '',
         descripcion: '',
         fechaExpiracion: '',
+        fechaComienzo: '',
         servicio: '',
         sesiones: '',
         fechaVenta: '',
@@ -96,7 +99,9 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
 
   const handleChangeStatus = (index) => {
     const newData = [...data];
-    newData[index].estado = newData[index].estado === 'Activo' ? 'Pendiente' : 'Activo';
+    const estadosPosibles = ['Activo', 'No Activo', 'Pendiente'];
+    let estadoActualIndex = estadosPosibles.indexOf(newData[index].estado);
+    newData[index].estado = estadosPosibles[(estadoActualIndex + 1) % estadosPosibles.length];
     setData(newData);
   };
 
@@ -105,7 +110,6 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
     setData(filteredData);
   };
 
-  // Filtramos los datos basados en el texto de búsqueda
   const filteredData = data.filter(item =>
     Object.values(item).some(val =>
       val.toString().toLowerCase().includes(filterText.toLowerCase())
@@ -116,7 +120,6 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
     <div className={`Widget-bono-widget-bonos ${theme}`}>
       <h2 onClick={onTitleClick}>Bonos</h2>
       <div className="Widget-bono-controls">
-        {/* Barra de búsqueda funcional */}
         <input
           type="text"
           placeholder="Buscar por cualquier campo..."
@@ -148,19 +151,31 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
                     value={formData.cliente} 
                     onChange={handleInputChange} 
                   />
-                  <input 
-                    type="text" 
+                  <select 
                     name="tipo" 
-                    placeholder="Tipo" 
                     value={formData.tipo} 
                     onChange={handleInputChange} 
                     required
-                  />
+                  >
+                    <option value="">Seleccionar tipo</option>
+                    <option value="Descuento">Descuento</option>
+                    <option value="Promoción">Promoción</option>
+                    <option value="Cashback">Cashback</option>
+                    <option value="Regalo">Regalo</option>
+                  </select>
                   <textarea 
                     name="descripcion" 
                     placeholder="Descripción" 
                     value={formData.descripcion} 
                     onChange={handleInputChange}
+                  />
+                  <input 
+                    type="date" 
+                    name="fechaComienzo" 
+                    placeholder="Fecha de Comienzo" 
+                    value={formData.fechaComienzo} 
+                    onChange={handleInputChange} 
+                    required
                   />
                   <input 
                     type="date" 
@@ -221,8 +236,9 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
         <thead className={theme}>
           <tr>
             <th></th>
-            {visibleColumns.numero && <th>Número de Bono</th>}
-            {visibleColumns.fecha && <th>Fecha</th>}
+            {visibleColumns.nombre && <th>Nombre de Bono</th>}
+            {visibleColumns.fechaComienzo && <th>Fecha de Comienzo</th>}
+            {visibleColumns.fechaExpiracion && <th>Fecha de Expiración</th>}
             {visibleColumns.estado && <th>Estado</th>}
             {visibleColumns.beneficiario && <th>Beneficiario</th>}
             {visibleColumns.monto && <th>Importe</th>}
@@ -234,8 +250,9 @@ const Bonos = ({ isEditMode, onTitleClick, theme }) => {
           {filteredData.map((item, index) => (
             <tr key={index} className={theme}>
               <td><input type="checkbox" /></td>
-              {visibleColumns.numero && <td>{item.numero}</td>}
-              {visibleColumns.fecha && <td>{item.fecha}</td>}
+              {visibleColumns.nombre && <td>{item.nombre}</td>}
+              {visibleColumns.fechaComienzo && <td>{item.fechaComienzo}</td>}
+              {visibleColumns.fechaExpiracion && <td>{item.fechaExpiracion}</td>}
               {visibleColumns.estado && <td>{item.estado}</td>}
               {visibleColumns.beneficiario && <td>{item.beneficiario}</td>}
               {visibleColumns.monto && <td>{item.monto}</td>}

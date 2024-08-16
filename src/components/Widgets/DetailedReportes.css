@@ -137,6 +137,30 @@
   background-color: var(--primary-dark);
 }
 
+.reportes-btn-descargar {
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+  border: 1px solid var(--button-border-light);
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.reportes-btn-descargar.dark {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border: 1px solid var(--button-border-dark);
+}
+
+.reportes-btn-descargar:hover {
+  background-color: var(--primary-light);
+}
+
+.reportes-btn-descargar.dark:hover {
+  background-color: var(--primary-dark);
+}
+
 .reportes-pagination {
   display: flex;
   justify-content: space-between;
