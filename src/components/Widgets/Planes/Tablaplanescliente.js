@@ -19,7 +19,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
     plan: true,
     clientes: true,
     precio: true,
-    duracion: true,
+    tipoPlan: true,  // Cambiado de "duracion" a "tipoPlan"
   });
   const [currentTable, setCurrentTable] = useState('planes');
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
@@ -264,7 +264,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
                   {visibleColumns.nombre && <th onClick={() => handleSort('name')}>Nombre del Plan</th>}
                   {visibleColumns.clientes && <th>Clientes</th>}
                   {visibleColumns.precio && <th>Precio</th>}
-                  {visibleColumns.duracion && <th>Duración</th>}
+                  {visibleColumns.tipoPlan && <th>Tipo de Plan</th>} {/* Modificado a Tipo de Plan */}
                   <th>Opciones</th>
                 </>
               ) : (
@@ -293,7 +293,7 @@ const Tablaplanescliente = ({ isEditMode, onTitleClick }) => {
                     {visibleColumns.nombre && <td>{item.name}</td>}
                     {visibleColumns.clientes && <td>{renderClientColumn(item._id)}</td>}
                     {visibleColumns.precio && <td>{item.rate || item.hourlyRate}</td>}
-                    {visibleColumns.duracion && <td>{item.contractDuration || 'N/A'}</td>}
+                    {visibleColumns.tipoPlan && <td>{item.contractDuration ? 'Fijo' : 'Variable'}</td>} {/* Mostrar el tipo de plan */}
                     <td>
                       <div className="Widgetplanes-dropdown">
                         <button className="Widgetplanes-dropbtn" onClick={() => toggleDropdown(item._id)}>...</button>

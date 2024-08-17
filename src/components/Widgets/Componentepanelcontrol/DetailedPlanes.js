@@ -93,7 +93,6 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
               <MetricCardDuplicado
                 title="Clientes Actuales"
                 value={`+${clientes.length}`}
-                description="+201 desde la última hora"
                 icon="📈"
                 valueClass="popup-metric-value-green"
                 theme={theme}
@@ -103,7 +102,6 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
               <MetricCardDuplicado
                 title="Planes Vendidos"
                 value={`+${totalPlanes.length}`}
-                description="+19% respecto al mes pasado"
                 icon="📄"
                 valueClass="popup-metric-value-green"
                 theme={theme}
@@ -111,9 +109,8 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
             </div>
             <div className="metrics-column">
               <MetricCardDuplicado
-                title="Planes"
+                title="Nuevos Planes"
                 value={`+${totalSuscripciones}`}
-                description="+180.1% respecto al mes pasado"
                 icon="👥"
                 valueClass="popup-metric-value-green"
                 theme={theme}
@@ -121,9 +118,8 @@ const DetailedPlanes = ({ onTabChange, theme, setTheme }) => {
             </div>
             <div className="metrics-column">
               <MetricCardDuplicado
-                title="Nuevos Planes en 30 días"
-                value={`+${nuevosPlanesVendidos}`}
-                description="Nuevos planes vendidos en el último mes"
+                title="Nuevos Clientes en ultimos 30 días"
+                value={`+${clientes.length}`}
                 icon="🆕"
                 valueClass="popup-metric-value-green"
                 theme={theme}

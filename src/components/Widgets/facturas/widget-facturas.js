@@ -4,9 +4,10 @@ import ModalDeEscaneoDeFacturas from './ModalDeEscaneoDeFacturas';
 import CreacionDeFacturas from './CreacionDeFacturas';
 import NavbarFiltrosFacturas from './NavbarFiltrosFacturas';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
+import ScanInvoiceForm from './Duplicados/ScanInvoiceForm';
+import Modal from './Modal'; // Importa el nuevo componente Modal
 
-const initialData = [
-];
+const initialData = [];
 
 const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, setTheme }) => {
   const [data, setData] = useState(initialData);
@@ -27,10 +28,18 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
     maxMonto: '',
     tipo: '',
     plan: '',
+    invoiceDate: '',
+    paymentMethod: '',
+    total: '',
+    type: '',
+    personType: '',
+    name: '',
+    surname: '',
+    serviceCode: '',
   });
   const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
   const [isColumnDropdownOpen, setIsColumnDropdownOpen] = useState(false);
-  const [isScanModalOpen, setIsScanModalOpen] = useState(false);
+  const [isScanModalOpen, setIsScanModalOpen] = useState(false); // Estado para controlar la visibilidad de ScanInvoiceForm
   const [isCreationModalOpen, setIsCreationModalOpen] = useState(false);
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [optionsOpenIndex, setOptionsOpenIndex] = useState(null);
@@ -63,11 +72,11 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
   };
 
   const handleOpenScanModal = () => {
-    setIsScanModalOpen(true);
+    setIsScanModalOpen(true); // Abre el modal de escaneo
   };
 
   const handleCloseScanModal = () => {
-    setIsScanModalOpen(false);
+    setIsScanModalOpen(false); // Cierra el modal de escaneo
   };
 
   const handleOpenCreationModal = () => {
@@ -105,7 +114,18 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
       const maxMontoCondition = filters.maxMonto ? parseFloat(item.monto.replace(/[^0-9.-]+/g, "")) <= parseFloat(filters.maxMonto) : true;
       const tipoCondition = filters.tipo ? item.tipo === filters.tipo : true;
       const planCondition = filters.plan ? item.plan === filters.plan : true;
-      return startDateCondition && endDateCondition && estatusCondition && minMontoCondition && maxMontoCondition && tipoCondition && planCondition;
+      
+      const invoiceDateCondition = filters.invoiceDate ? new Date(item.invoiceDate).toISOString().split('T')[0] === filters.invoiceDate : true;
+      const paymentMethodCondition = filters.paymentMethod ? item.paymentMethod.toLowerCase().includes(filters.paymentMethod.toLowerCase()) : true;
+      const totalCondition = filters.total ? item.total === parseFloat(filters.total) : true;
+      const typeCondition = filters.type ? item.type === filters.type : true;
+      const personTypeCondition = filters.personType ? item.personType.toLowerCase().includes(filters.personType.toLowerCase()) : true;
+      const nameCondition = filters.name ? item.name.toLowerCase().includes(filters.name.toLowerCase()) : true;
+      const surnameCondition = filters.surname ? item.surname.toLowerCase().includes(filters.surname.toLowerCase()) : true;
+      const serviceCodeCondition = filters.serviceCode ? item.services.some(service => service.serviceCode.toLowerCase().includes(filters.serviceCode.toLowerCase())) : true;
+
+      return startDateCondition && endDateCondition && estatusCondition && minMontoCondition && maxMontoCondition && tipoCondition && planCondition
+        && invoiceDateCondition && paymentMethodCondition && totalCondition && typeCondition && personTypeCondition && nameCondition && surnameCondition && serviceCodeCondition;
     });
   };
 
@@ -143,111 +163,105 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
             {isFilterDropdownOpen && (
               <div className={`Prevdropdown-content ${theme}`}>
                 <div className="Prevprevisiones-filtros">
-                  <div className="Prevfilter-field">
-                    <label>Fecha Inicio:</label>
+                  {/* Filtro por Fecha de Factura */}
+                  <div className="filter-field">
+                    <label>Fecha de Factura:</label>
                     <input
                       type="date"
-                      name="startDate"
-                      value={filters.startDate}
+                      name="invoiceDate"
+                      value={filters.invoiceDate}
                       onChange={handleFilterFieldChange}
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-                  <div className="Prevfilter-field">
-                    <label>Fecha Fin:</label>
+
+                  {/* Filtro por Método de Pago */}
+                  <div className="filter-field">
+                    <label>Método de Pago:</label>
                     <input
-                      type="date"
-                      name="endDate"
-                      value={filters.endDate}
+                      type="text"
+                      name="paymentMethod"
+                      value={filters.paymentMethod}
                       onChange={handleFilterFieldChange}
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-                  <div className="Prevfilter-field">
-                    <label>Estatus:</label>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('estatus', 'Pagado')}
-                      className={`widget-button ${filters.estatus === 'Pagado' ? 'active' : ''} ${theme}`}
-                    >
-                      Pagado
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('estatus', 'Pendiente')}
-                      className={`widget-button ${filters.estatus === 'Pendiente' ? 'active' : ''} ${theme}`}
-                    >
-                      Pendiente
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('estatus', 'Cancelado')}
-                      className={`widget-button ${filters.estatus === 'Cancelado' ? 'active' : ''} ${theme}`}
-                    >
-                      Cancelado
-                    </button>
-                  </div>
-                  <div className="Prevfilter-field">
-                    <label>Importe Mín:</label>
+
+                  {/* Filtro por Total */}
+                  <div className="filter-field">
+                    <label>Total:</label>
                     <input
                       type="number"
-                      name="minMonto"
-                      value={filters.minMonto}
+                      name="total"
+                      value={filters.total}
                       onChange={handleFilterFieldChange}
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-                  <div className="Prevfilter-field">
-                    <label>Importe Máx:</label>
+
+                  {/* Filtro por Tipo de Factura */}
+                  <div className="filter-field">
+                    <label>Tipo de Factura:</label>
+                    <select
+                      name="type"
+                      value={filters.type}
+                      onChange={handleFilterFieldChange}
+                      className={`widget-filter-input ${theme}`}
+                    >
+                      <option value="">Todos</option>
+                      <option value="received">Recibida</option>
+                      <option value="made">Emitida</option>
+                    </select>
+                  </div>
+
+                  {/* Filtro por Tipo de Persona */}
+                  <div className="filter-field">
+                    <label>Tipo de Persona:</label>
                     <input
-                      type="number"
-                      name="maxMonto"
-                      value={filters.maxMonto}
+                      type="text"
+                      name="personType"
+                      value={filters.personType}
                       onChange={handleFilterFieldChange}
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-                  <div className="Prevfilter-field">
-                    <label>Tipo:</label>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('tipo', 'Creada')}
-                      className={`widget-button ${filters.tipo === 'Creada' ? 'active' : ''} ${theme}`}
-                    >
-                      Creada
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('tipo', 'Escaneada')}
-                      className={`widget-button ${filters.tipo === 'Escaneada' ? 'active' : ''} ${theme}`}
-                    >
-                      Escaneada
-                    </button>
+
+                  {/* Filtro por Nombre */}
+                  <div className="filter-field">
+                    <label>Nombre:</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={filters.name}
+                      onChange={handleFilterFieldChange}
+                      className={`widget-filter-input ${theme}`}
+                    />
                   </div>
-                  <div className="Prevfilter-field">
-                    <label>Plan:</label>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('plan', 'Básico')}
-                      className={`widget-button ${filters.plan === 'Básico' ? 'active' : ''} ${theme}`}
-                    >
-                      Básico
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('plan', 'Estándar')}
-                      className={`widget-button ${filters.plan === 'Estándar' ? 'active' : ''} ${theme}`}
-                    >
-                      Estándar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFilterToggleChange('plan', 'Premium')}
-                      className={`widget-button ${filters.plan === 'Premium' ? 'active' : ''} ${theme}`}
-                    >
-                      Premium
-                    </button>
+
+                  {/* Filtro por Apellido */}
+                  <div className="filter-field">
+                    <label>Apellido:</label>
+                    <input
+                      type="text"
+                      name="surname"
+                      value={filters.surname}
+                      onChange={handleFilterFieldChange}
+                      className={`widget-filter-input ${theme}`}
+                    />
                   </div>
+
+                  {/* Filtro por Código de Servicio */}
+                  <div className="filter-field">
+                    <label>Código de Servicio:</label>
+                    <input
+                      type="text"
+                      name="serviceCode"
+                      value={filters.serviceCode}
+                      onChange={handleFilterFieldChange}
+                      className={`widget-filter-input ${theme}`}
+                    />
+                  </div>
+
                 </div>
               </div>
             )}
@@ -273,7 +287,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
               )}
             </div>
           )}
-          <button className={`WidgetFacturas-scan-btn ${theme}`} onClick={onTitleClick}>Escanear Factura</button>
+          <button className={`WidgetFacturas-scan-btn ${theme}`} onClick={handleOpenScanModal}>Escanear Factura</button> {/* Aquí */}
           <button className={`WidgetFacturas-add-btn ${theme}`} onClick={handleOpenCreationModal}>Añadir Factura</button>
         </div>
       </div>
@@ -329,6 +343,12 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
         </tbody>
       </table>
       <CreacionDeFacturas isOpen={isCreationModalOpen} closeModal={handleCloseCreationModal} onAddFactura={handleAddFactura} theme={theme} />
+      {isScanModalOpen && ( // Renderizar ScanInvoiceForm solo si isScanModalOpen es true
+        <Modal closeModal={handleCloseScanModal}> {/* Utiliza el componente Modal para hacer que ScanInvoiceForm sea un modal */}
+          <ScanInvoiceForm closeModal={handleCloseScanModal} />
+        </Modal>
+      )}
+      <ModalDeEscaneoDeFacturas isOpen={isDetailedModalOpen} closeModal={handleCloseDetailedModal} theme={theme} /> {/* Mantenido */}
     </div>
   );
 }

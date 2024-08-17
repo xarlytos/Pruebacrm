@@ -1,11 +1,11 @@
-// src/components/DetailedDocumento.js
-
 import React, { useState } from 'react';
+import axios from 'axios';
 import './DetailedDocumento.css';
 import WidgetLicenciasDuplicado from './Duplicados/WidgetLicenciasDuplicado';
 import WidgetContratosDuplicado from './Duplicados/WidgetContratosDuplicado';
 import WidgetDocumentosOtros from './widget-Documentos-otros';
 import NavegadorDeGraficos from '../Componentepanelcontrol/NavegadorDeGraficos';
+import WidgetAlertas from './widget-Alertas'; // Importamos el nuevo componente
 
 const DetailedDocumento = ({ onTabChange, theme, setTheme }) => {
   const [isAlarmPopupOpen, setIsAlarmPopupOpen] = useState(false);
@@ -51,10 +51,23 @@ const DetailedDocumento = ({ onTabChange, theme, setTheme }) => {
     });
   };
 
-  const handleCreateAlert = () => {
-    setAlerts([...alerts, { ...newAlert, _id: Date.now(), status: 'pendiente', __v: 0 }]);
-    setNewAlert({ title: '', message: '', alertDate: '', displayDate: '', tipo: 'licencia' });
-    setIsAlarmPopupOpen(false);
+  const handleCreateAlert = async () => {
+    try {
+      const response = await axios.post('https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com/api/alertas/', {
+        status: 'pendiente',
+        title: newAlert.title,
+        message: newAlert.message,
+        alertDate: newAlert.alertDate,
+        displayDate: newAlert.displayDate,
+        tipo: 'licencia', // Aseguramos que siempre sea "licencia"
+      });
+
+      setAlerts([...alerts, response.data]);
+      setNewAlert({ title: '', message: '', alertDate: '', displayDate: '', tipo: 'licencia' });
+      setIsAlarmPopupOpen(false);
+    } catch (error) {
+      console.error("Error al crear la alerta:", error);
+    }
   };
 
   const licencias = [
@@ -104,6 +117,9 @@ const DetailedDocumento = ({ onTabChange, theme, setTheme }) => {
         </div>
         <div className="documentos-otros-section">
           <WidgetDocumentosOtros isEditMode={true} theme={theme} />
+        </div>
+        <div className="alertas-section"> {/* Sección para alertas */}
+          <WidgetAlertas /> {/* Incluir el componente WidgetAlertas */}
         </div>
 
         {isAlarmPopupOpen && (
@@ -157,37 +173,6 @@ const DetailedDocumento = ({ onTabChange, theme, setTheme }) => {
             </button>
           </div>
         )}
-
-        <div className="alerts-section">
-          <h3>Alertas</h3>
-          <div className="form-group">
-            <label htmlFor="start">Fecha de inicio</label>
-            <input
-              type="date"
-              name="start"
-              id="start"
-              value={dateRange.start}
-              onChange={handleDateRangeChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="end">Fecha de fin</label>
-            <input
-              type="date"
-              name="end"
-              id="end"
-              value={dateRange.end}
-              onChange={handleDateRangeChange}
-            />
-          </div>
-          <ul>
-            {filteredAlerts.map(alert => (
-              <li key={alert._id}>
-                {alert.title} - {alert.alertDate} - {alert.message} (Mostrar desde {alert.displayDate})
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </div>
   );

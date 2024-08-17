@@ -5,7 +5,7 @@ import DetailedIngresoBeneficio from './Componentepanelcontrol/DetailedIngresoBe
 import DetailedDocumento from './Documentos/DetailedDocumento';
 import DetailedFactura from './facturas/DetailedFactura';
 import DetailedPlanes from './Componentepanelcontrol/DetailedPlanes';
-import DetailedReportes from './DetailedReportes'; // Importar el componente de reportes
+import DetailedReportes from './DetailedReportes';
 
 import ModalDeEscaneoDeFacturas from './facturas/ModalDeEscaneoDeFacturas';
 import NavegadorDeGraficos from './Componentepanelcontrol/NavegadorDeGraficos';
@@ -23,7 +23,7 @@ import Tablaplanescliente from './Planes/Tablaplanescliente';
 import Bonos from './Bonos/Bonos';
 import WidgetCuentaBancaria from './Gastos/widget-gastos';
 import WidgetPrevisionesPopup from './Componentepanelcontrol/DuplicadosPopup/WidgetPrevisionesPopup';
-import Alertas from './Alertas/Alertas'; // Importar el widget Alertas
+import Alertas from './Alertas/Alertas';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './Pestañaeconomiapage.css';
@@ -49,41 +49,35 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const [showControlPanel, setShowControlPanel] = useState(true);
   const [layout, setLayout] = useState([
-    { i: 'proyeccionMes', x: 0, y: 0, w: 3, h: 2 },        // Primer fila, primera tarjeta
-    { i: 'gastoMensual', x: 3, y: 0, w: 3, h: 2 },        // Primer fila, segunda tarjeta
-    { i: 'planesVendidos', x: 6, y: 0, w: 3, h: 2 },       // Primer fila, tercera tarjeta
-    { i: 'clientesActuales', x: 9, y: 0, w: 3, h: 2 },     // Primer fila, cuarta tarjeta
-    
-    { i: 'beneficioNeto', x: 0, y: 2, w: 3, h: 2 },      // Segunda fila, primera tarjeta
-    { i: 'ingresos', x: 3, y: 2, w: 3, h: 2 },       // Segunda fila, segunda tarjeta
-    { i: 'margenGanancia', x: 6, y: 2, w: 3, h: 2 },            // Segunda fila, tercera tarjeta
-    { i: 'clientesNuevos', x: 9, y: 2, w: 3, h: 2 },               // Segunda fila, cuarta tarjeta
-    
-    { i: 'overviewChart', x: 0, y: 4, w: 6, h: 5 },        // Tercera fila, ocupa la mitad del ancho
-    { i: 'recentSales', x: 6, y: 4, w: 6, h: 5 },          // Tercera fila, ocupa la otra mitad
-    { i: 'previsiones', x: 0, y: 9, w: 6, h: 4 },          // Cuarta fila, primera columna
-    { i: 'gasto', x: 6, y: 9, w: 6, h: 4 },                // Cuarta fila, segunda columna
-    { i: 'documentos', x: 0, y: 13, w: 6, h: 5 },          // Quinta fila, primera columna
-    { i: 'facturas', x: 6, y: 13, w: 6, h: 5 },            // Quinta fila, segunda columna
-    { i: 'cuentaBancaria', x: 0, y: 18, w: 6, h: 4 },      // Sexta fila, primera columna
-    { i: 'beneficioGrafico', x: 6, y: 18, w: 6, h: 4 },    // Sexta fila, segunda columna
-    { i: 'tablaPlanes', x: 0, y: 22, w: 6, h: 4 },         // Séptima fila, primera columna
-    { i: 'bonos', x: 6, y: 22, w: 6, h: 4 },               // Séptima fila, segunda columna
-    { i: 'alertas', x: 0, y: 26, w: 12, h: 4 },            // Octava fila, widget de alertas
-  ]);
+    { i: 'proyeccionMes', x: 0, y: 0, w: 3, h: 2 },
+    { i: 'gastoMensual', x: 3, y: 0, w: 3, h: 2 },
+    { i: 'planesVendidos', x: 6, y: 0, w: 3, h: 2 },
+    { i: 'clientesActuales', x: 9, y: 0, w: 3, h: 2 },
+    { i: 'ingresoMensual', x: 0, y: 2, w: 3, h: 2 },
+    { i: 'ingresos', x: 3, y: 2, w: 3, h: 2 },
+    { i: 'margenGanancia', x: 6, y: 2, w: 3, h: 2 },
+    { i: 'clientesNuevos', x: 9, y: 2, w: 3, h: 2 },
+    { i: 'overviewChart', x: 0, y: 4, w: 6, h: 5 },
+    { i: 'recentSales', x: 6, y: 4, w: 6, h: 5 },
+    { i: 'alertas', x: 0, y: 9, w: 6, h: 4 },         // Alertas a la izquierda
+    { i: 'gasto', x: 6, y: 9, w: 6, h: 4 },            // Gastos a la derecha de Alertas
+    { i: 'cuentaBancaria', x: 0, y: 13, w: 6, h: 4 },  // Cuenta Bancaria debajo de Alertas
+    { i: 'beneficioGrafico', x: 6, y: 13, w: 6, h: 4 }, // Cashflow (Beneficio Gráfico) a la derecha de Cuenta Bancaria
+    { i: 'documentos', x: 0, y: 17, w: 6, h: 5 },       // Documentos debajo de Cuenta Bancaria
+    { i: 'facturas', x: 6, y: 17, w: 6, h: 5 },         // Facturas a la derecha de Documentos
+    { i: 'tablaPlanes', x: 0, y: 22, w: 6, h: 4 },      // Planes de Clientes debajo de Documentos
+    { i: 'bonos', x: 6, y: 22, w: 6, h: 4 }             // Bonos a la derecha de Planes de Clientes
+]);
 
   const [proyeccionMes, setProyeccionMes] = useState(0);
   const [totalGastos, setTotalGastos] = useState(0);
-  const [beneficioNeto, setBeneficioNeto] = useState(0);
+  const [ingresoMensual, setIngresoMensual] = useState(0);
   const [totalIngresos, setTotalIngresos] = useState(0);
   const [margenGanancia, setMargenGanancia] = useState(0);
   const [suscripciones, setSuscripciones] = useState(0);
   const [planesVendidos, setPlanesVendidos] = useState(0);
   const [clientesActuales, setClientesActuales] = useState(0);
-  const [ingresoAbsoluto, setIngresoAbsoluto] = useState(0);
-  const [ingresoMensual, setIngresoMensual] = useState(0);
-  const [beneficio, setBeneficio] = useState(0);
-  const [gastos, setGastos] = useState([]);  // Ahora es un array
+  const [gastos, setGastos] = useState([]);
   const [ingresosEsperados, setIngresosEsperados] = useState([]);
 
   const handleToggleDropdown = (event, content) => {
@@ -91,8 +85,8 @@ function Pestañaeconomiapage({ theme, setTheme }) {
     setDropdownContent(content);
     setIsDropdownOpen(!isDropdownOpen);
     setDropdownPosition({
-      top: buttonRect.bottom + window.scrollY + 5, // Ajuste para que no esté pegado al botón
-      left: buttonRect.left + window.scrollX + 5,  // Ajuste para que no esté pegado al botón
+      top: buttonRect.bottom + window.scrollY + 5, 
+      left: buttonRect.left + window.scrollX + 5,
     });
   };
 
@@ -114,18 +108,23 @@ function Pestañaeconomiapage({ theme, setTheme }) {
         const planesVendidos = planesFijosResponse.data.length + planesVariablesResponse.data.length;
         const clientesActuales = clientesResponse.data.length;
 
+        const currentMonth = new Date().getMonth() + 1;
+        const ingresoMensual = ingresosData
+          .filter(ingreso => new Date(ingreso.fecha).getMonth() + 1 === currentMonth)
+          .reduce((acc, ingreso) => acc + parseFloat(ingreso.cantidad || 0), 0);
+
         setTotalIngresos(totalIngresos);
         setGastos(gastosData);
         setTotalGastos(totalGastos);
         setPlanesVendidos(planesVendidos);
         setClientesActuales(clientesActuales);
         setIngresosEsperados(ingresosData);
+        setIngresoMensual(ingresoMensual);
 
         const beneficioNeto = totalIngresos - totalGastos;
         const margenGanancia = totalIngresos > 0 ? (beneficioNeto / totalIngresos) * 100 : 0;
-        setBeneficioNeto(beneficioNeto);
-        setMargenGanancia(margenGanancia);
         setProyeccionMes(beneficioNeto);
+        setMargenGanancia(margenGanancia);
 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -222,9 +221,10 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
+  
   const getValueClass = (value, isExpense = false) => {
     if (isExpense) {
-      return 'panelcontrol-metric-value-red'; // Siempre rojo para los gastos
+      return 'panelcontrol-metric-value-red';
     }
     return value < 0 ? 'panelcontrol-metric-value-red' : 'panelcontrol-metric-value-green';
   };
@@ -251,13 +251,13 @@ function Pestañaeconomiapage({ theme, setTheme }) {
       case 'Facturas':
         handleOpenDetailedFactura();
         break;
-        case 'Reportes':
-          setIsDetailedModalOpen(false);
-          setIsDetailedDocumentoOpen(false);
-          setIsDetailedFacturaOpen(false);
-          setIsDetailedPlanesOpen(false);
-          setShowControlPanel(false);
-              break;  
+      case 'Reportes':
+        setIsDetailedModalOpen(false);
+        setIsDetailedDocumentoOpen(false);
+        setIsDetailedFacturaOpen(false);
+        setIsDetailedPlanesOpen(false);
+        setShowControlPanel(false);
+        break;
       default:
         break;
     }
@@ -275,19 +275,19 @@ function Pestañaeconomiapage({ theme, setTheme }) {
         planesVendidos={planesVendidos}
         clientesActuales={clientesActuales}
         gastos={gastos}
-        ingresosEsperados={ingresosEsperados} // Se pasa como prop aquí
+        ingresosEsperados={ingresosEsperados}
       />}
       {isDetailedDocumentoOpen && <DetailedDocumento onTabChange={handleTabChange} activeTab={activeTab} theme={theme} setTheme={setTheme} />}
       {isDetailedFacturaOpen && <DetailedFactura onTabChange={handleTabChange} activeTab={activeTab} theme={theme} setTheme={setTheme} />}
       {isDetailedPlanesOpen && <DetailedPlanes onTabChange={handleTabChange} activeTab={activeTab} theme={theme} setTheme={setTheme} />}
       {activeTab === 'Reportes' && (
-      <DetailedReportes
-        onTabChange={handleTabChange}
-        activeTab={activeTab}
-        theme={theme}
-        setTheme={setTheme}
-      />
-    )}
+        <DetailedReportes
+          onTabChange={handleTabChange}
+          activeTab={activeTab}
+          theme={theme}
+          setTheme={setTheme}
+        />
+      )}
 
       {isScanModalOpen && <ModalDeEscaneoDeFacturas isOpen={isScanModalOpen} onClose={handleCloseScanModal} theme={theme} setTheme={setTheme} />}
       {showControlPanel && !isDetailedModalOpen && !isDetailedDocumentoOpen && !isDetailedFacturaOpen && !isDetailedPlanesOpen && !isScanModalOpen && (
@@ -332,10 +332,10 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                               <button className="widget-remove-btn" onClick={() => handleRemoveItem(item.i)}>×</button>
                             </>
                           )}
-                                 {item.i === 'proyeccionMes' && (
+                          {item.i === 'proyeccionMes' && (
                             <MetricCard
                               title="Proyección del Mes"
-                              value={`$${proyeccionMes.toFixed(2)}`}
+                              value={`$${(proyeccionMes || 0).toFixed(2)}`}
                               description="Proyección del mes"
                               icon="📈"
                               valueClass={getValueClass(proyeccionMes)}
@@ -346,7 +346,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'gastoMensual' && (
                             <MetricCard
                               title="Gasto Mensual"
-                              value={`$${totalGastos.toFixed(2)}`}
+                              value={`$${(totalGastos || 0).toFixed(2)}`}
                               description="Gasto mensual"
                               icon="💸"
                               valueClass="panelcontrol-metric-value-red"
@@ -354,13 +354,13 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                               setTheme={setTheme}
                             />
                           )}
-                          {item.i === 'beneficioNeto' && (
+                          {item.i === 'ingresoMensual' && (
                             <MetricCard
-                              title="Beneficio "
-                              value={`$${beneficioNeto.toFixed(2)}`}
-                              description="Beneficio neto"
-                              icon="💹"
-                              valueClass={getValueClass(beneficioNeto)}
+                              title="Ingreso Mensual"
+                              value={`$${(ingresoMensual || 0).toFixed(2)}`}
+                              description="Ingreso mensual actual"
+                              icon="💰"
+                              valueClass={getValueClass(ingresoMensual)}
                               theme={theme}
                               setTheme={setTheme}
                             />
@@ -368,7 +368,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'ingresos' && (
                             <MetricCard
                               title="Ingresos"
-                              value={`$${totalIngresos.toFixed(2)}`}
+                              value={`$${(totalIngresos || 0).toFixed(2)}`}
                               description="Ingresos totales"
                               icon="💰"
                               valueClass={getValueClass(totalIngresos)}
@@ -379,7 +379,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'margenGanancia' && (
                             <MetricCard
                               title="Margen de Ganancia"
-                              value={`${margenGanancia.toFixed(2)}%`}
+                              value={`${(margenGanancia || 0).toFixed(2)}%`}
                               description="Margen de ganancia"
                               icon="📊"
                               valueClass={getValueClass(margenGanancia)}
@@ -390,7 +390,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'clientesNuevos' && (
                             <MetricCard
                               title="Clientes Nuevos"
-                              value={clientesActuales} 
+                              value={clientesActuales || 0}
                               description="Clientes nuevos"
                               icon="👥"
                               valueClass={getValueClass(clientesActuales)}
@@ -401,7 +401,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'planesVendidos' && (
                             <MetricCard
                               title="Planes Vendidos"
-                              value={planesVendidos}
+                              value={planesVendidos || 0}
                               description="Total planes vendidos"
                               icon="📄"
                               valueClass="panelcontrol-metric-value-green"
@@ -412,7 +412,7 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                           {item.i === 'clientesActuales' && (
                             <MetricCard
                               title="Clientes Actuales"
-                              value={clientesActuales}
+                              value={clientesActuales || 0}
                               description="Total clientes actuales"
                               icon="📈"
                               valueClass="panelcontrol-metric-value-green"
@@ -432,22 +432,22 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                                 onTitleClick={handleOpenDetailedModal} 
                                 theme={theme} 
                                 setTheme={setTheme}
-                                ventasRecientes={ingresosEsperados} // Se pasa como prop aquí
+                                ventasRecientes={ingresosEsperados}
                               />
                             </div>
                           )}
                           {item.i === 'previsiones' && (
                             <WidgetPrevisiones 
-                            onTitleClick={handleOpenDetailedModal} 
-                            isEditMode={isEditMode} 
-                            handleRemoveItem={handleRemoveItem} 
-                            theme={theme} 
-                            isDropdownOpen={isDropdownOpen} 
-                            toggleDropdown={handleToggleDropdown}
-                            dropdownPosition={dropdownPosition}
-                            setDropdownContent={setDropdownContent} // Pass the setDropdownContent function
+                              onTitleClick={handleOpenDetailedModal} 
+                              isEditMode={isEditMode} 
+                              handleRemoveItem={handleRemoveItem} 
+                              theme={theme} 
+                              isDropdownOpen={isDropdownOpen} 
+                              toggleDropdown={handleToggleDropdown}
+                              dropdownPosition={dropdownPosition}
+                              setDropdownContent={setDropdownContent}
                             />
-                        )}
+                          )}
                           {item.i === 'documentos' && (
                             <WidgetDocumentos isEditMode={isEditMode} onTitleClick={handleOpenDetailedDocumento} theme={theme} setTheme={setTheme} />
                           )}
@@ -455,7 +455,13 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                             <WidgetFacturas isEditMode={isEditMode} handleRemoveItem={handleRemoveItem} onTitleClick={handleOpenDetailedFactura} theme={theme} setTheme={setTheme} />
                           )}
                           {item.i === 'cuentaBancaria' && (
-                            <WidgetCuentaBancaria onTitleClick={handleOpenDetailedModal} theme={theme} beneficio={beneficio} setTheme={setTheme} />
+                            <WidgetCuentaBancaria 
+                              onTitleClick={handleOpenDetailedModal} 
+                              theme={theme} 
+                              beneficio={proyeccionMes}  // Pasa el valor de proyeccionMes
+                              valueClass={getValueClass(proyeccionMes)}  // Pasa la clase CSS calculada
+                              setTheme={setTheme} 
+                            />
                           )}
                           {item.i === 'gasto' && (
                             <WidgetGasto isEditMode={isEditMode} onTitleClick={handleOpenDetailedModal} theme={theme} setTheme={setTheme} gastos={gastos} />
@@ -484,7 +490,6 @@ function Pestañaeconomiapage({ theme, setTheme }) {
         </div>
       )}
       
-      {/* Dropdown moved outside of its original encapsulation */}
       {isDropdownOpen && dropdownContent && (
         <div className={`Prevdropdown-content ${theme}`} style={{ 
           position: 'absolute', 

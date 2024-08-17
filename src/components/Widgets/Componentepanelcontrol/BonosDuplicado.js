@@ -30,11 +30,14 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
   });
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del thead
+  const [selectedRows, setSelectedRows] = useState([]); // Estado para checkboxes de cada fila
 
   useEffect(() => {
     axios.get(`${API_BASE_URL}/api/bonos/`)
       .then((response) => {
         setData(response.data);
+        setSelectedRows(new Array(response.data.length).fill(false)); // Inicializar estado de checkboxes
       })
       .catch((error) => {
         console.error('Error al obtener los datos:', error);
@@ -97,6 +100,26 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
     }
   };
 
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedRows(new Array(data.length).fill(isChecked));
+  };
+
+  const handleRowCheckboxChange = (index) => {
+    const updatedSelectedRows = [...selectedRows];
+    updatedSelectedRows[index] = !updatedSelectedRows[index];
+    setSelectedRows(updatedSelectedRows);
+
+    // Si se desmarca cualquier checkbox de fila, desmarca el checkbox de selectAll
+    if (!updatedSelectedRows[index]) {
+      setSelectAll(false);
+    } else if (updatedSelectedRows.every(row => row)) {
+      // Si todos los checkboxes de fila están marcados, marca el checkbox de selectAll
+      setSelectAll(true);
+    }
+  };
+
   const filteredData = data.filter((item) =>
     Object.values(item).some((val) =>
       val.toString().toLowerCase().includes(filterText.toLowerCase())
@@ -142,12 +165,18 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
       <table>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAllChange}
+              />
+            </th>
             {visibleColumns.nombre && <th>Nombre de Bono</th>}
             {visibleColumns.fechaComienzo && <th>Fecha de Comienzo</th>}
             {visibleColumns.fechaExpiracion && <th>Fecha de Expiración</th>}
             {visibleColumns.estado && <th>Estado</th>}
-            {visibleColumns.beneficiario && <th>Beneficiario</th>}
+            {visibleColumns.beneficiario && <th>Clientes asignados</th>}
             {visibleColumns.monto && <th>Importe</th>}
             {visibleColumns.tipo && <th>Tipo de Bono</th>}
             <th></th>
@@ -157,7 +186,11 @@ const BonosDuplicado = ({ isEditMode, theme }) => {
           {filteredData.map((item, index) => (
             <tr key={index}>
               <td>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={selectedRows[index]}
+                  onChange={() => handleRowCheckboxChange(index)}
+                />
               </td>
               {visibleColumns.nombre && <td>{item.nombre}</td>}
               {visibleColumns.fechaComienzo && <td>{item.fechaComienzo}</td>}

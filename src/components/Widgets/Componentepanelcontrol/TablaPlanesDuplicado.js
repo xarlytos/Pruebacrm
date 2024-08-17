@@ -15,11 +15,14 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
     nombre: true,
     clientes: true,
     precio: true,
-    duracion: true
+    tipoPlan: true, 
   });
   const [showCreatePlanModal, setShowCreatePlanModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showAsociarClientes, setShowAsociarClientes] = useState(false);
+
+  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del thead
+  const [selectedRows, setSelectedRows] = useState([]); // Estado para checkboxes de cada fila
 
   useEffect(() => {
     const fetchPlanes = async () => {
@@ -38,25 +41,25 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
           planesVariablesResponse.json()
         ]);
 
-        // Combine ambos tipos de planes
         const combinedData = [
           ...planesFijos.map(plan => ({
             id: plan._id,
             nombre: plan.name,
-            clientes: plan.client ? 1 : 0, // Si hay un cliente asociado, cuenta como 1
-            precio: `$${plan.rate}/mes`, // Usando el campo `rate` para planes fijos
-            duracion: `${plan.contractDuration} meses` // Usando `contractDuration` para la duración
+            clientes: plan.client ? 1 : 0,
+            precio: `$${plan.rate}/mes`,
+            tipoPlan: 'Fijo',
           })),
           ...planesVariables.map(plan => ({
             id: plan._id,
             nombre: plan.name,
             clientes: plan.client ? 1 : 0,
-            precio: `$${plan.hourlyRate}/hora`, // Usando el campo `hourlyRate` para planes variables
-            duracion: plan.totalSessions ? `${plan.totalSessions} sesiones` : 'Variable' // Asumiendo `totalSessions` para indicar la duración si existe
+            precio: `$${plan.hourlyRate}/hora`,
+            tipoPlan: 'Variable',
           }))
         ];
 
         setData(combinedData);
+        setSelectedRows(new Array(combinedData.length).fill(false)); // Inicializar estado de checkboxes
       } catch (error) {
         console.error('Error al obtener los planes:', error);
       }
@@ -71,6 +74,24 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
 
   const handleColumnToggle = (column) => {
     setVisibleColumns({ ...visibleColumns, [column]: !visibleColumns[column] });
+  };
+
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedRows(new Array(data.length).fill(isChecked));
+  };
+
+  const handleRowCheckboxChange = (index) => {
+    const updatedSelectedRows = [...selectedRows];
+    updatedSelectedRows[index] = !updatedSelectedRows[index];
+    setSelectedRows(updatedSelectedRows);
+
+    if (!updatedSelectedRows[index]) {
+      setSelectAll(false);
+    } else if (updatedSelectedRows.every(row => row)) {
+      setSelectAll(true);
+    }
   };
 
   const filteredData = data.filter(item =>
@@ -138,24 +159,36 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
       <table>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAllChange}
+              />
+            </th>
             {visibleColumns.id && <th>ID</th>}
             {visibleColumns.nombre && <th>Nombre del Plan</th>}
             {visibleColumns.clientes && <th>Clientes</th>}
             {visibleColumns.precio && <th>Precio</th>}
-            {visibleColumns.duracion && <th>Duración</th>}
+            {visibleColumns.tipoPlan && <th>Tipo de Plan</th>}
             <th></th>
           </tr>
         </thead>
         <tbody>
           {filteredData.map((item, index) => (
             <tr key={index}>
-              <td><input type="checkbox" /></td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedRows[index]}
+                  onChange={() => handleRowCheckboxChange(index)}
+                />
+              </td>
               {visibleColumns.id && <td>{item.id}</td>}
               {visibleColumns.nombre && <td>{item.nombre}</td>}
               {visibleColumns.clientes && <td>{item.clientes}</td>}
               {visibleColumns.precio && <td>{item.precio}</td>}
-              {visibleColumns.duracion && <td>{item.duracion}</td>}
+              {visibleColumns.tipoPlan && <td>{item.tipoPlan}</td>}
               <td>
                 <div className="Tablaplanescliente-dropdown Tablaplanescliente-options-dropdown">
                   <button className={`dropdown-toggle ${theme} options-btn`}>...</button>

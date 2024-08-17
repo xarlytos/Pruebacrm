@@ -16,6 +16,9 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
     plan: true
   });
 
+  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del thead
+  const [selectedRows, setSelectedRows] = useState([]); // Estado para checkboxes de cada fila
+
   useEffect(() => {
     const fetchClientes = async () => {
       try {
@@ -31,6 +34,7 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
         }));
 
         setData(mappedClientes);
+        setSelectedRows(new Array(mappedClientes.length).fill(false)); // Inicializar estado de checkboxes
       } catch (error) {
         console.error('Error al obtener los clientes:', error);
       }
@@ -47,6 +51,24 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
     setVisibleColumns({ ...visibleColumns, [column]: !visibleColumns[column] });
   };
 
+  const handleSelectAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setSelectAll(isChecked);
+    setSelectedRows(new Array(data.length).fill(isChecked));
+  };
+
+  const handleRowCheckboxChange = (index) => {
+    const updatedSelectedRows = [...selectedRows];
+    updatedSelectedRows[index] = !updatedSelectedRows[index];
+    setSelectedRows(updatedSelectedRows);
+
+    if (!updatedSelectedRows[index]) {
+      setSelectAll(false);
+    } else if (updatedSelectedRows.every(row => row)) {
+      setSelectAll(true);
+    }
+  };
+
   const filteredData = data.filter(item =>
     Object.values(item).some(val =>
       val.toString().toLowerCase().includes(filterText.toLowerCase())
@@ -54,7 +76,6 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
   );
 
   return (
-
     <div className={`TablaplanesclienteDup-container ${theme}`}>
       <h2 className={theme}>Clientes</h2>
       <div className="Tablaplanescliente-controls">
@@ -75,7 +96,13 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
       <table>
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAllChange}
+              />
+            </th>
             {visibleColumns.id && <th>ID</th>}
             {visibleColumns.nombre && <th>Nombre</th>}
             {visibleColumns.email && <th>Email</th>}
@@ -87,7 +114,13 @@ const TablaClientesDuplicado = ({ isEditMode, theme }) => {
         <tbody>
           {filteredData.map((item, index) => (
             <tr key={index}>
-              <td><input type="checkbox" /></td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedRows[index]}
+                  onChange={() => handleRowCheckboxChange(index)}
+                />
+              </td>
               {visibleColumns.id && <td>{item.id}</td>}
               {visibleColumns.nombre && <td>{item.nombre}</td>}
               {visibleColumns.email && <td>{item.email}</td>}

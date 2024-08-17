@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './WidgetCuentaBancaria.css'; // Asegúrate de importar los estilos
 
-function WidgetCuentaBancaria({ beneficio }) {
-  const [showBeneficio, setShowBeneficio] = useState(true); // Mostrar CRM por defecto
-  const [activeView, setActiveView] = useState('CRM'); // Estado para rastrear la vista activa
-  const [defaultView, setDefaultView] = useState(localStorage.getItem('defaultView') || 'CRM'); // Vista predefinida
+function WidgetCuentaBancaria({ beneficio, valueClass, theme }) {
+  const [showBeneficio, setShowBeneficio] = useState(true);
+  const [activeView, setActiveView] = useState('CRM');
+  const [defaultView, setDefaultView] = useState(localStorage.getItem('defaultView') || 'CRM');
 
   useEffect(() => {
-    // Al cargar el componente, establecer la vista predefinida como la activa
     setActiveView(defaultView);
     if (defaultView === 'CRM') {
       setShowBeneficio(true);
@@ -36,42 +35,44 @@ function WidgetCuentaBancaria({ beneficio }) {
     alert(`Vista predefinida guardada: ${activeView}`);
   };
 
-  // Determinar la clase basada en el valor del beneficio
-  const beneficioClass = beneficio >= 0 ? 'beneficio-info positivo' : 'beneficio-info negativo';
+  // Asegurarse de que 'beneficio' es un número antes de usar toFixed()
+  const beneficioSeguro = typeof beneficio === 'number' ? beneficio : 0;
 
   return (
-    <div className="widget-cuentabancaria">
-      <div className="widget-handle"></div>
-      <h2>Cuenta Bancaria</h2>
-      <p>Contenido de la cuenta bancaria.</p>
-      <div className="buttons-container">
+    <div className={`widget-cuenta-bancaria-container ${theme === 'dark' ? 'dark-theme' : ''}`}>
+      <button 
+        onClick={handleSaveDefaultView} 
+        className="widget-cuenta-bancaria-save-btn"
+      >
+        Guardar Vista Predefinida
+      </button>
+      <div className="widget-cuenta-bancaria-handle"></div>
+      <h2 className="widget-cuenta-bancaria-title">Cuenta Bancaria</h2>
+      <p className="widget-cuenta-bancaria-description">Contenido de la cuenta bancaria.</p>
+      <div className="widget-cuenta-bancaria-buttons-container">
         <button 
           onClick={handleViewCRM} 
-          className={`btn-view-crm ${activeView === 'CRM' ? 'active' : ''}`}
+          className={`widget-cuenta-bancaria-btn ${activeView === 'CRM' ? 'active' : ''}`}
         >
           Ver Ingreso en CRM
         </button>
         <button 
           onClick={handleViewStripe} 
-          className={`btn-view-stripe ${activeView === 'Stripe' ? 'active' : ''}`}
+          className={`widget-cuenta-bancaria-btn ${activeView === 'Stripe' ? 'active' : ''}`}
         >
           Ver Cuenta en Stripe
         </button>
         <button 
           onClick={handleViewBankAccount} 
-          className={`btn-view-bank ${activeView === 'Bank' ? 'active' : ''}`}
+          className={`widget-cuenta-bancaria-btn ${activeView === 'Bank' ? 'active' : ''}`}
         >
           Ver Cuenta Bancaria
         </button>
-        <button 
-          onClick={handleSaveDefaultView} 
-          className="btn-save-default"
-        >
-          Guardar Vista Predefinida
-        </button>
       </div>
       {showBeneficio && (
-        <p className={beneficioClass}>Beneficio Actual: ${beneficio.toFixed(2)}</p>
+        <p className={`widget-cuenta-bancaria-beneficio ${valueClass}`}>
+          Beneficio Actual: ${beneficioSeguro.toFixed(2)}
+        </p>  // Se usa beneficioSeguro aquí
       )}
     </div>
   );

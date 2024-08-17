@@ -1,4 +1,5 @@
-.Documentos-widget {
+/* widget-Documentos.css */
+.uniquePrefix-Documentos-widget {
   padding: 10px;
   background: var(--background);
   color: var(--text);
@@ -6,38 +7,38 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.Documentos-widget h2 {
+.uniquePrefix-Documentos-widget h2 {
   cursor: pointer;
   color: rgb(230, 126, 34);
 }
 
-.Documentos-table {
+.uniquePrefix-Documentos-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-.Documentos-table th, .Documentos-table td {
+.uniquePrefix-Documentos-table th, .uniquePrefix-Documentos-table td {
   padding: 12px;
   text-align: left;
 }
 
-.Documentos-table th {
+.uniquePrefix-Documentos-table th {
   background: var(--primary);
   color: var(--text);
   border-bottom: 2px solid var(--secondary);
 }
 
-.Documentos-table td {
+.uniquePrefix-Documentos-table td {
   background: var(--secondary);
   border-bottom: 1px solid var(--primary);
 }
 
-.Documentos-table tr:hover td {
+.uniquePrefix-Documentos-table tr:hover td {
   background: var(--button-hover-bg);
 }
 
-.Documentos-filter-container {
+.uniquePrefix-Documentos-filter-container {
   display: flex;
   justify-content: flex-start;
   gap: 20px;
@@ -45,7 +46,7 @@
   position: relative;
 }
 
-.Documentos-filter-input {
+.uniquePrefix-Documentos-filter-input {
   padding: 8px;
   background: var(--button-bg);
   color: var(--button-text);
@@ -55,7 +56,7 @@
   height: 40px;
 }
 
-.Documentos-filter-select {
+.uniquePrefix-Documentos-filter-select {
   background: var(--button-bg);
   color: var(--button-text);
   border: 1px solid var(--button-border);
@@ -65,7 +66,7 @@
   padding-top: 6px;
 }
 
-.Documentos-dropdown-button {
+.uniquePrefix-Documentos-dropdown-button {
   padding: 3px;
   background: var(--button-bg);
   color: var(--button-text);
@@ -76,7 +77,7 @@
   margin-top: 4px;
 }
 
-.Documentos-dropdown-content {
+.uniquePrefix-Documentos-dropdown-content {
   display: block;
   position: absolute;
   background-color: var(--button-bg);
@@ -88,18 +89,18 @@
   right: 0;
 }
 
-.Documentos-dropdown-item {
+.uniquePrefix-Documentos-dropdown-item {
   display: block;
   margin-bottom: 8px;
 }
 
-.Documentos-pagination {
+.uniquePrefix-Documentos-pagination {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
 
-.Documentos-pagination-button {
+.uniquePrefix-Documentos-pagination-button {
   padding: 8px;
   background: var(--button-bg);
   color: var(--button-text);
@@ -108,16 +109,16 @@
   cursor: pointer;
 }
 
-.Documentos-pagination-button:disabled {
+.uniquePrefix-Documentos-pagination-button:disabled {
   cursor: not-allowed;
 }
 
-.Documentos-pagination-info {
+.uniquePrefix-Documentos-pagination-info {
   align-self: center;
   color: var(--text);
 }
 
-.Documentos-action-button {
+.uniquePrefix-Documentos-action-button {
   padding: 4px 8px;
   background: var(--button-bg);
   color: var(--button-text);
@@ -127,17 +128,17 @@
   position: relative;
 }
 
-.Documentos-action-button:hover {
+.uniquePrefix-Documentos-action-button:hover {
   background: var(--button-hover-bg);
   color: var(--button-hover-text);
 }
 
-.Documentos-action-dropdown {
+.uniquePrefix-Documentos-action-dropdown {
   position: relative;
   display: inline-block;
 }
 
-.Documentos-action-content {
+.uniquePrefix-Documentos-action-content {
   display: block;
   position: absolute;
   background-color: var(--button-bg);
@@ -149,7 +150,7 @@
   right: 0;
 }
 
-.Documentos-action-item {
+.uniquePrefix-Documentos-action-item {
   padding: 8px;
   background: var(--button-bg);
   color: var(--button-text);
@@ -159,7 +160,7 @@
   text-align: left;
 }
 
-.Documentos-action-item:hover {
+.uniquePrefix-Documentos-action-item:hover {
   background: var(--button-hover-bg);
   color: var(--button-hover-text);
 }
