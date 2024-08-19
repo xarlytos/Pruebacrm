@@ -207,7 +207,7 @@ const WidgetPrevisiones = ({
           />
         </div>
         <div className="Prevfilter-field">
-          <label>Importe Máx:</label>
+          <label>Importte Máx:</label>
           <input 
             type="number" 
             name="maxMonto" 
