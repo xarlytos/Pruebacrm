@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './widget-facturas.css';
 import ModalDeEscaneoDeFacturas from './ModalDeEscaneoDeFacturas';
-import CreacionDeFacturas from './CreacionDeFacturas';
 import NavbarFiltrosFacturas from './NavbarFiltrosFacturas';
 import ColumnDropdown from '../Componentepanelcontrol/ComponentesReutilizables/ColumnDropdown';
 import ScanInvoiceForm from './Duplicados/ScanInvoiceForm';
-import Modal from './Modal'; // Importa el nuevo componente Modal
+import Modal from './Modal';
+import CreacionDeFacturas from './CreacionDeFacturas';
 
-const initialData = [];
-
-const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, setTheme }) => {
-  const [data, setData] = useState(initialData);
+const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, setTheme, onOpenCreationModal }) => {
+  const [data, setData] = useState([]);
+  const [originalData, setOriginalData] = useState([]); 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedColumns, setSelectedColumns] = useState({
-    estatus: true,
     cliente: true,
     monto: true,
     fecha: true,
@@ -39,10 +37,29 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
   });
   const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
   const [isColumnDropdownOpen, setIsColumnDropdownOpen] = useState(false);
-  const [isScanModalOpen, setIsScanModalOpen] = useState(false); // Estado para controlar la visibilidad de ScanInvoiceForm
-  const [isCreationModalOpen, setIsCreationModalOpen] = useState(false);
+  const [isScanModalOpen, setIsScanModalOpen] = useState(false);
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+  const [isCreationModalOpen, setIsCreationModalOpen] = useState(false);
   const [optionsOpenIndex, setOptionsOpenIndex] = useState(null);
+  const [selectedInvoiceType, setSelectedInvoiceType] = useState('todos');
+  const [selectedAll, setSelectedAll] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  
+  const addButtonRef = useRef(null); // Referencia al botón "Añadir Factura"
+
+  useEffect(() => {
+    fetch('https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com/api/invoices')
+      .then(response => response.json())
+      .then(data => {
+        setData(data);
+        setOriginalData(data); 
+        setSelectedItems(new Array(data.length).fill(false));
+      })
+      .catch(error => {
+        console.error('Error al obtener las facturas:', error);
+      });
+  }, []);
 
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);
@@ -72,24 +89,16 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
   };
 
   const handleOpenScanModal = () => {
-    setIsScanModalOpen(true); // Abre el modal de escaneo
+    setIsScanModalOpen(true);
   };
 
   const handleCloseScanModal = () => {
-    setIsScanModalOpen(false); // Cierra el modal de escaneo
-  };
-
-  const handleOpenCreationModal = () => {
-    setIsCreationModalOpen(true);
-  };
-
-  const handleCloseCreationModal = () => {
-    setIsCreationModalOpen(false);
+    setIsScanModalOpen(false);
   };
 
   const handleAddFactura = (factura) => {
     setData([...data, factura]);
-    setIsCreationModalOpen(false);
+    setOriginalData([...originalData, factura]); 
   };
 
   const handleFilterFieldChange = (e) => {
@@ -105,34 +114,58 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
     setFilters({ ...filters, [filterKey]: '' });
   };
 
+  const handleClearAllFilters = () => {
+    setFilters({
+      startDate: '',
+      endDate: '',
+      estatus: '',
+      minMonto: '',
+      maxMonto: '',
+      tipo: '',
+      plan: '',
+      invoiceDate: '',
+      paymentMethod: '',
+      total: '',
+      type: '',
+      personType: '',
+      name: '',
+      surname: '',
+      serviceCode: '',
+    });
+
+    setData(originalData);
+    setIsFilterDropdownOpen(false);
+  };
+
   const applyFilters = (items) => {
     return items.filter((item) => {
-      const startDateCondition = filters.startDate ? new Date(item.fecha) >= new Date(filters.startDate) : true;
-      const endDateCondition = filters.endDate ? new Date(item.fecha) <= new Date(filters.endDate) : true;
-      const estatusCondition = filters.estatus ? item.estatus === filters.estatus : true;
-      const minMontoCondition = filters.minMonto ? parseFloat(item.monto.replace(/[^0-9.-]+/g, "")) >= parseFloat(filters.minMonto) : true;
-      const maxMontoCondition = filters.maxMonto ? parseFloat(item.monto.replace(/[^0-9.-]+/g, "")) <= parseFloat(filters.maxMonto) : true;
-      const tipoCondition = filters.tipo ? item.tipo === filters.tipo : true;
-      const planCondition = filters.plan ? item.plan === filters.plan : true;
-      
-      const invoiceDateCondition = filters.invoiceDate ? new Date(item.invoiceDate).toISOString().split('T')[0] === filters.invoiceDate : true;
+      const startDateCondition = filters.startDate ? new Date(item.invoiceDate) >= new Date(filters.startDate) : true;
+      const endDateCondition = filters.endDate ? new Date(item.invoiceDate) <= new Date(filters.endDate) : true;
+      const minMontoCondition = filters.minMonto ? parseFloat(item.total) >= parseFloat(filters.minMonto) : true;
+      const maxMontoCondition = filters.maxMonto ? parseFloat(item.total) <= parseFloat(filters.maxMonto) : true;
+      const tipoCondition = filters.tipo ? item.type === filters.tipo : true;
       const paymentMethodCondition = filters.paymentMethod ? item.paymentMethod.toLowerCase().includes(filters.paymentMethod.toLowerCase()) : true;
-      const totalCondition = filters.total ? item.total === parseFloat(filters.total) : true;
-      const typeCondition = filters.type ? item.type === filters.type : true;
       const personTypeCondition = filters.personType ? item.personType.toLowerCase().includes(filters.personType.toLowerCase()) : true;
       const nameCondition = filters.name ? item.name.toLowerCase().includes(filters.name.toLowerCase()) : true;
       const surnameCondition = filters.surname ? item.surname.toLowerCase().includes(filters.surname.toLowerCase()) : true;
       const serviceCodeCondition = filters.serviceCode ? item.services.some(service => service.serviceCode.toLowerCase().includes(filters.serviceCode.toLowerCase())) : true;
 
-      return startDateCondition && endDateCondition && estatusCondition && minMontoCondition && maxMontoCondition && tipoCondition && planCondition
-        && invoiceDateCondition && paymentMethodCondition && totalCondition && typeCondition && personTypeCondition && nameCondition && surnameCondition && serviceCodeCondition;
+      return startDateCondition && endDateCondition && minMontoCondition && maxMontoCondition && tipoCondition 
+        && paymentMethodCondition && personTypeCondition && nameCondition && surnameCondition && serviceCodeCondition;
     });
+  };
+
+  const handleApplyFilters = () => {
+    const filteredItems = applyFilters(originalData); 
+    setData(filteredItems);
+    setIsFilterDropdownOpen(false);
   };
 
   const filteredData = applyFilters(
     data.filter((item) =>
+      (selectedInvoiceType === 'todos' || item.type === selectedInvoiceType) &&
       Object.values(item).some((val) =>
-        val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        val?.toString().toLowerCase().includes(searchTerm.toLowerCase())
       )
     )
   );
@@ -143,6 +176,34 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const handleSelectAll = () => {
+    const newSelectedAll = !selectedAll;
+    setSelectedAll(newSelectedAll);
+    setSelectedItems(new Array(filteredData.length).fill(newSelectedAll));
+  };
+
+  const handleSelectItem = (index) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index] = !newSelectedItems[index];
+    setSelectedItems(newSelectedItems);
+
+    if (newSelectedItems.includes(false)) {
+      setSelectedAll(false);
+    } else {
+      setSelectedAll(true);
+    }
+  };
+
+  const handleOpenCreationModal = () => {
+    const buttonRect = addButtonRef.current.getBoundingClientRect();
+    setDropdownPosition({ top: buttonRect.top - 400, left: buttonRect.left }); // Ajusta la posición para que aparezca arriba
+    setIsCreationModalOpen(true);
+  };
+
+  const handleCloseCreationModal = () => {
+    setIsCreationModalOpen(false);
   };
 
   return (
@@ -158,13 +219,21 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
             onChange={handleFilterChange}
             className={`widget-filter-input ${theme}`}
           />
+          <select
+            className={`uniquePrefix-Documentos-filter-select ${theme}`}
+            value={selectedInvoiceType}
+            onChange={(e) => setSelectedInvoiceType(e.target.value)}
+          >
+            <option value="todos">Todos</option>
+            <option value="escaneada">Facturas Escaneadas</option>
+            <option value="made">Facturas Emitidas</option>
+          </select>
           <div className="dropdownFilters">
             <button onClick={toggleFilterDropdown} className={`widget-button ${theme}`}>Filtros</button>
             {isFilterDropdownOpen && (
               <div className={`Prevdropdown-content ${theme}`}>
                 <div className="Prevprevisiones-filtros">
-                  {/* Filtro por Fecha de Factura */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Fecha de Factura:</label>
                     <input
                       type="date"
@@ -174,9 +243,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
-                  {/* Filtro por Método de Pago */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Método de Pago:</label>
                     <input
                       type="text"
@@ -186,9 +253,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
-                  {/* Filtro por Total */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Total:</label>
                     <input
                       type="number"
@@ -198,9 +263,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
-                  {/* Filtro por Tipo de Factura */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Tipo de Factura:</label>
                     <select
                       name="type"
@@ -213,9 +276,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       <option value="made">Emitida</option>
                     </select>
                   </div>
-
-                  {/* Filtro por Tipo de Persona */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Tipo de Persona:</label>
                     <input
                       type="text"
@@ -225,9 +286,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
-                  {/* Filtro por Nombre */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Nombre:</label>
                     <input
                       type="text"
@@ -237,9 +296,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
-                  {/* Filtro por Apellido */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Apellido:</label>
                     <input
                       type="text"
@@ -249,9 +306,7 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
-                  {/* Filtro por Código de Servicio */}
-                  <div className="filter-field">
+                  <div className="Prevfilter-field">
                     <label>Código de Servicio:</label>
                     <input
                       type="text"
@@ -261,8 +316,9 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
                       className={`widget-filter-input ${theme}`}
                     />
                   </div>
-
                 </div>
+                <button onClick={handleApplyFilters} className={`apply-filters-btn ${theme}`}>Aplicar Filtros</button>
+                <button onClick={handleClearAllFilters} className={`clear-filters-btn ${theme}`}>Borrar Filtros</button>
               </div>
             )}
           </div>
@@ -287,8 +343,14 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
               )}
             </div>
           )}
-          <button className={`WidgetFacturas-scan-btn ${theme}`} onClick={handleOpenScanModal}>Escanear Factura</button> {/* Aquí */}
-          <button className={`WidgetFacturas-add-btn ${theme}`} onClick={handleOpenCreationModal}>Añadir Factura</button>
+          <button className={`WidgetFacturas-scan-btn ${theme}`} onClick={handleOpenScanModal}>Escanear Factura</button>
+          <button 
+            className={`WidgetFacturas-add-btn ${theme}`} 
+            onClick={handleOpenCreationModal} 
+            ref={addButtonRef} // Referencia al botón
+          >
+            Añadir Factura
+          </button>
         </div>
       </div>
       {isEditMode && (
@@ -303,9 +365,12 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={selectedAll}
+                onChange={handleSelectAll}
+              />
             </th>
-            {selectedColumns.estatus && <th>Estatus</th>}
             {selectedColumns.cliente && <th>Cliente</th>}
             {selectedColumns.monto && <th>Importe</th>}
             {selectedColumns.fecha && <th>Fecha</th>}
@@ -318,20 +383,23 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
           {filteredData.map((item, index) => (
             <tr key={index} className={theme}>
               <td>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={selectedItems[index]}
+                  onChange={() => handleSelectItem(index)}
+                />
               </td>
-              {selectedColumns.estatus && <td>{item.estatus}</td>}
-              {selectedColumns.cliente && <td>{item.cliente}</td>}
-              {selectedColumns.monto && <td>{item.monto}</td>}
-              {selectedColumns.fecha && <td>{item.fecha}</td>}
-              {selectedColumns.tipo && <td>{item.tipo}</td>}
-              {selectedColumns.plan && <td>{item.plan}</td>}
+              {selectedColumns.cliente && <td>{item.name || item.companyName}</td>}
+              {selectedColumns.monto && <td>{item.total}</td>}
+              {selectedColumns.fecha && <td>{new Date(item.invoiceDate).toLocaleDateString()}</td>}
+              {selectedColumns.tipo && <td>{item.type === 'made' ? 'Emitida' : 'Escaneada'}</td>}
+              {selectedColumns.plan && <td>{item.plan || 'N/A'}</td>}
               <td>
                 <div className="WidgetFacturas-dropdown-options">
                   <button onClick={() => toggleOptions(index)}>...</button>
                   {optionsOpenIndex === index && (
                     <div className={`WidgetFacturas-dropdown-content WidgetFacturas-options-dropdown ${theme}`}>
-                      {item.tipo === 'Escaneada' && <button>Añadir como Gasto</button>}
+                      {item.type === 'escaneada' && <button>Añadir como Gasto</button>}
                       <button>Opción 1</button>
                       <button>Opción 2</button>
                     </div>
@@ -342,13 +410,26 @@ const WidgetFacturas = ({ isEditMode, handleRemoveItem, onTitleClick, theme, set
           ))}
         </tbody>
       </table>
-      <CreacionDeFacturas isOpen={isCreationModalOpen} closeModal={handleCloseCreationModal} onAddFactura={handleAddFactura} theme={theme} />
-      {isScanModalOpen && ( // Renderizar ScanInvoiceForm solo si isScanModalOpen es true
-        <Modal closeModal={handleCloseScanModal}> {/* Utiliza el componente Modal para hacer que ScanInvoiceForm sea un modal */}
+      {isScanModalOpen && (
+        <Modal closeModal={handleCloseScanModal}>
           <ScanInvoiceForm closeModal={handleCloseScanModal} />
         </Modal>
       )}
-      <ModalDeEscaneoDeFacturas isOpen={isDetailedModalOpen} closeModal={handleCloseDetailedModal} theme={theme} /> {/* Mantenido */}
+      {isCreationModalOpen && (
+        <div className="CreacionDeFacturasModal" style={{ 
+          position: 'absolute', 
+          top: dropdownPosition.top, 
+          left: dropdownPosition.left, 
+          zIndex: 10000 
+        }}>
+          <CreacionDeFacturas
+            isOpen={isCreationModalOpen}
+            closeModal={handleCloseCreationModal}
+            theme={theme}
+          />
+        </div>
+      )}
+      <ModalDeEscaneoDeFacturas isOpen={isDetailedModalOpen} closeModal={handleCloseDetailedModal} theme={theme} />
     </div>
   );
 }

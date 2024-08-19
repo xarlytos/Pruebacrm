@@ -88,7 +88,7 @@ function WidgetAlertas({ theme }) {
             </th>
             <th>Título</th>
             <th>Fecha de Alerta</th>
-            <th>Fecha de Visualización</th>
+            <th>Fecha de Recordatorio</th>
             <th>Acciones</th>
           </tr>
         </thead>

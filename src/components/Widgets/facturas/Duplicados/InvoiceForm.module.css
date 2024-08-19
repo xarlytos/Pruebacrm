@@ -1,21 +1,30 @@
 /* Ajuste general del formulario */
 .form {
-  padding: 30px; /* Suficiente espacio interno */
+  padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  width: 100%; /* Asegura que el formulario ocupe todo el espacio */
+  width: 100%;
+  max-width: 1600px; /* Aumenta el ancho máximo para un diseño más horizontal */
+  margin: 0 auto; /* Centrado horizontal */
+  position: relative; /* Para posicionar el botón de cerrar en la esquina superior derecha */
 }
 
 .form h1 {
-  font-size: 26px;
+  font-size: 24px;
   margin-bottom: 25px;
+  text-align: center; /* Centra el título */
+  font-weight: bold;
 }
 
 .form h2 {
-  font-size: 22px;
+  font-size: 18px;
   margin: 20px 0 15px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
 }
 
 /* Estilos de los campos */
@@ -26,41 +35,78 @@
 .form input[type="file"],
 .form select,
 .form textarea {
-  width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
-  padding: 12px;
+  width: 100%;
+  padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form input[type="text"]:focus,
+.form input[type="date"]:focus,
+.form input[type="number"]:focus,
+.form input[type="email"]:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: #007bff;
 }
 
 .form textarea {
-  height: 100px;
+  height: 80px;
   resize: vertical;
 }
 
 /* Ajuste para el contenedor de servicios */
 .serviceField {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Asegura que los servicios se alineen en dos columnas */
-  gap: 20px;
+  grid-template-columns: repeat(5, 1fr); /* Ajusta a 5 columnas para los campos de servicio */
+  gap: 10px;
   margin-bottom: 15px;
 }
 
 .serviceField input[type="text"],
 .serviceField input[type="number"] {
-  width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
+  padding: 8px;
+  border-radius: 3px;
 }
 
-/* Botones */
-
-button[type="button"] {
-  background-color: #6c757d;
+/* Botón de Crear Factura */
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px; /* Posiciona el botón en la parte inferior derecha */
 }
 
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
 
+/* Botón de Cerrar */
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px; /* Posiciona el botón en la parte superior derecha */
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
 
-
+.closeButton:hover {
+  background-color: #c82333;
+}
 
 /* Modales */
 .modal {
@@ -73,7 +119,7 @@ button[type="button"] {
   border: 1px solid #ccc;
   border-radius: 10px;
   width: 100%;
-  max-width: 600px; /* Incrementa el ancho máximo */
+  max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -86,19 +132,184 @@ button[type="button"] {
 /* Diseño en Grid */
 .gridContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Mantiene dos columnas */
-  gap: 20px;
+  grid-template-columns: 1.5fr 1.5fr; /* Ajusta para dar más espacio a las columnas */
+  gap: 40px; /* Aumenta el espacio entre columnas */
+  margin-bottom: 20px;
 }
 
-.leftColumn, .rightColumn {
+.leftColumn,
+.rightColumn {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Espacio entre elementos dentro de las columnas */
+  gap: 15px;
 }
 
 .invoiceNumberContainer {
   display: flex;
-  gap: 15px; /* Espacio entre los campos de número de factura */
+  gap: 15px;
+}
+
+.invoiceYear {
+  flex: 1;
+}
+
+.invoiceNumber {
+  flex: 2;
+}
+
+/* Ocultar el borde extra en los campos de input */
+.form input,
+.form select,
+.form textarea {
+  outline: none;
+}
+
+h2 {
+  padding-bottom: 5px;
+}
+
+/* Estilo para los dropdowns */
+.form select {
+  background-color: #f8f9fa;
+}
+
+.form select:focus {
+  background-color: #fff;
+}
+
+/* Espaciado en los comentarios */
+.form textarea {
+  margin-bottom: 20px;
+}
+
+
+/* Ajuste general del formulario */
+.form {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.form h1 {
+  font-size: 24px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.form h2 {
+  font-size: 18px;
+  margin: 20px 0 15px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.form input[type="text"],
+.form input[type="date"],
+.form input[type="number"],
+.form input[type="email"],
+.form input[type="file"],
+.form select,
+.form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form input[type="text"]:focus,
+.form input[type="date"]:focus,
+.form input[type="number"]:focus,
+.form input[type="email"]:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: #007bff;
+}
+
+.form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+/* Ajuste para el contenedor de servicios */
+.serviceField {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.serviceField input[type="text"],
+.serviceField input[type="number"] {
+  padding: 8px;
+  border-radius: 3px;
+}
+
+/* Botón de Crear Factura */
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Botón de Cerrar */
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.closeButton:hover {
+  background-color: #c82333;
+}
+
+/* Diseño en Grid */
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.invoiceNumberContainer {
+  display: flex;
+  gap: 15px;
 }
 
 .invoiceYear {

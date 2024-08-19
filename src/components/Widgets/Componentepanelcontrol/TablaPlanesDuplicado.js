@@ -11,7 +11,6 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
   const [clientes, setClientes] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [visibleColumns, setVisibleColumns] = useState({
-    id: true,
     nombre: true,
     clientes: true,
     precio: true,
@@ -21,8 +20,8 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showAsociarClientes, setShowAsociarClientes] = useState(false);
 
-  const [selectAll, setSelectAll] = useState(false); // Estado para el checkbox del thead
-  const [selectedRows, setSelectedRows] = useState([]); // Estado para checkboxes de cada fila
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     const fetchPlanes = async () => {
@@ -59,7 +58,7 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
         ];
 
         setData(combinedData);
-        setSelectedRows(new Array(combinedData.length).fill(false)); // Inicializar estado de checkboxes
+        setSelectedRows(new Array(combinedData.length).fill(false));
       } catch (error) {
         console.error('Error al obtener los planes:', error);
       }
@@ -166,7 +165,7 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
                 onChange={handleSelectAllChange}
               />
             </th>
-            {visibleColumns.id && <th>ID</th>}
+            {/* La columna ID está eliminada pero las otras columnas mantienen sus medidas */}
             {visibleColumns.nombre && <th>Nombre del Plan</th>}
             {visibleColumns.clientes && <th>Clientes</th>}
             {visibleColumns.precio && <th>Precio</th>}
@@ -184,7 +183,7 @@ const TablaPlanesDuplicado = ({ isEditMode, theme }) => {
                   onChange={() => handleRowCheckboxChange(index)}
                 />
               </td>
-              {visibleColumns.id && <td>{item.id}</td>}
+              {/* Mantener el espacio de la columna ID eliminado para conservar las dimensiones */}
               {visibleColumns.nombre && <td>{item.nombre}</td>}
               {visibleColumns.clientes && <td>{item.clientes}</td>}
               {visibleColumns.precio && <td>{item.precio}</td>}

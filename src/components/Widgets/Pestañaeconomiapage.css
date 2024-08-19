@@ -101,6 +101,32 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.empty-widget {
+  display: flex;
+  justify-content: center;  /* Centra horizontalmente */
+  align-items: center;  /* Centra verticalmente */
+  height: 100%;
+  border: 2px dashed #ccc;  /* Marco visible */
+  background-color: rgba(255, 255, 255, 0.3);  /* Fondo blanco semitransparente */
+  border-radius: 10px;  /* Bordes redondeados para un mejor diseño */
+}
+
+.empty-widget-border {
+  text-align: center;
+}
+
+.empty-widget button {
+  font-size: 24px;  /* Tamaño de fuente más grande para el botón */
+  background-color: #f0f0f0;  /* Fondo claro para el botón */
+  border: none;  /* Sin bordes en el botón */
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.empty-widget button:hover {
+  background-color: #e0e0e0;  /* Cambio de color al pasar el ratón */
+}
 
 .widget {
   background: var(--primary);
@@ -244,4 +270,33 @@
 .ingreso-button.light {
   background-color: #eee;
   color: #333;
+}
+.empty-widget select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.empty-widget button {
+  font-size: 16px;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #555;
+}
+
+.empty-widget-border {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border: 2px dashed #ccc;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  text-align: center;
 }

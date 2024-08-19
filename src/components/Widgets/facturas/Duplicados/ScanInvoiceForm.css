@@ -1,88 +1,229 @@
-/* src/components/ScanInvoiceForm.css */
-
 .scan-invoice-form {
-  max-width: 100%; /* Allow the form to take up the full width */
+  max-width: 600px;
+  margin: auto;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* Ensure vertical scroll if needed */
+  background-color: #fefefe;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  font-family: 'Arial', sans-serif;
 }
 
-.scan-invoice-form h1 {
+.scan-invoice-form__title {
   font-size: 24px;
+  color: #333;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.scan-invoice-form h2 {
-  font-size: 20px;
+.scan-invoice-form__subtitle {
+  font-size: 18px;
+  color: #555;
   margin: 20px 0 10px;
 }
 
-.scan-invoice-form input[type="file"] {
-  width: calc(100% - 20px); /* Ensure full width minus padding */
+.scan-invoice-form__file-input {
+  width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
-.scan-invoice-form table {
+.scan-invoice-form__table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  font-size: 14px;
 }
 
-.scan-invoice-form th,
-.scan-invoice-form td {
+.scan-invoice-form__table th,
+.scan-invoice-form__table td {
+  padding: 10px;
   border: 1px solid #ddd;
-  padding: 8px;
 }
 
-.scan-invoice-form th {
-  background-color: #f2f2f2;
+.scan-invoice-form__table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
 }
 
-.scan-invoice-form button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin-top: 20px;
-  margin-right: 10px;
-  font-size: 16px;
+.scan-invoice-form__remove-button {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 14px;
 }
 
-.scan-invoice-form button:hover {
+.scan-invoice-form__remove-button:hover {
+  background-color: #c82333;
+}
+
+.scan-invoice-form__progress-bar {
+  width: 100%;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  height: 20px;
+}
+
+.scan-invoice-form__progress {
+  height: 100%;
+  background-color: #28a745;
+  transition: width 0.4s ease;
+  border-radius: 5px 0 0 5px;
+}
+
+.scan-invoice-form__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.scan-invoice-form__scan-button,
+.scan-invoice-form__cancel-button,
+.scan-invoice-form__save-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.scan-invoice-form__scan-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.scan-invoice-form__scan-button:hover {
   background-color: #0056b3;
 }
 
-.scan-invoice-form button:last-of-type {
+.scan-invoice-form__cancel-button {
   background-color: #6c757d;
+  color: white;
 }
 
-.scan-invoice-form button:last-of-type:hover {
+.scan-invoice-form__cancel-button:hover {
   background-color: #5a6268;
 }
 
-.progress-barrr {
-  width: 100%;
-  background-color: #e1cbcb; /* Lighter background for better contrast */
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 10px;
-  height: 20px; /* Adjust the height to make the bar more visible */
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Adds some depth to the bar */
+.scan-invoice-form__save-button {
+  background-color: #28a745;
+  color: white;
+  margin-top: 10px;
 }
 
-.progress-barrr .progress {
-  height: 100%;
-  background-color: #0361c6; /* Match the button color for consistency */
-  transition: width 0.4s ease; /* Smooth transition for the width */
-  border-radius: 4px 0 0 4px; /* Rounded corners on the left */
-  width: 0%; /* Start at 0% and update via JavaScript */
+.scan-invoice-form__save-button:hover {
+  background-color: #218838;
+}
+
+.scan-invoice-form__result {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.scan-invoice-form__result-title {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.scan-invoice-form__form-group {
+  margin-bottom: 15px;
+}
+
+.scan-invoice-form__form-group label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.scan-invoice-form__input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.scan-invoice-form {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fefefe;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 80vh; /* Limitar la altura máxima del popup */
+  overflow-y: auto; /* Habilitar el scroll vertical en caso de contenido extenso */
+  font-family: 'Arial', sans-serif;
+}
+
+.scan-invoice-form__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+  max-height: 200px; /* Limitar la altura máxima de la tabla */
+  overflow-y: auto; /* Habilitar el scroll vertical dentro de la tabla */
+  display: block; /* Convertir la tabla en un bloque para habilitar el desplazamiento interno */
+}
+
+.scan-invoice-form__table thead, 
+.scan-invoice-form__table tbody {
+  display: block; /* Hacer que thead y tbody actúen como bloques separados */
+}
+
+.scan-invoice-form__table thead {
+  width: calc(100% - 1em); /* Ajustar el ancho para alinear con el contenido desplazable */
+  overflow-y: hidden; /* Ocultar cualquier desplazamiento en thead */
+}
+
+.scan-invoice-form__table tbody {
+  width: 100%; /* Asegurarse de que el cuerpo de la tabla tome todo el ancho disponible */
+  max-height: 200px; /* Limitar la altura máxima de la tabla */
+  overflow-y: auto; /* Habilitar el desplazamiento en el cuerpo de la tabla */
+}
+
+.scan-invoice-form__table th, 
+.scan-invoice-form__table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.scan-invoice-form__table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  position: sticky;
+  top: 0; /* Mantener la cabecera visible al desplazar */
+  z-index: 2;
+}
+
+/* Barra de desplazamiento personalizada para WebKit (Chrome, Safari) */
+.scan-invoice-form__table::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scan-invoice-form__table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.scan-invoice-form__table::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.scan-invoice-form__table::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

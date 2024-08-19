@@ -33,6 +33,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
     estado: '',
     monto: '',
     tipo: '',
+    isRecurrente: false,
     frequency: '',
     duration: ''
   });
@@ -66,8 +67,8 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
   };
 
   const handleGastoChange = (e) => {
-    const { name, value } = e.target;
-    setNewGasto({ ...newGasto, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setNewGasto({ ...newGasto, [name]: type === 'checkbox' ? checked : value });
   };
 
   const handleAddGasto = (e) => {
@@ -85,7 +86,10 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
       amount: newGasto.monto,
       status: newGasto.estado,
       date: newGasto.fecha,
-      planType: newGasto.tipo
+      planType: newGasto.tipo,
+      isRecurrente: newGasto.isRecurrente,
+      frequency: newGasto.isRecurrente ? newGasto.frequency : null,
+      duration: newGasto.isRecurrente ? newGasto.duration : null
     })
     .then(response => {
       setNewGasto([...gastos, response.data]);
@@ -97,6 +101,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
         estado: '',
         monto: '',
         tipo: '',
+        isRecurrente: false,
         frequency: '',
         duration: ''
       });
@@ -284,9 +289,9 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
                   <input 
                     type="text" 
                     id="concept"
-                    name="concept" 
+                    name="concepto" 
                     placeholder="Concepto" 
-                    value={newGasto.concept} 
+                    value={newGasto.concepto} 
                     onChange={handleGastoChange} 
                     className={`Widgetgastoanadir-input ${theme}`}
                     required
@@ -320,9 +325,9 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
                   <input 
                     type="number" 
                     id="amount"
-                    name="amount" 
+                    name="monto" 
                     placeholder="Importe" 
-                    value={newGasto.amount} 
+                    value={newGasto.monto} 
                     onChange={handleGastoChange} 
                     className={`Widgetgastoanadir-input ${theme}`}
                     required
@@ -332,9 +337,9 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
                   <input 
                     type="text" 
                     id="status"
-                    name="status" 
+                    name="estado" 
                     placeholder="Estado" 
-                    value={newGasto.status} 
+                    value={newGasto.estado} 
                     onChange={handleGastoChange} 
                     className={`Widgetgastoanadir-input ${theme}`}
                     required
@@ -344,38 +349,52 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
                   <input 
                     type="date" 
                     id="date"
-                    name="date" 
+                    name="fecha" 
                     placeholder="Fecha" 
-                    value={newGasto.date} 
+                    value={newGasto.fecha} 
                     onChange={handleGastoChange} 
                     className={`Widgetgastoanadir-input ${theme}`}
                     required
                   />
 
-                  <label htmlFor="frequency" className="Widgetgastoanadir-label">Frecuencia</label>
-                  <select 
-                    id="frequency"
-                    name="frequency" 
-                    value={newGasto.frequency} 
-                    onChange={handleGastoChange} 
-                    className={`Widgetgastoanadir-select ${theme}`}
-                  >
-                    <option value="">Selecciona una opción</option>
-                    <option value="weekly">Semanal</option>
-                    <option value="biweekly">Quincenal</option>
-                    <option value="monthly">Mensual</option>
-                  </select>
-
-                  <label htmlFor="duration" className="Widgetgastoanadir-label">{getDurationLabel()}</label>
+                  <label htmlFor="isRecurrente" className="Widgetgastoanadir-label">¿Es recurrente?</label>
                   <input 
-                    type="number" 
-                    id="duration"
-                    name="duration" 
-                    placeholder={getDurationPlaceholder()} 
-                    value={newGasto.duration} 
+                    type="checkbox" 
+                    id="isRecurrente"
+                    name="isRecurrente" 
+                    checked={newGasto.isRecurrente} 
                     onChange={handleGastoChange} 
-                    className={`Widgetgastoanadir-input ${theme}`}
+                    className={`Widgetgastoanadir-checkbox ${theme}`}
                   />
+
+                  {newGasto.isRecurrente && (
+                    <>
+                      <label htmlFor="frequency" className="Widgetgastoanadir-label">Frecuencia</label>
+                      <select 
+                        id="frequency"
+                        name="frequency" 
+                        value={newGasto.frequency} 
+                        onChange={handleGastoChange} 
+                        className={`Widgetgastoanadir-select ${theme}`}
+                      >
+                        <option value="">Selecciona una opción</option>
+                        <option value="weekly">Semanal</option>
+                        <option value="biweekly">Quincenal</option>
+                        <option value="monthly">Mensual</option>
+                      </select>
+
+                      <label htmlFor="duration" className="Widgetgastoanadir-label">{getDurationLabel()}</label>
+                      <input 
+                        type="number" 
+                        id="duration"
+                        name="duration" 
+                        placeholder={getDurationPlaceholder()} 
+                        value={newGasto.duration} 
+                        onChange={handleGastoChange} 
+                        className={`Widgetgastoanadir-input ${theme}`}
+                      />
+                    </>
+                  )}
 
                   <button type="submit" className={`Widgetgastoanadir-button ${theme}`}>Añadir</button>
                 </form>
@@ -405,7 +424,7 @@ const WidgetGasto = ({ isEditMode, onTitleClick, theme, setTheme, gastos }) => {
             {visibleColumns.concepto && <th>Concepto</th>}
             {visibleColumns.fecha && <th>Fecha</th>}
             {visibleColumns.estado && <th>Estado</th>}
-            {visibleColumns.monto && <th>Monto</th>}
+            {visibleColumns.monto && <th>Importe</th>}
             {visibleColumns.tipo && <th>Tipo de Gasto</th>}
             <th></th>
           </tr>

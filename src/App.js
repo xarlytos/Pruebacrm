@@ -29,6 +29,7 @@ import './styles.css';
 const App = () => {
   const [theme, setTheme] = useState('light');
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [trainerId, setTrainerId] = useState(null);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -36,6 +37,12 @@ const App = () => {
 
   useEffect(() => {
     document.body.className = theme;
+
+    // Recuperar el trainerId del localStorage
+    const storedTrainerId = localStorage.getItem('trainerId');
+    if (storedTrainerId) {
+      setTrainerId(storedTrainerId);
+    }
   }, [theme]);
 
   return (
@@ -63,14 +70,14 @@ const App = () => {
             <Route path="/income-expenses" element={<IncomeExpenses theme={theme} setTheme={setTheme}/>} />
             <Route path="/bonos" element={<Bonos theme={theme} setTheme={setTheme}/>} />
             <Route path="/incomes" element={<Incomes theme={theme} setTheme={setTheme}/>} />
-            <Route path="/economia" element={<Pestañaeconomiapage theme={theme} setTheme={setTheme}/>} />
+            <Route path="/economia" element={<Pestañaeconomiapage theme={theme} setTheme={setTheme} userId={trainerId} />} />
             <Route path="/dashboard" element={<Dashboard theme={theme} setTheme={setTheme}/>} />
             <Route path="/content-creation" element={<ContentCreation theme={theme} setTheme={setTheme}/>} />
             <Route path="/campaigns" element={<Campaigns theme={theme} setTheme={setTheme}/>} />
             <Route path="/ads" element={<Ads theme={theme} setTheme={setTheme}/>} />
             <Route path="/funnels" element={<FunnelsList theme={theme} setTheme={setTheme}/>} />
             <Route path="/rutinaaasss" element={<Rutinaaasss theme={theme} setTheme={setTheme}/>} />
-            <Route path="/login" element={<Login theme={theme} setTheme={setTheme}/>} />
+            <Route path="/login" element={<Login />} />
             <Route path="/ajustes" element={<Ajustes theme={theme} setTheme={setTheme}/>} /> {/* Agregar la ruta Ajustes */}
           </Routes>
         </div>

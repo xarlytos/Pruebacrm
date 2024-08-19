@@ -20,9 +20,10 @@ import { Menu, MenuItem } from '@mui/material';
 import AgregarNotaModal from './AgregarNotaModal';
 import PlanEntrenamientoModal from './PlanEntrenamientoModal';
 import AsignarObjetivosModal from './AsignarObjetivosModal';
-import DietaModalActual from './Dietamodalactual'; // Corregido para coincidir con el archivo existente
+import DietaModalActual from './Dietamodalactual';
 import ActualizarMetodoPagoModal from './Actualizarmetodopago';
-import ModalBonos from './ModalBonos'; // Importa el componente ModalBonos
+import ModalBonos from './ModalBonos';
+import ServiciosLista from './ServiciosLista';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 
@@ -50,6 +51,7 @@ const ClientesLista = ({ theme, setTheme }) => {
     const [camposVisibles, setCamposVisibles] = useState(camposDisponibles.map(campo => campo.key));
     const [orden, setOrden] = useState({ campo: null, direccion: null });
     const [vistaCalendario, setVistaCalendario] = useState(false);
+    const [vistaServicios, setVistaServicios] = useState(false); // Estado para controlar la vista de servicios
     const [vistaCalendarioTipo, setVistaCalendarioTipo] = useState('month');
     const [mostrarPopupCSV, setMostrarPopupCSV] = useState(false);
     const [mostrarCommandPopup, setMostrarCommandPopup] = useState(false);
@@ -64,7 +66,9 @@ const ClientesLista = ({ theme, setTheme }) => {
     const [mostrarAsignarObjetivosModal, setMostrarAsignarObjetivosModal] = useState(false);
     const [mostrarDietaModalActual, setMostrarDietaModalActual] = useState(false);
     const [mostrarActualizarMetodoPagoModal, setMostrarActualizarMetodoPagoModal] = useState(false);
-    const [mostrarModalBonos, setMostrarModalBonos] = useState(false); // Añade estado para mostrar el modal de bonos
+    const [mostrarModalBonos, setMostrarModalBonos] = useState(false);
+    const [openDialogPlantilla, setOpenDialogPlantilla] = useState(false);
+    const [openDialogServicio, setOpenDialogServicio] = useState(false); // Estado para el diálogo de servicio
 
     useEffect(() => {
         cargarClientes();
@@ -83,6 +87,18 @@ const ClientesLista = ({ theme, setTheme }) => {
 
     const handleClienteClick = (cliente) => {
         setSelectedCliente(prev => prev && prev._id === cliente._id ? null : cliente);
+    };
+
+    const handleToggleServicios = () => { 
+        setVistaServicios(prev => !prev);
+        setVistaCalendario(false); // Asegurarse de que la vista de calendario se desactive
+
+        // Abrir o cerrar el diálogo de servicio cuando se active la vista de servicios
+        if (!vistaServicios) {
+            handleOpenDialogServicio();
+        } else {
+            handleCloseDialogServicio();
+        }
     };
 
     const handleCheckboxChange = (e, cliente) => {
@@ -158,6 +174,7 @@ const ClientesLista = ({ theme, setTheme }) => {
             return 0;
         });
     };
+
     const clientesFiltrados = applyAdvancedFilters(sortClientes(clientes), filtrosAvanzados);
 
     const handleFileUpload = () => {
@@ -375,6 +392,22 @@ const ClientesLista = ({ theme, setTheme }) => {
         setAnchorEl(null);
     };
 
+    const handleOpenDialogPlantilla = () => {
+        setOpenDialogPlantilla(true);
+    };
+
+    const handleCloseDialogPlantilla = () => {
+        setOpenDialogPlantilla(false);
+    };
+
+    const handleOpenDialogServicio = () => {
+        setOpenDialogServicio(true);
+    };
+
+    const handleCloseDialogServicio = () => {
+        setOpenDialogServicio(false);
+    };
+
     return (
         <div className={`clientes-lista ${theme}`}>
             <ToastContainer />
@@ -422,8 +455,11 @@ const ClientesLista = ({ theme, setTheme }) => {
                         {vistaCalendario ? <MdViewList size={20} /> : <MdViewModule size={20} />}
                         {vistaCalendario ? 'Ver Tabla' : 'Ver Calendario'}
                     </button>
+                    <button className={`cliente-action-btn ${theme}`} onClick={handleToggleServicios}> {/* Botón de Servicios */}
+                        Servicios
+                    </button>
                     <div>
-                            <button className={`cliente-action-btn ${theme}`} onClick={handleMenuClick}>
+                        <button className={`cliente-action-btn ${theme}`} onClick={handleMenuClick}>
                             <MdExpandMore size={20} />
                             Más Acciones
                         </button>
@@ -468,43 +504,43 @@ const ClientesLista = ({ theme, setTheme }) => {
                                 Plan de Entrenamiento Actual
                             </MenuItem>
                             <PlanEntrenamientoModal
-                open={mostrarPlanEntrenamientoModal}
-                onClose={handleClosePlanEntrenamientoModal}
-                cliente={selectedCliente}
-                theme={theme}
-            />
+                                open={mostrarPlanEntrenamientoModal}
+                                onClose={handleClosePlanEntrenamientoModal}
+                                cliente={selectedCliente}
+                                theme={theme}
+                            />
 
                             <MenuItem onClick={handleAsignarObjetivos} disabled={clientesSeleccionados.length !== 1}>
                                 <MdFlag size={20} />
                                 Asignar Objetivos
                             </MenuItem>
                             <AsignarObjetivosModal
-    open={mostrarAsignarObjetivosModal}
-    onClose={handleCloseAsignarObjetivosModal}
-    cliente={selectedCliente}
-    theme={theme}
-    onObjetivosAsignados={(nuevosObjetivos) => {
-        // Actualizar el cliente con los nuevos objetivos en la lista
-        setClientes(prevClientes => 
-            prevClientes.map(cliente =>
-                cliente._id === selectedCliente._id
-                    ? { ...cliente, objetivos: nuevosObjetivos }
-                    : cliente
-            )
-        );
-    }}
-/>
+                                open={mostrarAsignarObjetivosModal}
+                                onClose={handleCloseAsignarObjetivosModal}
+                                cliente={selectedCliente}
+                                theme={theme}
+                                onObjetivosAsignados={(nuevosObjetivos) => {
+                                    // Actualizar el cliente con los nuevos objetivos en la lista
+                                    setClientes(prevClientes => 
+                                        prevClientes.map(cliente =>
+                                            cliente._id === selectedCliente._id
+                                                ? { ...cliente, objetivos: nuevosObjetivos }
+                                                : cliente
+                                        )
+                                    );
+                                }}
+                            />
 
                             <MenuItem onClick={handlePlanDieta} disabled={clientesSeleccionados.length !== 1}>
                                 <MdRestaurant size={20} />
                                 Plan de Dieta Actual
                             </MenuItem>
                             <DietaModalActual
-                open={mostrarDietaModalActual}
-                onClose={handleCloseDietaModalActual}
-                cliente={selectedCliente}
-                theme={theme}
-            />
+                                open={mostrarDietaModalActual}
+                                onClose={handleCloseDietaModalActual}
+                                cliente={selectedCliente}
+                                theme={theme}
+                            />
 
                             <MenuItem onClick={handleVerMensajes} disabled={clientesSeleccionados.length !== 1}>
                                 <MdMessage size={20} />
@@ -515,22 +551,22 @@ const ClientesLista = ({ theme, setTheme }) => {
                                 Actualizar Método de Pago
                             </MenuItem>
                             <ActualizarMetodoPagoModal
-                open={mostrarActualizarMetodoPagoModal}
-                onClose={handleCloseActualizarMetodoPagoModal}
-                cliente={selectedCliente}
-                theme={theme}
-            />
+                                open={mostrarActualizarMetodoPagoModal}
+                                onClose={handleCloseActualizarMetodoPagoModal}
+                                cliente={selectedCliente}
+                                theme={theme}
+                            />
 
                             <MenuItem onClick={handleVerBonos} disabled={clientesSeleccionados.length !== 1}>
                                 <MdCardGiftcard size={20} />
                                 Ver Bonos Asociados
                             </MenuItem>
                             <ModalBonos
-                    open={mostrarModalBonos}
-                    onClose={handleCloseModalBonos}
-                    cliente={selectedCliente}
-                    theme={theme}
-                />
+                                open={mostrarModalBonos}
+                                onClose={handleCloseModalBonos}
+                                cliente={selectedCliente}
+                                theme={theme}
+                            />
 
                             <MenuItem onClick={handleVerEstadisticas} disabled={clientesSeleccionados.length !== 1}>
                                 <MdBarChart size={20} />
@@ -545,7 +581,14 @@ const ClientesLista = ({ theme, setTheme }) => {
                 </div>
                 {renderAppliedFilters()}
                 <button className="fixed-button" onClick={handleDetailsClick}>Ver Detalles</button>
-                {vistaCalendario ? (
+                {vistaServicios ? ( // Renderizado condicional de la vista de servicios
+                    <ServiciosLista 
+                        theme={theme}
+                        isOpenServicioDialog={openDialogServicio}
+                        onOpenServicioDialog={handleOpenDialogServicio}
+                        onCloseServicioDialog={handleCloseDialogServicio}
+                    />
+                ) : vistaCalendario ? (
                     <CalendarView clientes={clientesFiltrados} vista={vistaCalendarioTipo} theme={theme} />
                 ) : (
                     <table className="clientes-table">

@@ -5,8 +5,11 @@ import { lock } from 'react-icons-kit/icomoon/lock';
 import { eye } from 'react-icons-kit/icomoon/eye';
 import { eyeBlocked } from 'react-icons-kit/icomoon/eyeBlocked';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // Importar el hook de navegación
 import './login.css';
 import prueba from './logoastro.jpg';
+
+const API_BASE_URL = 'http://localhost:5005/api/trainers';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,22 +17,24 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [isRegister, setIsRegister] = useState(false);
+  const navigate = useNavigate();  // Inicializar el hook de navegación
 
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Intentando iniciar sesión con:', { email, password });
 
     try {
-      const response = await axios.post('/api/trainers/login', {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
         correoElectronico: email,
         contraseña: password,
       });
       console.log('Respuesta de inicio de sesión:', response.data);
 
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('trainerId', response.data.trainerId);
       alert('Inicio de sesión exitoso');
+      navigate('/economia');  // Redirigir al usuario a la página de economía
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error('Error al iniciar sesión:', error.response ? error.response.data : error);
       alert('Error al iniciar sesión');
     }
   };
@@ -39,7 +44,7 @@ const Login = () => {
     console.log('Intentando registrar con:', { name, email, password });
 
     try {
-      const response = await axios.post('/api/trainers/register', {
+      const response = await axios.post(`${API_BASE_URL}/register`, {
         nombre: name,
         correoElectronico: email,
         contraseña: password,
@@ -49,7 +54,7 @@ const Login = () => {
       alert('Registro exitoso');
       setIsRegister(false);
     } catch (error) {
-      console.error('Error al registrar:', error);
+      console.error('Error al registrar:', error.response ? error.response.data : error);
       alert('Error al registrar');
     }
   };

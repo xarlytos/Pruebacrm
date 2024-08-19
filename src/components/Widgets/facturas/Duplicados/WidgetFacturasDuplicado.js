@@ -1,5 +1,3 @@
-// src/components/WidgetFacturasDuplicado.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FacturasActionButtons from './FacturasActionButtons';
@@ -30,6 +28,8 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false);
   const [isScanModalOpen, setIsScanModalOpen] = useState(false);
+  const [selectedAll, setSelectedAll] = useState(false); // Estado para el checkbox global
+  const [selectedItems, setSelectedItems] = useState([]); // Estado para los checkboxes individuales
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -37,6 +37,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/invoices`);
         setInvoices(response.data);
+        setSelectedItems(new Array(response.data.length).fill(false)); // Inicializar estado para los checkboxes
       } catch (error) {
         setError('Error al obtener las facturas.');
       } finally {
@@ -49,14 +50,12 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
 
   const filteredData = invoices.filter(
     item =>
-      (item.estado && item.estado.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (item.cliente && item.cliente.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (item.monto && item.monto.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (item.fecha && item.fecha.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (item.tipo && item.tipo.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (item.numeroFactura && item.numeroFactura.toLowerCase().includes(searchTerm.toLowerCase()))
+      (item.companyName && item.companyName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.total && item.total.toString().includes(searchTerm.toLowerCase())) ||
+      (item.invoiceDate && new Date(item.invoiceDate).toLocaleDateString().includes(searchTerm)) ||
+      (item.type && (item.type === 'made' ? 'Emitida' : 'Escaneada').toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.invoiceNumber && item.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()))
   );
-  
 
   const handleColumnToggle = column => {
     setSelectedColumns({
@@ -117,6 +116,27 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
     onTabChange('Panel de Control');
   };
 
+  // Manejo del checkbox global
+  const handleSelectAll = () => {
+    const newSelectedAll = !selectedAll;
+    setSelectedAll(newSelectedAll);
+    setSelectedItems(new Array(currentItems.length).fill(newSelectedAll));
+  };
+
+  // Manejo del checkbox individual
+  const handleSelectItem = (index) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index] = !newSelectedItems[index];
+    setSelectedItems(newSelectedItems);
+
+    // Desmarcar el checkbox global si alguno individual está desmarcado
+    if (newSelectedItems.includes(false)) {
+      setSelectedAll(false);
+    } else {
+      setSelectedAll(true);
+    }
+  };
+
   if (loading) {
     return <div className={`WidgetFacturasDuplicado-widget ${theme}`}>Cargando...</div>;
   }
@@ -144,7 +164,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
       </button>
       <FacturasActionButtons onScanClick={handleScanClick} onOpenClick={handleOpenClick} />
       <div className="WidgetFacturasDuplicado-filter-container">
-        <h2>Facturas</h2>
+        <h2>Facturaasdasds</h2>
         <input
           type="text"
           placeholder="Filtrar..."
@@ -158,9 +178,12 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={selectedAll}
+                onChange={handleSelectAll}
+              />
             </th>
-            {selectedColumns.estado && <th>Estado</th>}
             {selectedColumns.cliente && <th>Cliente</th>}
             {selectedColumns.monto && <th>Importe</th>}
             {selectedColumns.fecha && <th>Fecha</th>}
@@ -173,14 +196,17 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
           {currentItems.map((item, index) => (
             <tr key={index}>
               <td>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={selectedItems[index]}
+                  onChange={() => handleSelectItem(index)}
+                />
               </td>
-              {selectedColumns.estado && <td>{item.estado}</td>}
-              {selectedColumns.cliente && <td>{item.cliente}</td>}
-              {selectedColumns.monto && <td>{item.monto}</td>}
-              {selectedColumns.fecha && <td>{item.fecha}</td>}
-              {selectedColumns.tipo && <td>{item.tipo}</td>}
-              {selectedColumns.numeroFactura && <td>{item.numeroFactura}</td>}
+              {selectedColumns.cliente && <td>{item.companyName || item.name}</td>}
+              {selectedColumns.monto && <td>{item.total.toFixed(2)}</td>}
+              {selectedColumns.fecha && <td>{new Date(item.invoiceDate).toLocaleDateString()}</td>}
+              {selectedColumns.tipo && <td>{item.type === 'made' ? 'Emitida' : 'Escaneada'}</td>}
+              {selectedColumns.numeroFactura && <td>{item.invoiceNumber}</td>}
               <td>
                 <div className="WidgetFacturasDuplicado-action-dropdown">
                   <button
@@ -191,7 +217,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
                   </button>
                   {actionDropdownOpen[index] && (
                     <div className="WidgetFacturasDuplicado-action-content">
-                      {item.tipo === 'Factura Recibida' && (
+                      {item.type !== 'made' && (
                         <button className="WidgetFacturasDuplicado-action-item">Añadir como Gasto</button>
                       )}
                       <button className="WidgetFacturasDuplicado-action-item" onClick={() => openShowInvoiceModal(item)}>Mostrar Factura</button>
@@ -248,7 +274,7 @@ function WidgetFacturasDuplicado({ isEditMode, theme, onTabChange }) {
             <button className={`WidgetFacturasDuplicado-modal-close-button ${theme}`} onClick={closeShowInvoiceModal}>Cerrar</button>
             {pdfUrl && (
               <div>
-                <h2>Factura {selectedInvoice.numeroFactura}</h2>
+                <h2>Factura {selectedInvoice.invoiceNumber}</h2>
                 <embed src={pdfUrl} width="100%" height="600px" type="application/pdf" />
               </div>
             )}

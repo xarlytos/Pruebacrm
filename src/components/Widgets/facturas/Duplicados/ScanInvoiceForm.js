@@ -1,6 +1,5 @@
-// src/components/ScanInvoiceForm.js
 import React, { useState } from 'react';
-import './ScanInvoiceForm.css'; // Add styles for the form
+import './ScanInvoiceForm.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://crmbackendsilviuuu-4faab73ac14b.herokuapp.com';
 const MAX_FILE_SIZE_MB = 15;
@@ -116,13 +115,12 @@ const ScanInvoiceForm = ({ closeModal }) => {
     const progressBarWidth = (totalFileSize / MAX_FILE_SIZE_MB) * 100;
 
     return (
-
         <div className="scan-invoice-form">
-            <h1>Escaaanear Factura</h1>
-            <input type="file" multiple onChange={handleFileChange} />
-            <h2>Archivos Subidos</h2>
+            <h1 className="scan-invoice-form__title">Escanear Factura</h1>
+            <input type="file" multiple onChange={handleFileChange} className="scan-invoice-form__file-input" />
+            <h2 className="scan-invoice-form__subtitle">Archivos Subidos</h2>
             {uploadedFiles.length > 0 ? (
-                <table>
+                <table className="scan-invoice-form__table">
                     <thead>
                         <tr>
                             <th>Nombre del Archivo</th>
@@ -136,7 +134,12 @@ const ScanInvoiceForm = ({ closeModal }) => {
                                 <td>{file.name}</td>
                                 <td>{(file.size / 1024 / 1024).toFixed(2)} MB</td>
                                 <td>
-                                    <button onClick={() => handleRemoveFile(index)}>Eliminar</button>
+                                    <button
+                                        className="scan-invoice-form__remove-button"
+                                        onClick={() => handleRemoveFile(index)}
+                                    >
+                                        Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -145,41 +148,46 @@ const ScanInvoiceForm = ({ closeModal }) => {
             ) : (
                 <p>No se han subido archivos.</p>
             )}
-            <div className="progress-barrr">
-                <div className="progress" style={{ width: `${progressBarWidth}%` }}></div>
+            <div className="scan-invoice-form__progress-bar">
+                <div className="scan-invoice-form__progress" style={{ width: `${progressBarWidth}%` }}></div>
             </div>
             <p>Total Subido: {totalFileSize.toFixed(2)} / 15 MB</p>
-            <button onClick={handleScanInvoices}>Comenzar Escaneo de Facturas</button>
-            <button onClick={closeModal}>Cancelar</button>
+            <div className="scan-invoice-form__buttons">
+                <button onClick={handleScanInvoices} className="scan-invoice-form__scan-button">Comenzar Escaneo de Facturas</button>
+                <button onClick={closeModal} className="scan-invoice-form__cancel-button">Cancelar</button>
+            </div>
             {responseData && (
-                <div>
-                    <h2>Datos extraídos:</h2>
-                    <form>
-                        <div>
+                <div className="scan-invoice-form__result">
+                    <h2 className="scan-invoice-form__result-title">Datos extraídos:</h2>
+                    <form className="scan-invoice-form__result-form">
+                        <div className="scan-invoice-form__form-group">
                             <label>Nombre de la Compañía:</label>
                             <input
                                 type="text"
                                 value={companyName}
                                 onChange={(e) => setCompanyName(e.target.value)}
+                                className="scan-invoice-form__input"
                             />
                         </div>
-                        <div>
+                        <div className="scan-invoice-form__form-group">
                             <label>Total:</label>
                             <input
                                 type="number"
                                 value={total}
                                 onChange={(e) => setTotal(e.target.value)}
+                                className="scan-invoice-form__input"
                             />
                         </div>
-                        <div>
+                        <div className="scan-invoice-form__form-group">
                             <label>Fecha de la Factura:</label>
                             <input
                                 type="date"
                                 value={invoiceDate}
                                 onChange={(e) => setInvoiceDate(e.target.value)}
+                                className="scan-invoice-form__input"
                             />
                         </div>
-                        <button type="button" onClick={handleSaveInvoice}>Guardar Factura</button>
+                        <button type="button" onClick={handleSaveInvoice} className="scan-invoice-form__save-button">Guardar Factura</button>
                     </form>
                 </div>
             )}

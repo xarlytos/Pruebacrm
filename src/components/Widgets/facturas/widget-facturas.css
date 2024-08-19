@@ -339,3 +339,35 @@
 .Prevfilter-field button.active {
   background: var(--button-active-bg);
 }
+
+.apply-filters-btn {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+
+.apply-filters-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.clear-filters-btn {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: var(--clear-button-bg);
+  color: var(--clear-button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+
+.clear-filters-btn:hover {
+  background-color: var(--clear-button-hover-bg);
+}

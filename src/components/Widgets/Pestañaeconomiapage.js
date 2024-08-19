@@ -24,6 +24,7 @@ import Bonos from './Bonos/Bonos';
 import WidgetCuentaBancaria from './Gastos/widget-gastos';
 import WidgetPrevisionesPopup from './Componentepanelcontrol/DuplicadosPopup/WidgetPrevisionesPopup';
 import Alertas from './Alertas/Alertas';
+import BarraComponentewidgets from './Barracomponentewidgets';  // Importa el nuevo componente
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './Pestañaeconomiapage.css';
@@ -43,6 +44,8 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   const [isScanModalOpen, setIsScanModalOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isBarraWidgetsOpen, setIsBarraWidgetsOpen] = useState(false);
+  const [removedWidgets, setRemovedWidgets] = useState([]); // Estado para widgets eliminados
   const [activeTab, setActiveTab] = useState('Panel de Control');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownContent, setDropdownContent] = useState(null);
@@ -59,15 +62,15 @@ function Pestañaeconomiapage({ theme, setTheme }) {
     { i: 'clientesNuevos', x: 9, y: 2, w: 3, h: 2 },
     { i: 'overviewChart', x: 0, y: 4, w: 6, h: 5 },
     { i: 'recentSales', x: 6, y: 4, w: 6, h: 5 },
-    { i: 'alertas', x: 0, y: 9, w: 6, h: 4 },         // Alertas a la izquierda
-    { i: 'gasto', x: 6, y: 9, w: 6, h: 4 },            // Gastos a la derecha de Alertas
-    { i: 'cuentaBancaria', x: 0, y: 13, w: 6, h: 4 },  // Cuenta Bancaria debajo de Alertas
-    { i: 'beneficioGrafico', x: 6, y: 13, w: 6, h: 4 }, // Cashflow (Beneficio Gráfico) a la derecha de Cuenta Bancaria
-    { i: 'documentos', x: 0, y: 17, w: 6, h: 5 },       // Documentos debajo de Cuenta Bancaria
-    { i: 'facturas', x: 6, y: 17, w: 6, h: 5 },         // Facturas a la derecha de Documentos
-    { i: 'tablaPlanes', x: 0, y: 22, w: 6, h: 4 },      // Planes de Clientes debajo de Documentos
-    { i: 'bonos', x: 6, y: 22, w: 6, h: 4 }             // Bonos a la derecha de Planes de Clientes
-]);
+    { i: 'alertas', x: 0, y: 9, w: 6, h: 4 },
+    { i: 'gasto', x: 6, y: 9, w: 6, h: 4 },
+    { i: 'cuentaBancaria', x: 0, y: 13, w: 6, h: 4 },
+    { i: 'beneficioGrafico', x: 6, y: 13, w: 6, h: 4 },
+    { i: 'documentos', x: 0, y: 17, w: 6, h: 5 },
+    { i: 'facturas', x: 6, y: 17, w: 6, h: 5 },
+    { i: 'tablaPlanes', x: 0, y: 22, w: 6, h: 4 },
+    { i: 'bonos', x: 6, y: 22, w: 6, h: 4 }
+  ]);
 
   const [proyeccionMes, setProyeccionMes] = useState(0);
   const [totalGastos, setTotalGastos] = useState(0);
@@ -215,13 +218,24 @@ function Pestañaeconomiapage({ theme, setTheme }) {
   };
 
   const handleRemoveItem = (i) => {
+    const removedWidget = layout.find(item => item.i === i);
+    setRemovedWidgets([...removedWidgets, removedWidget]); // Añadir el widget eliminado al estado
     setLayout(layout.filter(item => item.i !== i));
+  };
+
+  const handleReaddWidget = (widget) => {
+    setLayout([...layout, widget]);
+    setRemovedWidgets(removedWidgets.filter(item => item.i !== widget.i));
   };
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
   };
-  
+
+  const toggleBarraWidgets = () => {
+    setIsBarraWidgetsOpen(!isBarraWidgetsOpen);
+  };
+
   const getValueClass = (value, isExpense = false) => {
     if (isExpense) {
       return 'panelcontrol-metric-value-red';
@@ -299,6 +313,11 @@ function Pestañaeconomiapage({ theme, setTheme }) {
               <button className="edit-mode-btn" onClick={toggleEditMode}>
                 {isEditMode ? 'Salir del Modo Edición' : 'Modo Edición'}
               </button>
+              {isEditMode && (
+                <button className="barra-widgets-btn" onClick={toggleBarraWidgets}>
+                  {isBarraWidgetsOpen ? 'Cerrar Barra de Widgets' : 'Abrir Barra de Widgets'}
+                </button>
+              )}
             </div>
           </div>
           {activeTab === 'Panel de Control' && (
@@ -486,6 +505,16 @@ function Pestañaeconomiapage({ theme, setTheme }) {
                 </div>
               </ResponsiveGridLayout>
             </>
+          )}
+          {isBarraWidgetsOpen && (
+            <div className="barra-component-widgets">
+              <BarraComponentewidgets 
+                theme={theme} 
+                setTheme={setTheme} 
+                removedWidgets={removedWidgets}  // Pasa los widgets eliminados al componente de la barra
+                onReaddWidget={handleReaddWidget}  // Pasa la función para reinsertar widgets
+              />
+            </div>
           )}
         </div>
       )}
